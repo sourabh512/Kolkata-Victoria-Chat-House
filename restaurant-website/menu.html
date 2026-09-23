@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Menu Management</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        header {
+            background: #e65100;
+            color: white;
+            padding: 18px 30px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        header h1 {
+            font-size: 24px;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .back-btn {
+            background: white;
+            color: #e65100;
+            padding: 10px 16px;
+        }
+
+        .logout-btn {
+            background: #333;
+            color: white;
+            padding: 10px 16px;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1200px;
+            margin: 30px auto;
+        }
+
+        .top-section {
+            background: white;
+            padding: 20px;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 2px 8px rgba(0,0,0,0.1);
+
+            margin-bottom: 25px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .add-btn {
+            background: #e65100;
+            color: white;
+            padding: 12px 20px;
+        }
+
+        .menu-container {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(280px, 1fr));
+
+            gap: 20px;
+        }
+
+        .menu-card {
+            background: white;
+
+            border-radius: 10px;
+
+            padding: 20px;
+
+            box-shadow:
+                0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .menu-card h3 {
+            color: #e65100;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .image-name {
+            color: #777;
+            margin-bottom: 15px;
+        }
+
+        .status {
+            display: inline-block;
+
+            padding: 6px 12px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+
+            margin-bottom: 15px;
+        }
+
+        .available {
+            background: #dff5e1;
+            color: #2e7d32;
+        }
+
+        .unavailable {
+            background: #ffdddd;
+            color: #c62828;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .edit-btn {
+            background: #1976d2;
+            color: white;
+            padding: 9px 14px;
+        }
+
+        .toggle-btn {
+            background: #555;
+            color: white;
+            padding: 9px 14px;
+        }
+
+        .delete-btn {
+            background: #c62828;
+            color: white;
+            padding: 9px 14px;
+        }
+
+        /* FORM */
+
+        .form-container {
+            display: none;
+
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 2px 8px rgba(0,0,0,0.1);
+
+            margin-bottom: 25px;
+        }
+
+        .form-container.show {
+            display: block;
+        }
+
+        .form-container h2 {
+            margin-bottom: 20px;
+            color: #e65100;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+
+            padding: 11px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 5px;
+
+            font-size: 15px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checkbox-group input {
+            width: auto;
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .save-btn {
+            background: #2e7d32;
+            color: white;
+            padding: 11px 20px;
+        }
+
+        .cancel-btn {
+            background: #777;
+            color: white;
+            padding: 11px 20px;
+        }
+
+        .empty {
+            background: white;
+            padding: 40px;
+            text-align: center;
+            border-radius: 10px;
+            color: #777;
+        }
+
+        @media (max-width: 700px) {
+
+            header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .top-section {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>
+        🍽️ Menu Management
+    </h1>
+
+    <div class="header-buttons">
+
+        <button
+            class="back-btn"
+            onclick="goBack()">
+
+            ← Dashboard
+
+        </button>
+
+        <button
+            class="logout-btn"
+            onclick="logout()">
+
+            Logout
+
+        </button>
+
+    </div>
+
+</header>
+
+
+<div class="container">
+
+
+    <!-- TOP -->
+
+    <div class="top-section">
+
+        <div>
+
+            <h2>
+                Restaurant Menu
+            </h2>
+
+            <p>
+                Add, edit and manage your menu items.
+            </p>
+
+        </div>
+
+
+        <button
+            class="add-btn"
+            onclick="openAddForm()">
+
+            + Add Menu Item
+
+        </button>
+
+    </div>
+
+
+
+    <!-- FORM -->
+
+    <div
+        id="form-container"
+        class="form-container">
+
+        <h2 id="form-title">
+            Add Menu Item
+        </h2>
+
+
+        <div class="form-group">
+
+            <label>
+                Item Name
+            </label>
+
+            <input
+                type="text"
+                id="item-name"
+                placeholder="Example: Puchka">
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Price
+            </label>
+
+            <input
+                type="number"
+                id="item-price"
+                placeholder="Example: 40"
+                min="0">
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Image Filename
+            </label>
+
+            <input
+                type="text"
+                id="item-image"
+                placeholder="Example: Panipuri.jpg">
+
+        </div>
+
+
+        <div class="form-group checkbox-group">
+
+            <input
+                type="checkbox"
+                id="item-available"
+                checked>
+
+            <label>
+                Available for customers
+            </label>
+
+        </div>
+
+
+        <div class="form-buttons">
+
+            <button
+                class="save-btn"
+                onclick="saveItem()">
+
+                Save Item
+
+            </button>
+
+            <button
+                class="cancel-btn"
+                onclick="closeForm()">
+
+                Cancel
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- MENU -->
+
+    <div
+        id="menu-container"
+        class="menu-container">
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+
+/* =========================================
+   LOGIN CHECK
+========================================= */
+
+if (sessionStorage.getItem("adminLoggedIn") !== "true") {
+
+    window.location.href = "login.html";
+
+}
+
+
+/* =========================================
+   VARIABLES
+========================================= */
+
+let menuItems = [];
+
+let editingId = null;
+
+
+/* =========================================
+   LOAD MENU
+========================================= */
+
+function loadMenu() {
+
+    fetch(
+        "http://127.0.0.1:8080/api/menu",
+        {
+            method: "GET",
+            credentials: "include"
+        }
+    )
+
+    .then(function(response) {
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Could not load menu"
+            );
+
+        }
+
+        return response.json();
+
+    })
+
+    .then(function(items) {
+
+        menuItems = items;
+
+        displayMenu();
+
+    })
+
+    .catch(function(error) {
+
+        console.error(
+            "Menu error:",
+            error
+        );
+
+        document.getElementById(
+            "menu-container"
+        ).innerHTML = `
+
+            <div class="empty">
+
+                ❌ Could not load menu.
+
+                <br><br>
+
+                Make sure Spring Boot
+                is running.
+
+            </div>
+
+        `;
+
+    });
+
+}
+
+
+/* =========================================
+   DISPLAY MENU
+========================================= */
+
+function displayMenu() {
+
+    let container =
+        document.getElementById(
+            "menu-container"
+        );
+
+
+    container.innerHTML = "";
+
+
+    if (menuItems.length === 0) {
+
+        container.innerHTML = `
+
+            <div class="empty">
+
+                No menu items found.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    menuItems.forEach(function(item) {
+
+        let card =
+            document.createElement("div");
+
+        card.className = "menu-card";
+
+
+        let statusClass =
+            item.available
+                ? "available"
+                : "unavailable";
+
+
+        let statusText =
+            item.available
+                ? "AVAILABLE"
+                : "UNAVAILABLE";
+
+
+        card.innerHTML = `
+
+            <h3>
+                ${escapeHtml(item.name)}
+            </h3>
+
+            <div class="price">
+
+                ₹${Number(item.price).toFixed(2)}
+
+            </div>
+
+            <div class="image-name">
+
+                Image:
+                ${escapeHtml(item.image || "None")}
+
+            </div>
+
+            <span class="status ${statusClass}">
+
+                ${statusText}
+
+            </span>
+
+            <div class="actions">
+
+                <button
+                    class="edit-btn"
+                    onclick="editItem(${item.id})">
+
+                    ✏️ Edit
+
+                </button>
+
+                <button
+                    class="toggle-btn"
+                    onclick="toggleAvailability(${item.id})">
+
+                    ${item.available
+                        ? "🔴 Disable"
+                        : "🟢 Enable"}
+
+                </button>
+
+                <button
+                    class="delete-btn"
+                    onclick="deleteItem(${item.id})">
+
+                    🗑️ Delete
+
+                </button>
+
+            </div>
+
+        `;
+
+
+        container.appendChild(card);
+
+    });
+
+}
+
+
+/* =========================================
+   OPEN ADD FORM
+========================================= */
+
+function openAddForm() {
+
+    editingId = null;
+
+
+    document.getElementById(
+        "form-title"
+    ).innerText =
+        "Add Menu Item";
+
+
+    document.getElementById(
+        "item-name"
+    ).value = "";
+
+
+    document.getElementById(
+        "item-price"
+    ).value = "";
+
+
+    document.getElementById(
+        "item-image"
+    ).value = "";
+
+
+    document.getElementById(
+        "item-available"
+    ).checked = true;
+
+
+    document.getElementById(
+        "form-container"
+    ).classList.add("show");
+
+}
+
+
+/* =========================================
+   CLOSE FORM
+========================================= */
+
+function closeForm() {
+
+    document.getElementById(
+        "form-container"
+    ).classList.remove("show");
+
+    editingId = null;
+
+}
+
+
+/* =========================================
+   EDIT ITEM
+========================================= */
+
+function editItem(id) {
+
+    let item =
+        menuItems.find(function(menuItem) {
+
+            return menuItem.id === id;
+
+        });
+
+
+    if (!item) {
+
+        return;
+
+    }
+
+
+    editingId = id;
+
+
+    document.getElementById(
+        "form-title"
+    ).innerText =
+        "Edit Menu Item";
+
+
+    document.getElementById(
+        "item-name"
+    ).value =
+        item.name;
+
+
+    document.getElementById(
+        "item-price"
+    ).value =
+        item.price;
+
+
+    document.getElementById(
+        "item-image"
+    ).value =
+        item.image || "";
+
+
+    document.getElementById(
+        "item-available"
+    ).checked =
+        item.available;
+
+
+    document.getElementById(
+        "form-container"
+    ).classList.add("show");
+
+}
+
+
+/* =========================================
+   SAVE ITEM
+========================================= */
+
+function saveItem() {
+
+    let name =
+        document.getElementById(
+            "item-name"
+        ).value.trim();
+
+
+    let price =
+        Number(
+            document.getElementById(
+                "item-price"
+            ).value
+        );
+
+
+    let image =
+        document.getElementById(
+            "item-image"
+        ).value.trim();
+
+
+    let available =
+        document.getElementById(
+            "item-available"
+        ).checked;
+
+
+    if (name === "") {
+
+        alert("Please enter item name.");
+
+        return;
+
+    }
+
+
+    if (price <= 0) {
+
+        alert("Please enter a valid price.");
+
+        return;
+
+    }
+
+
+    let menuItem = {
+
+        name: name,
+
+        price: price,
+
+        image: image,
+
+        available: available
+
+    };
+
+
+    let url =
+        editingId === null
+            ? "http://127.0.0.1:8080/api/menu"
+            : "http://127.0.0.1:8080/api/menu/"
+                + editingId;
+
+
+    let method =
+        editingId === null
+            ? "POST"
+            : "PUT";
+
+
+    fetch(url, {
+
+        method: method,
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        credentials: "include",
+
+        body: JSON.stringify(menuItem)
+
+    })
+
+    .then(function(response) {
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Could not save menu item"
+            );
+
+        }
+
+        return response.json();
+
+    })
+
+    .then(function() {
+
+        alert(
+            editingId === null
+                ? "Menu item added successfully!"
+                : "Menu item updated successfully!"
+        );
+
+
+        closeForm();
+
+        loadMenu();
+
+    })
+
+    .catch(function(error) {
+
+        console.error(
+            "Save error:",
+            error
+        );
+
+        alert(
+            "Could not save menu item."
+        );
+
+    });
+
+}
+
+
+/* =========================================
+   TOGGLE AVAILABILITY
+========================================= */
+
+function toggleAvailability(id) {
+
+    let item =
+        menuItems.find(function(menuItem) {
+
+            return menuItem.id === id;
+
+        });
+
+
+    if (!item) {
+
+        return;
+
+    }
+
+
+    let updatedItem = {
+
+        name: item.name,
+
+        price: item.price,
+
+        image: item.image,
+
+        available: !item.available
+
+    };
+
+
+    fetch(
+        "http://127.0.0.1:8080/api/menu/" + id,
+        {
+
+            method: "PUT",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            credentials: "include",
+
+            body: JSON.stringify(updatedItem)
+
+        }
+    )
+
+    .then(function(response) {
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Could not update availability"
+            );
+
+        }
+
+        return response.json();
+
+    })
+
+    .then(function() {
+
+        loadMenu();
+
+    })
+
+    .catch(function(error) {
+
+        console.error(
+            "Availability error:",
+            error
+        );
+
+        alert(
+            "Could not change availability."
+        );
+
+    });
+
+}
+
+
+/* =========================================
+   DELETE ITEM
+========================================= */
+
+function deleteItem(id) {
+
+    let item =
+        menuItems.find(function(menuItem) {
+
+            return menuItem.id === id;
+
+        });
+
+
+    if (!item) {
+
+        return;
+
+    }
+
+
+    let confirmed =
+        confirm(
+            "Are you sure you want to delete "
+            + item.name
+            + "?"
+        );
+
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+
+    fetch(
+        "http://127.0.0.1:8080/api/menu/" + id,
+        {
+
+            method: "DELETE",
+
+            credentials: "include"
+
+        }
+    )
+
+    .then(function(response) {
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Could not delete item"
+            );
+
+        }
+
+        return response.text();
+
+    })
+
+    .then(function() {
+
+        alert(
+            "Menu item deleted successfully!"
+        );
+
+        loadMenu();
+
+    })
+
+    .catch(function(error) {
+
+        console.error(
+            "Delete error:",
+            error
+        );
+
+        alert(
+            "Could not delete menu item."
+        );
+
+    });
+
+}
+
+
+/* =========================================
+   BACK TO DASHBOARD
+========================================= */
+
+function goBack() {
+
+    window.location.href =
+        "admin.html";
+
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+function logout() {
+
+    fetch(
+        "http://127.0.0.1:8080/api/logout",
+        {
+            method: "POST",
+            credentials: "include"
+        }
+    )
+    .then(function() {
+
+        sessionStorage.removeItem(
+            "adminLoggedIn"
+        );
+
+        window.location.href =
+            "login.html";
+
+    })
+    .catch(function(error) {
+
+        console.error(
+            "Logout error:",
+            error
+        );
+
+        sessionStorage.removeItem(
+            "adminLoggedIn"
+        );
+
+        window.location.href =
+            "login.html";
+
+    });
+
+}
+
+
+/* =========================================
+   HTML SAFETY
+========================================= */
+
+function escapeHtml(value) {
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+
+        return "";
+
+    }
+
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+loadMenu();
+
+</script>
+
+
+</body>
+
+</html>

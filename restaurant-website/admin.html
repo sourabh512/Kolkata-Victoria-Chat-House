@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Restaurant Admin Dashboard</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #fffaf5;
+            padding: 30px;
+        }
+
+        #orders-container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        /* HEADER */
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            color: #e65100;
+        }
+
+        .logout-btn {
+            background: #d32f2f;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .logout-btn:hover {
+            background: #b71c1c;
+        }
+
+        /* SEARCH */
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 13px 15px;
+            border: 1px solid #ddd;
+            border-radius: 7px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .search-box input:focus {
+            border-color: #e65100;
+        }
+
+        .search-box button {
+            background: #e65100;
+            color: white;
+            border: none;
+            padding: 0 20px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .search-box button:hover {
+            background: #bf360c;
+        }
+
+        /* SUMMARY */
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .summary-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+        }
+
+        .summary-box h2 {
+            font-size: 30px;
+            color: #e65100;
+            margin-bottom: 5px;
+        }
+
+        .summary-box p {
+            color: #555;
+            font-weight: bold;
+        }
+
+        /* ORDER SECTIONS */
+
+        .order-section {
+            margin-bottom: 35px;
+        }
+
+        .section-title {
+            background: #e65100;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .preparing-title {
+            background: #ff9800;
+        }
+
+        .ready-title {
+            background: #388e3c;
+        }
+
+        .completed-title {
+            background: #616161;
+        }
+
+        /* ORDER CARD */
+
+        .order-card {
+            background: white;
+            padding: 25px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+        }
+
+        .order-card h2 {
+            color: #e65100;
+            margin-bottom: 15px;
+        }
+
+        .order-card p {
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+
+        .total {
+            font-size: 20px;
+            font-weight: bold;
+            color: #e65100;
+            margin-top: 15px;
+        }
+
+        /* STATUS */
+
+        .status {
+            font-weight: bold;
+        }
+
+        .status-new {
+            color: #e65100;
+        }
+
+        .status-preparing {
+            color: #ff9800;
+        }
+
+        .status-ready {
+            color: #388e3c;
+        }
+
+        .status-completed {
+            color: #616161;
+        }
+
+        /* BUTTONS */
+
+        .status-btn {
+            padding: 9px 14px;
+            margin: 5px 5px 0 0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .preparing-btn {
+            background: #ff9800;
+            color: white;
+        }
+
+        .ready-btn {
+            background: #388e3c;
+            color: white;
+        }
+
+        .completed-btn {
+            background: #616161;
+            color: white;
+        }
+
+        .print-btn {
+            background: #1565c0;
+            color: white;
+        }
+
+        .status-btn:hover {
+            opacity: 0.8;
+        }
+
+        /* EMPTY ORDERS */
+
+        .no-orders {
+            background: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            color: #777;
+        }
+
+        .no-search-results {
+            background: white;
+            padding: 25px;
+            text-align: center;
+            border-radius: 8px;
+            color: #777;
+        }
+
+        /* NOTIFICATION */
+
+        .notification {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 320px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.25);
+            z-index: 9999;
+            border-left: 6px solid #e65100;
+        }
+
+        .notification-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #e65100;
+            margin-bottom: 10px;
+        }
+
+        #notification-message {
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .close-notification {
+            margin-top: 12px;
+            background: #e65100;
+            color: white;
+            border: none;
+            padding: 7px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* =====================================
+   MOBILE ADMIN DASHBOARD
+   ===================================== */
+
+@media (max-width: 700px) {
+
+    body {
+        padding: 12px;
+    }
+
+    #orders-container {
+        width: 100%;
+    }
+
+
+    /* HEADER */
+
+    .header {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+    }
+
+    .header h1 {
+        font-size: 24px;
+        line-height: 1.3;
+    }
+
+    .header button,
+    .header a {
+        width: 100%;
+        padding: 12px;
+        text-align: center;
+        border-radius: 6px;
+        box-sizing: border-box;
+    }
+
+
+    /* SEARCH */
+
+    .search-box {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .search-box input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 13px;
+    }
+
+    .search-box button {
+        width: 100%;
+        padding: 13px;
+    }
+
+
+    /* SUMMARY */
+
+    .summary {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .summary-box {
+        padding: 15px 8px;
+    }
+
+    .summary-box h2 {
+        font-size: 24px;
+    }
+
+    .summary-box p {
+        font-size: 13px;
+    }
+
+
+    /* ORDER SECTION */
+
+    .order-section {
+        margin-bottom: 25px;
+    }
+
+    .section-title {
+        font-size: 17px;
+        padding: 12px;
+    }
+
+
+    /* ORDER CARD */
+
+    .order-card {
+        padding: 18px;
+        overflow-wrap: break-word;
+    }
+
+    .order-card h2 {
+        font-size: 20px;
+    }
+
+    .order-card p {
+        font-size: 14px;
+    }
+
+
+    /* STATUS BUTTONS */
+
+    .status-btn {
+        width: 100%;
+        margin: 5px 0;
+        padding: 11px;
+    }
+
+
+    /* NOTIFICATION */
+
+    .notification {
+        width: calc(100% - 24px);
+        left: 12px;
+        right: 12px;
+        top: 12px;
+        box-sizing: border-box;
+    }
+
+}
+
+
+/* =====================================
+   VERY SMALL PHONES
+   ===================================== */
+
+@media (max-width: 400px) {
+
+    .summary {
+        grid-template-columns: 1fr;
+    }
+
+    .header h1 {
+        font-size: 21px;
+    }
+
+    .order-card {
+        padding: 15px;
+    }
+
+}
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div id="orders-container">
+
+    <!-- NOTIFICATION -->
+
+    <div id="notification"
+         class="notification">
+
+        <div class="notification-title">
+            🔔 New Order!
+        </div>
+
+        <div id="notification-message"></div>
+
+        <button
+                class="close-notification"
+                onclick="closeNotification()">
+
+            Close
+
+        </button>
+
+    </div>
+
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <h1>
+            Restaurant Admin Dashboard
+        </h1> 
+        <button onclick="openHistory()">
+    📜 Order History
+</button>
+   <a href="menu.html">
+    🍽️ Menu Management
+</a>
+        <button
+                class="logout-btn"
+                onclick="logout()">
+
+            Logout
+
+        </button>
+
+    </div>
+
+
+    <!-- SEARCH -->
+
+    <div class="search-box">
+
+        <input
+                type="text"
+                id="search-input"
+                placeholder="Search by order ID, name, phone, address or item..."
+                onkeyup="searchOrders()"
+        >
+
+        <button onclick="clearSearch()">
+            Clear
+        </button>
+
+    </div>
+
+
+    <!-- SUMMARY -->
+
+    <div class="summary">
+
+        <div class="summary-box">
+
+            <h2 id="total-orders-count">
+                0
+            </h2>
+
+            <p>
+                Total Orders
+            </p>
+
+        </div>
+
+
+        <div class="summary-box">
+
+            <h2 id="today-orders-count">
+                0
+            </h2>
+
+            <p>
+                Today's Orders
+            </p>
+
+        </div>
+
+
+        <div class="summary-box">
+
+            <h2 id="completed-orders-count">
+                0
+            </h2>
+
+            <p>
+                Completed Orders
+            </p>
+
+        </div>
+
+
+        <div class="summary-box">
+
+            <h2 id="total-revenue">
+                ₹0
+            </h2>
+
+            <p>
+                Total Revenue
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- NEW ORDERS -->
+
+    <div class="order-section">
+
+        <div class="section-title">
+            🆕 New Orders
+        </div>
+
+        <div id="new-orders"></div>
+
+    </div>
+
+
+    <!-- PREPARING -->
+
+    <div class="order-section">
+
+        <div class="section-title preparing-title">
+            👨‍🍳 Preparing
+        </div>
+
+        <div id="preparing-orders"></div>
+
+    </div>
+
+
+    <!-- READY -->
+
+    <div class="order-section">
+
+        <div class="section-title ready-title">
+            ✅ Ready
+        </div>
+
+        <div id="ready-orders"></div>
+
+    </div>
+
+
+    <!-- COMPLETED -->
+
+    <div class="order-section">
+
+        <div class="section-title completed-title">
+            ✔ Completed
+        </div>
+
+        <div id="completed-orders"></div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   GLOBAL VARIABLES
+===================================================== */
+
+let allOrders = [];
+
+let previousOrderIds = [];
+
+let firstLoad = true;
+
+
+/* =====================================================
+   CHECK ADMIN LOGIN
+===================================================== */
+
+if (sessionStorage.getItem("adminLoggedIn") !== "true") {
+
+    window.location.href = "login.html";
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+function logout() {
+
+    fetch(
+        "http://127.0.0.1:8080/api/logout",
+        {
+            method: "POST",
+            credentials: "include"
+        }
+    )
+
+    .then(function(response) {
+
+        if (!response.ok) {
+            throw new Error("Logout failed");
+        }
+
+        return response;
+
+    })
+
+    .then(function() {
+
+        sessionStorage.removeItem("adminLoggedIn");
+
+        window.location.href = "login.html";
+
+    })
+
+    .catch(function(error) {
+
+        console.error("Logout error:", error);
+
+        sessionStorage.removeItem("adminLoggedIn");
+
+        window.location.href = "login.html";
+
+    });
+
+}
+
+
+/* =====================================================
+   SEARCH ORDERS
+===================================================== */
+
+function searchOrders() {
+
+    let searchText =
+        document.getElementById("search-input")
+        .value
+        .toLowerCase()
+        .trim();
+
+    if (searchText === "") {
+
+        displayOrders(allOrders);
+
+        return;
+
+    }
+
+    let filteredOrders =
+        allOrders.filter(function(order) {
+
+            return (
+
+                String(order.id)
+                    .toLowerCase()
+                    .includes(searchText)
+
+                ||
+
+                String(order.name)
+                    .toLowerCase()
+                    .includes(searchText)
+
+                ||
+
+                String(order.phone)
+                    .toLowerCase()
+                    .includes(searchText)
+
+                ||
+
+                String(order.address)
+                    .toLowerCase()
+                    .includes(searchText)
+
+                ||
+
+                String(order.items)
+                    .toLowerCase()
+                    .includes(searchText)
+
+            );
+
+        });
+
+
+    if (filteredOrders.length === 0) {
+
+        showNoSearchResults();
+
+    }
+
+    else {
+
+        displayOrders(filteredOrders);
+
+    }
+
+}
+
+
+/* =====================================================
+   CLEAR SEARCH
+===================================================== */
+
+function clearSearch() {
+
+    document.getElementById("search-input").value = "";
+
+    displayOrders(allOrders);
+
+}
+
+
+/* =====================================================
+   NO SEARCH RESULTS
+===================================================== */
+
+function showNoSearchResults() {
+
+    document.getElementById("new-orders").innerHTML =
+        '<div class="no-search-results">' +
+        'No matching orders found.' +
+        '</div>';
+
+    document.getElementById("preparing-orders").innerHTML = "";
+
+    document.getElementById("ready-orders").innerHTML = "";
+
+    document.getElementById("completed-orders").innerHTML = "";
+
+}
+
+
+/* =====================================================
+   FORMAT DATE AND TIME
+===================================================== */
+
+function formatOrderDateTime(dateTime) {
+
+    if (!dateTime) {
+
+        return "Date/time not available";
+
+    }
+
+    let date = new Date(dateTime);
+
+    return date.toLocaleString("en-IN", {
+
+        day: "2-digit",
+
+        month: "short",
+
+        year: "numeric",
+
+        hour: "2-digit",
+
+        minute: "2-digit",
+
+        hour12: true
+
+    });
+
+}
+
+
+/* =====================================================
+   DASHBOARD STATISTICS
+===================================================== */
+
+function updateDashboardStats(orders) {
+
+    let totalOrders = orders.length;
+
+    let todayOrders = 0;
+
+    let completedOrders = 0;
+
+    let totalRevenue = 0;
+
+
+    let today = new Date();
+
+    let todayDate =
+        today.toISOString().split("T")[0];
+
+
+    orders.forEach(function(order) {
+
+        totalRevenue =
+            totalRevenue + Number(order.total);
+
+
+        if (order.status === "COMPLETED") {
+
+            completedOrders++;
+
+        }
+
+
+        if (order.orderDateTime) {
+
+            let orderDate =
+                new Date(order.orderDateTime);
+
+            let orderDateString =
+                orderDate.toISOString().split("T")[0];
+
+
+            if (orderDateString === todayDate) {
+
+                todayOrders++;
+
+            }
+
+        }
+
+    });
+
+
+    document.getElementById(
+        "total-orders-count"
+    ).innerText = totalOrders;
+
+
+    document.getElementById(
+        "today-orders-count"
+    ).innerText = todayOrders;
+
+
+    document.getElementById(
+        "completed-orders-count"
+    ).innerText = completedOrders;
+
+
+    document.getElementById(
+        "total-revenue"
+    ).innerText =
+        "₹" + totalRevenue;
+
+}
+
+
+/* =====================================================
+   DISPLAY ORDERS
+===================================================== */
+
+function displayOrders(orders) {
+
+    let newOrders =
+        document.getElementById("new-orders");
+
+    let preparingOrders =
+        document.getElementById("preparing-orders");
+
+    let readyOrders =
+        document.getElementById("ready-orders");
+
+    let completedOrders =
+        document.getElementById("completed-orders");
+
+
+    newOrders.innerHTML = "";
+
+    preparingOrders.innerHTML = "";
+
+    readyOrders.innerHTML = "";
+
+    completedOrders.innerHTML = "";
+
+
+    let newCount = 0;
+
+    let preparingCount = 0;
+
+    let readyCount = 0;
+
+    let completedCount = 0;
+
+
+    orders.forEach(function(order) {
+
+        let card = `
+
+            <div class="order-card">
+
+                <h2>
+                    Order #${order.id}
+                </h2>
+
+                <p>
+                    <strong>Name:</strong>
+                    ${order.name}
+                </p>
+
+                <p>
+                    <strong>Phone:</strong>
+
+                    <a
+                        href="tel:${order.phone}"
+                        style="
+                            color:#1565c0;
+                            font-weight:bold;
+                            text-decoration:none;
+                        "
+                    >
+
+                        📞 ${order.phone}
+
+                    </a>
+
+                </p>
+
+                <p>
+                    <strong>Address:</strong>
+                    ${order.address}
+                </p>
+
+                <p>
+                    <strong>🕐 Ordered:</strong>
+                    ${formatOrderDateTime(
+                        order.orderDateTime
+                    )}
+                </p>
+
+                <p>
+                    <strong>Items:</strong>
+                    ${order.items}
+                </p>
+
+                <p class="total">
+                    Total: ₹${order.total}
+                </p>
+
+                <p>
+
+                    <strong>Status:</strong>
+
+                    <span class="status status-${String(
+                        order.status
+                    ).toLowerCase()}">
+
+                        ${order.status}
+
+                    </span>
+
+                </p>
+
+
+                <div>
+
+                    <button
+                        class="status-btn preparing-btn"
+                        onclick="updateStatus(
+                            ${order.id},
+                            'PREPARING'
+                        )">
+
+                        Preparing
+
+                    </button>
+
+
+                    <button
+                        class="status-btn ready-btn"
+                        onclick="updateStatus(
+                            ${order.id},
+                            'READY'
+                        )">
+
+                        Ready
+
+                    </button>
+
+
+                    <button
+                        class="status-btn completed-btn"
+                        onclick="updateStatus(
+                            ${order.id},
+                            'COMPLETED'
+                        )">
+
+                        Completed
+
+                    </button>
+
+
+                    <button
+                        class="status-btn print-btn"
+                        onclick="printOrder(${order.id})">
+
+                        🖨️ Print Order
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+
+        if (order.status === "NEW") {
+
+            newOrders.innerHTML += card;
+
+            newCount++;
+
+        }
+
+        else if (order.status === "PREPARING") {
+
+            preparingOrders.innerHTML += card;
+
+            preparingCount++;
+
+        }
+
+        else if (order.status === "READY") {
+
+            readyOrders.innerHTML += card;
+
+            readyCount++;
+
+        }
+
+        else if (order.status === "COMPLETED") {
+
+            completedOrders.innerHTML += card;
+
+            completedCount++;
+
+        }
+
+    });
+
+
+    if (newCount === 0) {
+
+        newOrders.innerHTML =
+            '<div class="no-orders">' +
+            'No new orders.' +
+            '</div>';
+
+    }
+
+
+    if (preparingCount === 0) {
+
+        preparingOrders.innerHTML =
+            '<div class="no-orders">' +
+            'No orders being prepared.' +
+            '</div>';
+
+    }
+
+
+    if (readyCount === 0) {
+
+        readyOrders.innerHTML =
+            '<div class="no-orders">' +
+            'No ready orders.' +
+            '</div>';
+
+    }
+
+
+    if (completedCount === 0) {
+
+        completedOrders.innerHTML =
+            '<div class="no-orders">' +
+            'No completed orders.' +
+            '</div>';
+
+    }
+
+}
+
+
+/* =====================================================
+   CHECK FOR NEW ORDERS
+===================================================== */
+
+function checkForNewOrders(orders) {
+
+    let currentNewOrderIds =
+        orders
+            .filter(function(order) {
+
+                return order.status === "NEW";
+
+            })
+            .map(function(order) {
+
+                return order.id;
+
+            });
+
+
+    /* FIRST LOAD */
+
+    if (firstLoad) {
+
+        previousOrderIds =
+            currentNewOrderIds;
+
+        firstLoad = false;
+
+        return;
+
+    }
+
+
+    /* FIND ACTUALLY NEW ORDER */
+
+    let newlyCreatedOrders =
+        orders.filter(function(order) {
+
+            return (
+                order.status === "NEW"
+                &&
+                !previousOrderIds.includes(order.id)
+            );
+
+        });
+
+
+    if (newlyCreatedOrders.length > 0) {
+
+        let latestOrder =
+            newlyCreatedOrders[
+                newlyCreatedOrders.length - 1
+            ];
+
+        showNotification(latestOrder);
+
+    }
+
+
+    previousOrderIds =
+        currentNewOrderIds;
+
+}
+
+
+/* =====================================================
+   SHOW NOTIFICATION
+===================================================== */
+
+function showNotification(order) {
+
+    let notification =
+        document.getElementById("notification");
+
+
+    let message =
+        document.getElementById(
+            "notification-message"
+        );
+
+
+    message.innerHTML =
+
+        "Order #" + order.id +
+
+        "<br>" +
+
+        "Customer: " + order.name +
+
+        "<br>" +
+
+        "Total: ₹" + order.total;
+
+
+    notification.style.display =
+        "block";
+
+
+    /* Play sound */
+
+    let audio =
+        new Audio(
+            "https://actions.google.com/sounds/v1/alarms/notification.mp3"
+        );
+
+
+    audio.volume = 1.0;
+
+
+    audio.play().catch(function(error) {
+
+        console.log(
+            "Browser blocked notification sound."
+        );
+
+    });
+
+
+    /* Hide after 8 seconds */
+
+    setTimeout(function() {
+
+        notification.style.display =
+            "none";
+
+    }, 8000);
+
+}
+
+
+/* =====================================================
+   CLOSE NOTIFICATION
+===================================================== */
+
+function closeNotification() {
+
+    document.getElementById(
+        "notification"
+    ).style.display = "none";
+
+}
+
+
+/* =====================================================
+   LOAD ORDERS
+===================================================== */
+
+function loadOrders() {
+
+    fetch(
+        "http://127.0.0.1:8080/api/orders",
+        {
+            method: "GET",
+            credentials: "include"
+        }
+    )
+
+    .then(function(response) {
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Could not load orders. Status: "
+                + response.status
+            );
+
+        }
+
+        return response.json();
+
+    })
+
+    .then(function(orders) {
+
+        allOrders = orders;
+
+
+        updateDashboardStats(orders);
+
+
+        checkForNewOrders(orders);
+
+
+        let searchText =
+            document.getElementById(
+                "search-input"
+            )
+            .value
+            .toLowerCase()
+            .trim();
+
+
+        if (searchText === "") {
+
+            displayOrders(orders);
+
+        }
+
+        else {
+
+            searchOrders();
+
+        }
+
+    })
+
+    .catch(function(error) {
+
+        console.error(
+            "Error loading orders:",
+            error
+        );
+
+        document.getElementById(
+            "new-orders"
+        ).innerHTML =
+
+            "<p>Unable to load orders.</p>";
+
+    });
+
+}
+
+
+/* =====================================================
+   UPDATE STATUS
+===================================================== */
+
+function updateStatus(
+    orderId,
+    newStatus
+) {
+
+    fetch(
+        "http://127.0.0.1:8080/api/orders/"
+        + orderId
+        + "/status?status="
+        + newStatus,
+        {
+            method: "PUT",
+            credentials: "include"
+        }
+    )
+
+    .then(function(response) {
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Could not update status"
+            );
+
+        }
+
+        return response.json();
+
+    })
+
+    .then(function(data) {
+
+        console.log(
+            "Status updated:",
+            data
+        );
+
+        loadOrders();
+
+    })
+
+    .catch(function(error) {
+
+        console.error(error);
+
+        alert(
+            "Could not update order status."
+        );
+
+    });
+
+}
+
+
+/* =====================================================
+   PRINT ORDER
+===================================================== */
+
+function printOrder(orderId) {
+
+    let order =
+        allOrders.find(function(item) {
+
+            return item.id === orderId;
+
+        });
+
+
+    if (!order) {
+
+        alert("Order not found.");
+
+        return;
+
+    }
+
+
+    let orderDate =
+        formatOrderDateTime(
+            order.orderDateTime
+        );
+
+
+    let printWindow =
+        window.open(
+            "",
+            "_blank",
+            "width=500,height=700"
+        );
+
+
+    printWindow.document.write(`
+
+        <!DOCTYPE html>
+
+        <html>
+
+        <head>
+
+            <title>
+                Order #${order.id}
+            </title>
+
+            <style>
+
+                body {
+                    font-family: Arial, sans-serif;
+                    padding: 25px;
+                    max-width: 450px;
+                    margin: auto;
+                }
+
+                h1 {
+                    text-align: center;
+                    margin-bottom: 5px;
+                }
+
+                h2 {
+                    text-align: center;
+                    margin-top: 5px;
+                }
+
+                .restaurant {
+                    text-align: center;
+                    margin-bottom: 20px;
+                }
+
+                .line {
+                    border-top: 1px dashed #000;
+                    margin: 15px 0;
+                }
+
+                p {
+                    margin: 8px 0;
+                }
+
+                .items {
+                    white-space: pre-wrap;
+                }
+
+                .total {
+                    font-size: 20px;
+                    font-weight: bold;
+                }
+
+                .footer {
+                    text-align: center;
+                    margin-top: 25px;
+                }
+
+                @media print {
+
+                    body {
+                        padding: 10px;
+                    }
+
+                }
+
+            </style>
+
+        </head>
+
+        <body>
+
+            <h1>
+                Kolkata Victoria Chat House
+            </h1>
+
+            <div class="restaurant">
+                SahaKarnagar Bangalore
+            </div>
+
+            <div class="line"></div>
+
+            <h2>
+                ORDER #${order.id}
+            </h2>
+
+            <p>
+                <strong>Ordered:</strong>
+                ${orderDate}
+            </p>
+
+            <div class="line"></div>
+
+            <p>
+                <strong>Customer:</strong>
+                ${order.name}
+            </p>
+
+            <p>
+                <strong>Phone:</strong>
+                ${order.phone}
+            </p>
+
+            <p>
+                <strong>Address:</strong>
+                ${order.address}
+            </p>
+
+            <div class="line"></div>
+
+            <p>
+                <strong>Items:</strong>
+            </p>
+
+            <p class="items">
+                ${order.items}
+            </p>
+
+            <div class="line"></div>
+
+            <p class="total">
+                Total: ₹${order.total}
+            </p>
+
+            <p>
+                <strong>Status:</strong>
+                ${order.status}
+            </p>
+
+            <div class="line"></div>
+
+            <div class="footer">
+
+                Thank you for ordering!
+
+                <br>
+                <br>
+
+                Kolkata Victoria Chat House
+
+            </div>
+
+        </body>
+
+        </html>
+
+    `);
+
+
+    printWindow.document.close();
+
+    printWindow.focus();
+
+
+    setTimeout(function() {
+
+        printWindow.print();
+
+    }, 500);
+
+}
+
+
+/* =====================================================
+   INITIAL LOAD
+===================================================== */
+
+loadOrders();
+
+
+/* =====================================================
+   AUTOMATIC REFRESH EVERY 5 SECONDS
+===================================================== */
+
+setInterval(function() {
+
+    loadOrders();
+
+}, 5000);  
+
+function openHistory() {
+
+    window.location.href = "history.html";
+
+}
+
+</script>
+
+</body>
+
+</html>

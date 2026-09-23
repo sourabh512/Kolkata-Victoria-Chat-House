@@ -1,0 +1,22 @@
+# Java / Maven
+**/target/
+**/.mvn/wrapper/maven-wrapper.jar
+
+# IntelliJ IDEA
+**/.idea/
+**/*.iml
+**/*.iws
+**/*.ipr
+
+# VS Code
+**/.vscode/
+
+# Spring Boot secrets
+**/src/main/resources/application.properties
+
+# Environment files
+**/.env
+
+# OS files
+Thumbs.db
+.DS_Store

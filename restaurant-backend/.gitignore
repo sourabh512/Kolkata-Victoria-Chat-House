@@ -1,0 +1,69 @@
+HELP.md
+target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+
+.classpath
+.factorypath
+.project
+.settingsPS C:\Users\anjal\OneDrive\Desktop\KVCH> Get-Content .gitignore
+         # Java / Maven
+         **/target/
+         **/.mvn/wrapper/maven-wrapper.jar
+
+         # IntelliJ IDEA
+         **/.idea/
+         **/*.iml
+         **/*.iws
+         **/*.ipr
+
+         # VS Code
+         **/.vscode/
+
+         # Spring Boot secrets
+         **/src/main/resources/application.properties
+
+         # Environment files
+         **/.env
+
+         # OS files
+         Thumbs.db
+         .DS_Store
+         PS C:\Users\anjal\OneDrive\Desktop\KVCH> git status
+         On branch master
+
+         No commits yet
+
+         Untracked files:
+           (use "git add <file>..." to include in what will be committed)
+                 .gitignore
+                 restaurant-backend/
+                 restaurant-website/
+
+         nothing added to commit but untracked files present (use "git add" to track)
+         PS C:\Users\anjal\OneDrive\Desktop\KVCH>
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/

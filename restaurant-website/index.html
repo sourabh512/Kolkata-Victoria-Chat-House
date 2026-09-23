@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Kolkata Victoria Chat House</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<header>
+
+    <nav class="navbar">
+
+        <div class="logo">
+
+            <span>🍽️</span>
+
+            Kolkata Victoria Chat House
+
+        </div>
+
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="#home">Home</a>
+            </li>
+
+            <li>
+                <a href="#about">About</a>
+            </li>
+
+            <li>
+                <a href="#menu">Menu</a>
+            </li>
+
+            <li>
+                <a href="#contact">Contact</a>
+            </li>
+            
+                <li>
+                    <a href="http://127.0.0.1:5500/admin.html">Admin</a>
+                </li>
+
+        </ul>
+
+
+        <button
+            class="order-btn"
+            onclick="orderNow()">
+
+            Order Now
+
+        </button>
+
+    </nav>
+
+</header>
+
+
+
+<!-- =========================
+     HERO SECTION
+========================= -->
+
+<section id="home" class="hero">
+
+    <div class="hero-content">
+
+        <p class="small-title">
+            WELCOME TO
+        </p>
+
+
+        <h1>
+
+            Kolkata Victoria
+
+            <span>
+                Chat House
+            </span>
+
+        </h1>
+
+
+        <p>
+
+            Authentic Indian Chaat with delicious flavors,
+            fresh ingredients and a taste you'll remember.
+
+        </p>
+
+
+        <div class="hero-buttons">
+
+            <a
+                href="#menu"
+                class="primary-btn">
+
+                View Menu
+
+            </a>
+
+
+            <button
+                class="secondary-btn"
+                onclick="orderNow()">
+
+                Order Now
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     ABOUT SECTION
+========================= -->
+
+<section id="about" class="about">
+
+
+    <div class="about-image">
+
+        <div class="food-placeholder">
+
+            🍛
+
+        </div>
+
+    </div>
+
+
+
+    <div class="about-content">
+
+        <p class="section-title">
+
+            ABOUT US
+
+        </p>
+
+
+        <h2>
+
+            Taste the authentic
+
+            <span>
+                flavor of Kolkata
+            </span>
+
+        </h2>
+
+
+        <p>
+
+            At Kolkata Victoria Chat House,
+            we serve delicious Indian street food
+            prepared with fresh ingredients
+            and traditional flavors.
+
+        </p>
+
+
+        <p>
+
+            From crispy Puchka to delicious Chaat
+            and Parathas, every dish is prepared
+            with love.
+
+        </p>
+
+
+        <button
+            class="primary-btn"
+            onclick="showMessage()">
+
+            Learn More
+
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     MENU SECTION
+========================= -->
+
+<section id="menu" class="menu-section">
+
+    <h2>Our Menu</h2>
+
+    <p class="menu-subtitle">
+        Fresh and authentic taste of Kolkata
+    </p>
+
+    <div id="dynamic-menu" class="dynamic-menu-grid">
+
+        <p class="loading-menu">
+            Loading menu...
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     WHY CHOOSE US
+========================= -->
+
+<section class="why-us">
+
+
+    <p class="section-title">
+
+        WHY CHOOSE US
+
+    </p>
+
+
+    <h2>
+
+        Made with
+
+        <span>
+            Love
+        </span>
+
+    </h2>
+
+
+
+    <div class="features">
+
+
+        <div class="feature">
+
+            <div>
+                🥬
+            </div>
+
+            <h3>
+                Fresh Ingredients
+            </h3>
+
+            <p>
+                Fresh ingredients used every day.
+            </p>
+
+        </div>
+
+
+
+        <div class="feature">
+
+            <div>
+                👨‍🍳
+            </div>
+
+            <h3>
+                Quality Food
+            </h3>
+
+            <p>
+                Prepared with care and traditional recipes.
+            </p>
+
+        </div>
+
+
+
+        <div class="feature">
+
+            <div>
+                ❤️
+            </div>
+
+            <h3>
+                Made With Love
+            </h3>
+
+            <p>
+                Every dish is prepared for your happiness.
+            </p>
+
+        </div>
+
+
+
+        <div class="feature">
+
+            <div>
+                💰
+            </div>
+
+            <h3>
+                Affordable Price
+            </h3>
+
+            <p>
+                Great food at prices everyone can enjoy.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+<!-- ORDER TRACKING -->
+<section id="order-tracking" class="order-tracking-section">
+
+    <h2>Track Your Order</h2>
+
+    <p>
+        Enter your order ID to check your order status.
+    </p>
+
+    <div class="tracking-box">
+
+        <input
+            type="number"
+            id="tracking-order-id"
+            placeholder="Enter Order ID"
+        >
+
+        <button
+            type="button"
+            onclick="trackOrder()">
+            Track Order
+        </button>
+
+    </div>
+
+    <div
+        id="tracking-result"
+        class="tracking-result">
+    </div>
+
+</section>
+
+<!-- =========================
+     CONTACT
+========================= -->
+
+<section id="contact" class="contact">
+
+
+    <p class="section-title">
+
+        CONTACT US
+
+    </p>
+
+
+    <h2>
+
+        Visit
+
+        <span>
+            Us Today
+        </span>
+
+    </h2>
+
+
+
+    <div class="contact-container">
+
+
+        <div>
+
+            <h3>
+                📍 Address
+            </h3>
+
+            <p>
+                SahaKarnagar Bangalore
+            </p>
+
+        </div>
+
+
+
+        <div>
+
+            <h3>
+                📞 Phone
+            </h3>
+
+            <p>
+                +91 72596 88154
+            </p>
+
+        </div>
+
+
+
+        <div>
+
+            <h3>
+                🕐 Opening Hours
+            </h3>
+
+            <p>
+                2:00 PM - 10:00 PM
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+
+    <h3>
+
+        Kolkata Victoria Chat House
+
+    </h3>
+
+
+    <p>
+
+        Delicious food.
+        Authentic taste.
+
+    </p>
+
+
+    <p class="copyright">
+
+        © 2026 Kolkata Victoria Chat House.
+        All Rights Reserved.
+
+    </p>
+
+
+</footer>
+
+
+
+<!-- =========================
+     CART BUTTON
+========================= -->
+
+<div
+    id="cart"
+    onclick="toggleCart()">
+
+    🛒 Cart
+
+    <span id="cart-count">
+        0
+    </span>
+
+</div>
+
+
+
+<!-- =========================
+     CART BOX
+========================= -->
+
+<div id="cart-box">
+
+
+    <div class="cart-header">
+
+
+        <h2>
+            Your Cart
+        </h2>
+
+
+        <button onclick="toggleCart()">
+
+            ✕
+
+        </button>
+
+
+    </div>
+
+
+
+    <!-- CART ITEMS -->
+
+    <div id="cart-items">
+
+    </div>
+
+
+
+    <!-- CART TOTAL -->
+
+    <div class="cart-total">
+
+        <h3>
+
+            Total:
+            ₹<span id="cart-total">0</span>
+
+        </h3>
+
+    </div>
+
+
+
+    <!-- PLACE ORDER -->
+
+    <button
+        class="place-order-btn"
+        onclick="placeOrder()">
+
+        Place Order
+
+    </button>
+
+
+</div>
+
+
+
+<!-- =========================
+     CUSTOMER ORDER FORM
+========================= -->
+
+<div id="order-form">
+
+
+    <div class="order-form-box">
+
+
+        <button
+            onclick="closeOrderForm()">
+
+            ✕
+
+        </button>
+
+
+        <h2>
+            Complete Your Order
+        </h2>
+
+
+
+        <form
+            onsubmit="confirmOrder(event)">
+
+
+            <!-- NAME -->
+
+            <label for="customer-name">
+
+                Full Name
+
+            </label>
+
+
+            <input
+                type="text"
+                id="customer-name"
+                placeholder="Enter your name"
+                required
+            >
+
+
+
+            <!-- PHONE -->
+
+            <label for="customer-phone">
+
+                Phone Number
+
+            </label>
+
+
+            <input
+                type="tel"
+                id="customer-phone"
+                placeholder="Enter your phone number"
+                pattern="[0-9]{10}"
+                maxlength="10"
+                required
+            >
+
+
+
+            <!-- ADDRESS -->
+
+            <label for="customer-address">
+
+                Delivery Address
+
+            </label>
+
+
+            <textarea
+                id="customer-address"
+                placeholder="Enter your complete address"
+                rows="4"
+                required
+            ></textarea>
+
+
+
+            <!-- ORDER SUMMARY -->
+
+            <h3 class="order-summary-title">
+
+                Order Summary
+
+            </h3>
+
+
+            <div id="order-summary">
+
+            </div>
+
+
+
+            <!-- TOTAL -->
+
+            <div class="form-total">
+
+                Total:
+                ₹<span id="form-total">0</span>
+
+            </div>
+
+
+
+            <!-- CONFIRM -->
+
+            <button
+                type="submit"
+                class="confirm-order-btn">
+
+                Confirm Order
+
+            </button>
+
+
+        </form>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
+<script src="script.js"></script>
+ <!-- ORDER SUCCESS POPUP -->
+<div id="order-success-popup" class="success-popup">
+
+    <div class="success-popup-box">
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+        <h2>Order Placed Successfully!</h2>
+
+        <p class="success-thank-you">
+            Thank you for ordering from
+            <strong>Kolkata Victoria Chat House</strong>
+        </p>
+
+        <div class="success-order-details">
+
+            <p>
+                <strong>Order ID:</strong>
+                <span id="success-order-id"></span>
+            </p>
+
+            <p>
+                <strong>Total:</strong>
+                <span id="success-order-total"></span>
+            </p>
+
+            <p>
+                <strong>Customer:</strong>
+                <span id="success-customer-name"></span>
+            </p>
+
+        </div>
+
+        <button
+            type="button"
+            onclick="closeSuccessPopup()">
+            Continue
+        </button>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
