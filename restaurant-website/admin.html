@@ -1,417 +1,413 @@
-
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
 
-    <title>Restaurant Admin Dashboard</title>
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-    <style>
+<title>Restaurant Admin Dashboard</title>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background: #fffaf5;
+        padding: 30px;
+    }
+
+    #orders-container {
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    h1 {
+        color: #e65100;
+    }
+
+    .header button,
+    .header a {
+        border: none;
+        padding: 10px 18px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 15px;
+        text-decoration: none;
+    }
+
+    .header button {
+        background: #e65100;
+        color: white;
+    }
+
+    .header button:hover {
+        background: #bf360c;
+    }
+
+    .header a {
+        background: #388e3c;
+        color: white;
+    }
+
+    .header a:hover {
+        background: #2e7d32;
+    }
+
+    .logout-btn {
+        background: #d32f2f !important;
+        color: white;
+    }
+
+    .logout-btn:hover {
+        background: #b71c1c !important;
+    }
+
+    .search-box {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 25px;
+    }
+
+    .search-box input {
+        flex: 1;
+        padding: 13px 15px;
+        border: 1px solid #ddd;
+        border-radius: 7px;
+        font-size: 16px;
+        outline: none;
+    }
+
+    .search-box input:focus {
+        border-color: #e65100;
+    }
+
+    .search-box button {
+        background: #e65100;
+        color: white;
+        border: none;
+        padding: 0 20px;
+        border-radius: 7px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .search-box button:hover {
+        background: #bf360c;
+    }
+
+    .summary {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+
+    .summary-box {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .summary-box h2 {
+        font-size: 30px;
+        color: #e65100;
+        margin-bottom: 5px;
+    }
+
+    .summary-box p {
+        color: #555;
+        font-weight: bold;
+    }
+
+    .order-section {
+        margin-bottom: 35px;
+    }
+
+    .section-title {
+        background: #e65100;
+        color: white;
+        padding: 12px 18px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        font-size: 20px;
+    }
+
+    .preparing-title {
+        background: #ff9800;
+    }
+
+    .ready-title {
+        background: #388e3c;
+    }
+
+    .completed-title {
+        background: #616161;
+    }
+
+    .order-card {
+        background: white;
+        padding: 25px;
+        margin-bottom: 15px;
+        border-radius: 10px;
+        box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .order-card h2 {
+        color: #e65100;
+        margin-bottom: 15px;
+    }
+
+    .order-card p {
+        margin: 8px 0;
+        line-height: 1.5;
+    }
+
+    .total {
+        font-size: 20px;
+        font-weight: bold;
+        color: #e65100;
+        margin-top: 15px;
+    }
+
+    .status {
+        font-weight: bold;
+    }
+
+    .status-new {
+        color: #e65100;
+    }
+
+    .status-preparing {
+        color: #ff9800;
+    }
+
+    .status-ready {
+        color: #388e3c;
+    }
+
+    .status-completed {
+        color: #616161;
+    }
+
+    .status-btn {
+        padding: 9px 14px;
+        margin: 5px 5px 0 0;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .preparing-btn {
+        background: #ff9800;
+        color: white;
+    }
+
+    .ready-btn {
+        background: #388e3c;
+        color: white;
+    }
+
+    .completed-btn {
+        background: #616161;
+        color: white;
+    }
+
+    .print-btn {
+        background: #1565c0;
+        color: white;
+    }
+
+    .status-btn:hover {
+        opacity: 0.8;
+    }
+
+    .no-orders {
+        background: white;
+        padding: 20px;
+        text-align: center;
+        border-radius: 8px;
+        color: #777;
+    }
+
+    .no-search-results {
+        background: white;
+        padding: 25px;
+        text-align: center;
+        border-radius: 8px;
+        color: #777;
+    }
+
+    .notification {
+        display: none;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: 320px;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.25);
+        z-index: 9999;
+        border-left: 6px solid #e65100;
+    }
+
+    .notification-title {
+        font-size: 20px;
+        font-weight: bold;
+        color: #e65100;
+        margin-bottom: 10px;
+    }
+
+    #notification-message {
+        color: #333;
+        line-height: 1.5;
+    }
+
+    .close-notification {
+        margin-top: 12px;
+        background: #e65100;
+        color: white;
+        border: none;
+        padding: 7px 12px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    @media (max-width: 700px) {
 
         body {
-            font-family: Arial, sans-serif;
-            background: #fffaf5;
-            padding: 30px;
+            padding: 12px;
         }
 
         #orders-container {
-            max-width: 1200px;
-            margin: auto;
+            width: 100%;
         }
 
         .header {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            gap: 10px;
-            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 12px;
+            text-align: center;
         }
 
-        h1 {
-            color: #e65100;
+        .header h1 {
+            font-size: 24px;
+            line-height: 1.3;
         }
 
         .header button,
         .header a {
-            border: none;
-            padding: 10px 18px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 15px;
-            text-decoration: none;
-        }
-
-        .header button {
-            background: #e65100;
-            color: white;
-        }
-
-        .header button:hover {
-            background: #bf360c;
-        }
-
-        .header a {
-            background: #388e3c;
-            color: white;
-        }
-
-        .header a:hover {
-            background: #2e7d32;
-        }
-
-        .logout-btn {
-            background: #d32f2f !important;
-            color: white;
-        }
-
-        .logout-btn:hover {
-            background: #b71c1c !important;
+            width: 100%;
+            padding: 12px;
+            text-align: center;
+            border-radius: 6px;
         }
 
         .search-box {
             display: flex;
+            flex-direction: column;
             gap: 10px;
-            margin-bottom: 25px;
         }
 
         .search-box input {
-            flex: 1;
-            padding: 13px 15px;
-            border: 1px solid #ddd;
-            border-radius: 7px;
-            font-size: 16px;
-            outline: none;
-        }
-
-        .search-box input:focus {
-            border-color: #e65100;
+            width: 100%;
+            padding: 13px;
         }
 
         .search-box button {
-            background: #e65100;
-            color: white;
-            border: none;
-            padding: 0 20px;
-            border-radius: 7px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .search-box button:hover {
-            background: #bf360c;
+            width: 100%;
+            padding: 13px;
         }
 
         .summary {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            margin-bottom: 30px;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
         }
 
         .summary-box {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+            padding: 15px 8px;
         }
 
         .summary-box h2 {
-            font-size: 30px;
-            color: #e65100;
-            margin-bottom: 5px;
+            font-size: 24px;
         }
 
         .summary-box p {
-            color: #555;
-            font-weight: bold;
+            font-size: 13px;
         }
 
         .order-section {
-            margin-bottom: 35px;
+            margin-bottom: 25px;
         }
 
         .section-title {
-            background: #e65100;
-            color: white;
-            padding: 12px 18px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            font-size: 20px;
-        }
-
-        .preparing-title {
-            background: #ff9800;
-        }
-
-        .ready-title {
-            background: #388e3c;
-        }
-
-        .completed-title {
-            background: #616161;
+            font-size: 17px;
+            padding: 12px;
         }
 
         .order-card {
-            background: white;
-            padding: 25px;
-            margin-bottom: 15px;
-            border-radius: 10px;
-            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            padding: 18px;
+            overflow-wrap: break-word;
         }
 
         .order-card h2 {
-            color: #e65100;
-            margin-bottom: 15px;
+            font-size: 20px;
         }
 
         .order-card p {
-            margin: 8px 0;
-            line-height: 1.5;
-        }
-
-        .total {
-            font-size: 20px;
-            font-weight: bold;
-            color: #e65100;
-            margin-top: 15px;
-        }
-
-        .status {
-            font-weight: bold;
-        }
-
-        .status-new {
-            color: #e65100;
-        }
-
-        .status-preparing {
-            color: #ff9800;
-        }
-
-        .status-ready {
-            color: #388e3c;
-        }
-
-        .status-completed {
-            color: #616161;
+            font-size: 14px;
         }
 
         .status-btn {
-            padding: 9px 14px;
-            margin: 5px 5px 0 0;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .preparing-btn {
-            background: #ff9800;
-            color: white;
-        }
-
-        .ready-btn {
-            background: #388e3c;
-            color: white;
-        }
-
-        .completed-btn {
-            background: #616161;
-            color: white;
-        }
-
-        .print-btn {
-            background: #1565c0;
-            color: white;
-        }
-
-        .status-btn:hover {
-            opacity: 0.8;
-        }
-
-        .no-orders {
-            background: white;
-            padding: 20px;
-            text-align: center;
-            border-radius: 8px;
-            color: #777;
-        }
-
-        .no-search-results {
-            background: white;
-            padding: 25px;
-            text-align: center;
-            border-radius: 8px;
-            color: #777;
+            width: 100%;
+            margin: 5px 0;
+            padding: 11px;
         }
 
         .notification {
-            display: none;
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            width: 320px;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.25);
-            z-index: 9999;
-            border-left: 6px solid #e65100;
+            width: calc(100% - 24px);
+            left: 12px;
+            right: 12px;
+            top: 12px;
+        }
+    }
+
+    @media (max-width: 400px) {
+
+        .summary {
+            grid-template-columns: 1fr;
         }
 
-        .notification-title {
-            font-size: 20px;
-            font-weight: bold;
-            color: #e65100;
-            margin-bottom: 10px;
+        .header h1 {
+            font-size: 21px;
         }
 
-        #notification-message {
-            color: #333;
-            line-height: 1.5;
+        .order-card {
+            padding: 15px;
         }
+    }
+</style>
 
-        .close-notification {
-            margin-top: 12px;
-            background: #e65100;
-            color: white;
-            border: none;
-            padding: 7px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        @media (max-width: 700px) {
-
-            body {
-                padding: 12px;
-            }
-
-            #orders-container {
-                width: 100%;
-            }
-
-            .header {
-                display: flex;
-                flex-direction: column;
-                gap: 12px;
-                text-align: center;
-            }
-
-            .header h1 {
-                font-size: 24px;
-                line-height: 1.3;
-            }
-
-            .header button,
-            .header a {
-                width: 100%;
-                padding: 12px;
-                text-align: center;
-                border-radius: 6px;
-                box-sizing: border-box;
-            }
-
-            .search-box {
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .search-box input {
-                width: 100%;
-                box-sizing: border-box;
-                padding: 13px;
-            }
-
-            .search-box button {
-                width: 100%;
-                padding: 13px;
-            }
-
-            .summary {
-                grid-template-columns: 1fr 1fr;
-                gap: 10px;
-            }
-
-            .summary-box {
-                padding: 15px 8px;
-            }
-
-            .summary-box h2 {
-                font-size: 24px;
-            }
-
-            .summary-box p {
-                font-size: 13px;
-            }
-
-            .order-section {
-                margin-bottom: 25px;
-            }
-
-            .section-title {
-                font-size: 17px;
-                padding: 12px;
-            }
-
-            .order-card {
-                padding: 18px;
-                overflow-wrap: break-word;
-            }
-
-            .order-card h2 {
-                font-size: 20px;
-            }
-
-            .order-card p {
-                font-size: 14px;
-            }
-
-            .status-btn {
-                width: 100%;
-                margin: 5px 0;
-                padding: 11px;
-            }
-
-            .notification {
-                width: calc(100% - 24px);
-                left: 12px;
-                right: 12px;
-                top: 12px;
-                box-sizing: border-box;
-            }
-        }
-
-        @media (max-width: 400px) {
-
-            .summary {
-                grid-template-columns: 1fr;
-            }
-
-            .header h1 {
-                font-size: 21px;
-            }
-
-            .order-card {
-                padding: 15px;
-            }
-        }
-
-    </style>
 
 </head>
 
@@ -419,183 +415,183 @@
 
 <div id="orders-container">
 
-    <!-- NOTIFICATION -->
 
-    <div id="notification"
-         class="notification">
+<!-- NOTIFICATION -->
 
-        <div class="notification-title">
-            🔔 New Order!
-        </div>
+<div id="notification" class="notification">
 
-        <div id="notification-message"></div>
+    <div class="notification-title">
+        🔔 New Order!
+    </div>
 
-        <button
-                class="close-notification"
-                onclick="closeNotification()">
+    <div id="notification-message"></div>
 
-            Close
+    <button
+            class="close-notification"
+            onclick="closeNotification()">
+        Close
+    </button>
 
-        </button>
+</div>
+
+
+<!-- HEADER -->
+
+<div class="header">
+
+    <h1>
+        Restaurant Admin Dashboard
+    </h1>
+
+    <button onclick="openHistory()">
+        📜 Order History
+    </button>
+
+    <a href="menu.html">
+        🍽️ Menu Management
+    </a>
+
+    <button
+            class="logout-btn"
+            onclick="logout()">
+        Logout
+    </button>
+
+</div>
+
+
+<!-- SEARCH -->
+
+<div class="search-box">
+
+    <input
+            type="text"
+            id="search-input"
+            placeholder="Search by order ID, name, phone, address or item..."
+            onkeyup="searchOrders()"
+    >
+
+    <button onclick="clearSearch()">
+        Clear
+    </button>
+
+</div>
+
+
+<!-- SUMMARY -->
+
+<div class="summary">
+
+    <div class="summary-box">
+
+        <h2 id="total-orders-count">
+            0
+        </h2>
+
+        <p>
+            Total Orders
+        </p>
 
     </div>
 
+    <div class="summary-box">
 
-    <!-- HEADER -->
+        <h2 id="today-orders-count">
+            0
+        </h2>
 
-    <div class="header">
-
-        <h1>
-            Restaurant Admin Dashboard
-        </h1>
-
-        <button onclick="openHistory()">
-            📜 Order History
-        </button>
-
-        <a href="menu.html">
-            🍽️ Menu Management
-        </a>
-
-        <button
-                class="logout-btn"
-                onclick="logout()">
-
-            Logout
-
-        </button>
+        <p>
+            Today's Orders
+        </p>
 
     </div>
 
+    <div class="summary-box">
 
-    <!-- SEARCH -->
+        <h2 id="completed-orders-count">
+            0
+        </h2>
 
-    <div class="search-box">
-
-        <input
-                type="text"
-                id="search-input"
-                placeholder="Search by order ID, name, phone, address or item..."
-                onkeyup="searchOrders"
-        >
-
-        <button onclick="clearSearch()">
-            Clear
-        </button>
+        <p>
+            Completed Orders
+        </p>
 
     </div>
 
+    <div class="summary-box">
 
-    <!-- SUMMARY -->
+        <h2 id="total-revenue">
+            ₹0
+        </h2>
 
-    <div class="summary">
-
-        <div class="summary-box">
-
-            <h2 id="total-orders-count">
-                0
-            </h2>
-
-            <p>
-                Total Orders
-            </p>
-
-        </div>
-
-        <div class="summary-box">
-
-            <h2 id="today-orders-count">
-                0
-            </h2>
-
-            <p>
-                Today's Orders
-            </p>
-
-        </div>
-
-        <div class="summary-box">
-
-            <h2 id="completed-orders-count">
-                0
-            </h2>
-
-            <p>
-                Completed Orders
-            </p>
-
-        </div>
-
-        <div class="summary-box">
-
-            <h2 id="total-revenue">
-                ₹0
-            </h2>
-
-            <p>
-                Total Revenue
-            </p>
-
-        </div>
-
-    </div>
-
-
-    <!-- NEW ORDERS -->
-
-    <div class="order-section">
-
-        <div class="section-title">
-            🆕 New Orders
-        </div>
-
-        <div id="new-orders"></div>
-
-    </div>
-
-
-    <!-- PREPARING -->
-
-    <div class="order-section">
-
-        <div class="section-title preparing-title">
-            👨‍🍳 Preparing
-        </div>
-
-        <div id="preparing-orders"></div>
-
-    </div>
-
-
-    <!-- READY -->
-
-    <div class="order-section">
-
-        <div class="section-title ready-title">
-            ✅ Ready
-        </div>
-
-        <div id="ready-orders"></div>
-
-    </div>
-
-
-    <!-- COMPLETED -->
-
-    <div class="order-section">
-
-        <div class="section-title completed-title">
-            ✔ Completed
-        </div>
-
-        <div id="completed-orders"></div>
+        <p>
+            Total Revenue
+        </p>
 
     </div>
 
 </div>
 
 
+<!-- NEW ORDERS -->
+
+<div class="order-section">
+
+    <div class="section-title">
+        🆕 New Orders
+    </div>
+
+    <div id="new-orders"></div>
+
+</div>
+
+
+<!-- PREPARING -->
+
+<div class="order-section">
+
+    <div class="section-title preparing-title">
+        👨‍🍳 Preparing
+    </div>
+
+    <div id="preparing-orders"></div>
+
+</div>
+
+
+<!-- READY -->
+
+<div class="order-section">
+
+    <div class="section-title ready-title">
+        ✅ Ready
+    </div>
+
+    <div id="ready-orders"></div>
+
+</div>
+
+
+<!-- COMPLETED -->
+
+<div class="order-section">
+
+    <div class="section-title completed-title">
+        ✔ Completed
+    </div>
+
+    <div id="completed-orders"></div>
+
+</div>
+
+
+</div>
+
 <script>
+
+/* =====================================================
+   RAILWAY BACKEND
+===================================================== */
 
 const API_BASE =
     "https://kolkata-victoria-chat-house-production.up.railway.app";
@@ -640,7 +636,9 @@ function logout() {
     .then(function(response) {
 
         if (!response.ok) {
+
             throw new Error("Logout failed");
+
         }
 
         return response;
@@ -680,6 +678,7 @@ function searchOrders() {
         .toLowerCase()
         .trim();
 
+
     if (searchText === "") {
 
         displayOrders(allOrders);
@@ -687,6 +686,7 @@ function searchOrders() {
         return;
 
     }
+
 
     let filteredOrders =
         allOrders.filter(function(order) {
@@ -947,9 +947,7 @@ function displayOrders(orders) {
                             text-decoration:none;
                         "
                     >
-
                         📞 ${order.phone}
-
                     </a>
 
                 </p>
@@ -988,7 +986,6 @@ function displayOrders(orders) {
                     </span>
 
                 </p>
-
 
                 <div>
 
@@ -1499,126 +1496,129 @@ function printOrder(orderId) {
 
             </style>
 
-        </head>
 
-        <body>
+    </head>
 
-            <h1>
-                Kolkata Victoria Chat House
-            </h1>
+    <body>
 
-            <div class="restaurant">
-                SahaKarnagar Bangalore
-            </div>
+        <h1>
+            Kolkata Victoria Chat House
+        </h1>
 
-            <div class="line"></div>
+        <div class="restaurant">
+            SahaKarnagar Bangalore
+        </div>
 
-            <h2>
-                ORDER #${order.id}
-            </h2>
+        <div class="line"></div>
 
-            <p>
-                <strong>Ordered:</strong>
-                ${orderDate}
-            </p>
+        <h2>
+            ORDER #${order.id}
+        </h2>
 
-            <div class="line"></div>
+        <p>
+            <strong>Ordered:</strong>
+            ${orderDate}
+        </p>
 
-            <p>
-                <strong>Customer:</strong>
-                ${order.name}
-            </p>
+        <div class="line"></div>
 
-            <p>
-                <strong>Phone:</strong>
-                ${order.phone}
-            </p>
+        <p>
+            <strong>Customer:</strong>
+            ${order.name}
+        </p>
 
-            <p>
-                <strong>Address:</strong>
-                ${order.address}
-            </p>
+        <p>
+            <strong>Phone:</strong>
+            ${order.phone}
+        </p>
 
-            <div class="line"></div>
+        <p>
+            <strong>Address:</strong>
+            ${order.address}
+        </p>
 
-            <p>
-                <strong>Items:</strong>
-            </p>
+        <div class="line"></div>
 
-            <p class="items">
-                ${order.items}
-            </p>
+        <p>
+            <strong>Items:</strong>
+        </p>
 
-            <div class="line"></div>
+        <p class="items">
+            ${order.items}
+        </p>
 
-            <p class="total">
-                Total: ₹${order.total}
-            </p>
+        <div class="line"></div>
 
-            <p>
-                <strong>Status:</strong>
-                ${order.status}
-            </p>
+        <p class="total">
+            Total: ₹${order.total}
+        </p>
 
-            <div class="line"></div>
+        <p>
+            <strong>Status:</strong>
+            ${order.status}
+        </p>
 
-            <div class="footer">
+        <div class="line"></div>
 
-                Thank you for ordering!
+        <div class="footer">
 
-                <br>
-                <br>
+            Thank you for ordering!
 
-                Kolkata Victoria Chat House
+            <br>
+            <br>
 
-            </div>
+            Kolkata Victoria Chat House
 
-        </body>
+        </div>
 
-        </html>
+    </body>
 
-    `);
+    </html>
 
-
-    printWindow.document.close();
-
-    printWindow.focus();
+`);
 
 
-    setTimeout(function() {
+printWindow.document.close();
 
-        printWindow.print();
+printWindow.focus();
 
-    }, 500);
+
+setTimeout(function() {
+
+    printWindow.print();
+
+}, 500);
+
 
 }
 
-
 /* =====================================================
-   ORDER HISTORY
+ORDER HISTORY
 ===================================================== */
 
 function openHistory() {
 
-    window.location.href = "history.html";
+
+window.location.href = "history.html";
+
 
 }
 
-
 /* =====================================================
-   INITIAL LOAD
+INITIAL LOAD
 ===================================================== */
 
 loadOrders();
 
-
 /* =====================================================
-   AUTOMATIC REFRESH EVERY 5 SECONDS
+AUTOMATIC REFRESH EVERY 5 SECONDS
 ===================================================== */
 
 setInterval(function() {
 
-    loadOrders();
+
+loadOrders();
+
 
 }, 5000);
 
@@ -1627,4 +1627,3 @@ setInterval(function() {
 </body>
 
 </html>
-
