@@ -1,452 +1,451 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
 
-    <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
 
-    <title>Menu Management</title>
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-    <style>
+<title>Menu Management</title>
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<style>
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f5f5;
-            color: #333;
-        }
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background: #f5f5f5;
+        color: #333;
+    }
+
+    header {
+        background: #e65100;
+        color: white;
+        padding: 18px 30px;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    header h1 {
+        font-size: 24px;
+    }
+
+    .header-buttons {
+        display: flex;
+        gap: 10px;
+    }
+
+    button {
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        font-weight: bold;
+    }
+
+    .back-btn {
+        background: white;
+        color: #e65100;
+        padding: 10px 16px;
+    }
+
+    .logout-btn {
+        background: #333;
+        color: white;
+        padding: 10px 16px;
+    }
+
+    .container {
+        width: 95%;
+        max-width: 1200px;
+        margin: 30px auto;
+    }
+
+    .top-section {
+        background: white;
+        padding: 20px;
+
+        border-radius: 10px;
+
+        box-shadow:
+            0 2px 8px rgba(0,0,0,0.1);
+
+        margin-bottom: 25px;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .add-btn {
+        background: #e65100;
+        color: white;
+        padding: 12px 20px;
+    }
+
+    .menu-container {
+        display: grid;
+
+        grid-template-columns:
+            repeat(auto-fit, minmax(280px, 1fr));
+
+        gap: 20px;
+    }
+
+    .menu-card {
+        background: white;
+
+        border-radius: 10px;
+
+        padding: 20px;
+
+        box-shadow:
+            0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .menu-card h3 {
+        color: #e65100;
+        margin-bottom: 10px;
+    }
+
+    .price {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .image-name {
+        color: #777;
+        margin-bottom: 15px;
+    }
+
+    .status {
+        display: inline-block;
+
+        padding: 6px 12px;
+
+        border-radius: 20px;
+
+        font-size: 13px;
+
+        margin-bottom: 15px;
+    }
+
+    .available {
+        background: #dff5e1;
+        color: #2e7d32;
+    }
+
+    .unavailable {
+        background: #ffdddd;
+        color: #c62828;
+    }
+
+    .actions {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .edit-btn {
+        background: #1976d2;
+        color: white;
+        padding: 9px 14px;
+    }
+
+    .toggle-btn {
+        background: #555;
+        color: white;
+        padding: 9px 14px;
+    }
+
+    .delete-btn {
+        background: #c62828;
+        color: white;
+        padding: 9px 14px;
+    }
+
+    .form-container {
+        display: none;
+
+        background: white;
+
+        padding: 25px;
+
+        border-radius: 10px;
+
+        box-shadow:
+            0 2px 8px rgba(0,0,0,0.1);
+
+        margin-bottom: 25px;
+    }
+
+    .form-container.show {
+        display: block;
+    }
+
+    .form-container h2 {
+        margin-bottom: 20px;
+        color: #e65100;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: bold;
+    }
+
+    .form-group input {
+        width: 100%;
+
+        padding: 11px;
+
+        border: 1px solid #ccc;
+
+        border-radius: 5px;
+
+        font-size: 15px;
+    }
+
+    .checkbox-group {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .checkbox-group input {
+        width: auto;
+    }
+
+    .form-buttons {
+        display: flex;
+        gap: 10px;
+    }
+
+    .save-btn {
+        background: #2e7d32;
+        color: white;
+        padding: 11px 20px;
+    }
+
+    .cancel-btn {
+        background: #777;
+        color: white;
+        padding: 11px 20px;
+    }
+
+    .empty {
+        background: white;
+        padding: 40px;
+        text-align: center;
+        border-radius: 10px;
+        color: #777;
+    }
+
+    @media (max-width: 700px) {
 
         header {
-            background: #e65100;
-            color: white;
-            padding: 18px 30px;
-
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
-
-        header h1 {
-            font-size: 24px;
-        }
-
-        .header-buttons {
-            display: flex;
-            gap: 10px;
-        }
-
-        button {
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-
-        .back-btn {
-            background: white;
-            color: #e65100;
-            padding: 10px 16px;
-        }
-
-        .logout-btn {
-            background: #333;
-            color: white;
-            padding: 10px 16px;
-        }
-
-        .container {
-            width: 95%;
-            max-width: 1200px;
-            margin: 30px auto;
+            flex-direction: column;
+            gap: 15px;
+            text-align: center;
         }
 
         .top-section {
-            background: white;
-            padding: 20px;
-
-            border-radius: 10px;
-
-            box-shadow:
-                0 2px 8px rgba(0,0,0,0.1);
-
-            margin-bottom: 25px;
-
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .add-btn {
-            background: #e65100;
-            color: white;
-            padding: 12px 20px;
-        }
-
-        .menu-container {
-            display: grid;
-
-            grid-template-columns:
-                repeat(auto-fit, minmax(280px, 1fr));
-
-            gap: 20px;
-        }
-
-        .menu-card {
-            background: white;
-
-            border-radius: 10px;
-
-            padding: 20px;
-
-            box-shadow:
-                0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .menu-card h3 {
-            color: #e65100;
-            margin-bottom: 10px;
-        }
-
-        .price {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .image-name {
-            color: #777;
-            margin-bottom: 15px;
-        }
-
-        .status {
-            display: inline-block;
-
-            padding: 6px 12px;
-
-            border-radius: 20px;
-
-            font-size: 13px;
-
-            margin-bottom: 15px;
-        }
-
-        .available {
-            background: #dff5e1;
-            color: #2e7d32;
-        }
-
-        .unavailable {
-            background: #ffdddd;
-            color: #c62828;
-        }
-
-        .actions {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .edit-btn {
-            background: #1976d2;
-            color: white;
-            padding: 9px 14px;
-        }
-
-        .toggle-btn {
-            background: #555;
-            color: white;
-            padding: 9px 14px;
-        }
-
-        .delete-btn {
-            background: #c62828;
-            color: white;
-            padding: 9px 14px;
-        }
-
-        /* FORM */
-
-        .form-container {
-            display: none;
-
-            background: white;
-
-            padding: 25px;
-
-            border-radius: 10px;
-
-            box-shadow:
-                0 2px 8px rgba(0,0,0,0.1);
-
-            margin-bottom: 25px;
-        }
-
-        .form-container.show {
-            display: block;
-        }
-
-        .form-container h2 {
-            margin-bottom: 20px;
-            color: #e65100;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: bold;
-        }
-
-        .form-group input {
-            width: 100%;
-
-            padding: 11px;
-
-            border: 1px solid #ccc;
-
-            border-radius: 5px;
-
-            font-size: 15px;
-        }
-
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .checkbox-group input {
-            width: auto;
-        }
-
-        .form-buttons {
-            display: flex;
-            gap: 10px;
-        }
-
-        .save-btn {
-            background: #2e7d32;
-            color: white;
-            padding: 11px 20px;
-        }
-
-        .cancel-btn {
-            background: #777;
-            color: white;
-            padding: 11px 20px;
-        }
-
-        .empty {
-            background: white;
-            padding: 40px;
+            flex-direction: column;
+            gap: 15px;
             text-align: center;
-            border-radius: 10px;
-            color: #777;
         }
 
-        @media (max-width: 700px) {
+    }
 
-            header {
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
-            }
+</style>
 
-            .top-section {
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
-            }
-
-        }
-
-    </style>
 
 </head>
 
-
 <body>
-
 
 <header>
 
-    <h1>
-        🍽️ Menu Management
-    </h1>
 
-    <div class="header-buttons">
+<h1>
+    🍽️ Menu Management
+</h1>
 
-        <button
-            class="back-btn"
-            onclick="goBack()">
+<div class="header-buttons">
 
-            ← Dashboard
+    <button
+        class="back-btn"
+        onclick="goBack()">
 
-        </button>
+        ← Dashboard
 
-        <button
-            class="logout-btn"
-            onclick="logout()">
+    </button>
 
-            Logout
+    <button
+        class="logout-btn"
+        onclick="logout()">
 
-        </button>
+        Logout
 
-    </div>
+    </button>
+
+</div>
+
 
 </header>
-
 
 <div class="container">
 
 
-    <!-- TOP -->
+<div class="top-section">
 
-    <div class="top-section">
+    <div>
 
-        <div>
+        <h2>
+            Restaurant Menu
+        </h2>
 
-            <h2>
-                Restaurant Menu
-            </h2>
+        <p>
+            Add, edit and manage your menu items.
+        </p>
 
-            <p>
-                Add, edit and manage your menu items.
-            </p>
+    </div>
 
-        </div>
 
+    <button
+        class="add-btn"
+        onclick="openAddForm()">
+
+        + Add Menu Item
+
+    </button>
+
+</div>
+
+
+<div
+    id="form-container"
+    class="form-container">
+
+    <h2 id="form-title">
+        Add Menu Item
+    </h2>
+
+
+    <div class="form-group">
+
+        <label>
+            Item Name
+        </label>
+
+        <input
+            type="text"
+            id="item-name"
+            placeholder="Example: Puchka">
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label>
+            Price
+        </label>
+
+        <input
+            type="number"
+            id="item-price"
+            placeholder="Example: 40"
+            min="0">
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label>
+            Image Filename
+        </label>
+
+        <input
+            type="text"
+            id="item-image"
+            placeholder="Example: Panipuri.jpg">
+
+    </div>
+
+
+    <div class="form-group checkbox-group">
+
+        <input
+            type="checkbox"
+            id="item-available"
+            checked>
+
+        <label>
+            Available for customers
+        </label>
+
+    </div>
+
+
+    <div class="form-buttons">
 
         <button
-            class="add-btn"
-            onclick="openAddForm()">
+            class="save-btn"
+            onclick="saveItem()">
 
-            + Add Menu Item
+            Save Item
 
         </button>
 
-    </div>
+        <button
+            class="cancel-btn"
+            onclick="closeForm()">
 
+            Cancel
 
-
-    <!-- FORM -->
-
-    <div
-        id="form-container"
-        class="form-container">
-
-        <h2 id="form-title">
-            Add Menu Item
-        </h2>
-
-
-        <div class="form-group">
-
-            <label>
-                Item Name
-            </label>
-
-            <input
-                type="text"
-                id="item-name"
-                placeholder="Example: Puchka">
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>
-                Price
-            </label>
-
-            <input
-                type="number"
-                id="item-price"
-                placeholder="Example: 40"
-                min="0">
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>
-                Image Filename
-            </label>
-
-            <input
-                type="text"
-                id="item-image"
-                placeholder="Example: Panipuri.jpg">
-
-        </div>
-
-
-        <div class="form-group checkbox-group">
-
-            <input
-                type="checkbox"
-                id="item-available"
-                checked>
-
-            <label>
-                Available for customers
-            </label>
-
-        </div>
-
-
-        <div class="form-buttons">
-
-            <button
-                class="save-btn"
-                onclick="saveItem()">
-
-                Save Item
-
-            </button>
-
-            <button
-                class="cancel-btn"
-                onclick="closeForm()">
-
-                Cancel
-
-            </button>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- MENU -->
-
-    <div
-        id="menu-container"
-        class="menu-container">
+        </button>
 
     </div>
 
 </div>
 
 
+<div
+    id="menu-container"
+    class="menu-container">
+
+</div>
+
+
+</div>
 
 <script>
+
+
+/* =========================================
+   RAILWAY BACKEND
+========================================= */
+
+const API_BASE =
+    "https://kolkata-victoria-chat-house-production.up.railway.app";
 
 
 /* =========================================
@@ -476,7 +475,7 @@ let editingId = null;
 function loadMenu() {
 
     fetch(
-        "http://127.0.0.1:8080/api/menu",
+        API_BASE + "/api/menu",
         {
             method: "GET",
             credentials: "include"
@@ -522,8 +521,7 @@ function loadMenu() {
 
                 <br><br>
 
-                Make sure Spring Boot
-                is running.
+                Please check the Railway backend.
 
             </div>
 
@@ -834,9 +832,8 @@ function saveItem() {
 
     let url =
         editingId === null
-            ? "http://127.0.0.1:8080/api/menu"
-            : "http://127.0.0.1:8080/api/menu/"
-                + editingId;
+            ? API_BASE + "/api/menu"
+            : API_BASE + "/api/menu/" + editingId;
 
 
     let method =
@@ -864,7 +861,8 @@ function saveItem() {
         if (!response.ok) {
 
             throw new Error(
-                "Could not save menu item"
+                "Could not save menu item. Status: "
+                + response.status
             );
 
         }
@@ -939,7 +937,7 @@ function toggleAvailability(id) {
 
 
     fetch(
-        "http://127.0.0.1:8080/api/menu/" + id,
+        API_BASE + "/api/menu/" + id,
         {
 
             method: "PUT",
@@ -1028,7 +1026,7 @@ function deleteItem(id) {
 
 
     fetch(
-        "http://127.0.0.1:8080/api/menu/" + id,
+        API_BASE + "/api/menu/" + id,
         {
 
             method: "DELETE",
@@ -1097,12 +1095,16 @@ function goBack() {
 function logout() {
 
     fetch(
-        "http://127.0.0.1:8080/api/logout",
+        API_BASE + "/api/logout",
         {
+
             method: "POST",
+
             credentials: "include"
+
         }
     )
+
     .then(function() {
 
         sessionStorage.removeItem(
@@ -1113,6 +1115,7 @@ function logout() {
             "login.html";
 
     })
+
     .catch(function(error) {
 
         console.error(
@@ -1164,8 +1167,8 @@ function escapeHtml(value) {
 
 loadMenu();
 
-</script>
 
+</script>
 
 </body>
 
