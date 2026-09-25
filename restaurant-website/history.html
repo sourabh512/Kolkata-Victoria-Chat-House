@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -77,18 +78,14 @@
 
         .summary {
             display: grid;
-            grid-template-columns:
-                repeat(2, 1fr);
-
+            grid-template-columns: repeat(2, 1fr);
             gap: 20px;
-
             margin-bottom: 25px;
         }
 
         .summary-card {
             background: white;
             padding: 20px;
-
             border-radius: 10px;
 
             box-shadow:
@@ -169,6 +166,56 @@
             font-size: 15px;
         }
 
+        /* DAILY REPORT */
+
+        .daily-report-box {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .report-card {
+            flex: 1;
+            min-width: 200px;
+
+            background: #fff3e0;
+
+            padding: 20px;
+
+            border-radius: 8px;
+        }
+
+        .report-number {
+            font-size: 28px;
+            font-weight: bold;
+
+            color: #e65100;
+
+            margin-top: 8px;
+        }
+
+        .print-report-btn {
+            margin-top: 20px;
+
+            background: #e65100;
+            color: white;
+
+            border: none;
+
+            padding: 12px 20px;
+
+            border-radius: 5px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+        }
+
+        .print-report-btn:hover {
+            background: #bf360c;
+        }
+
         /* ORDERS */
 
         .orders-container {
@@ -221,8 +268,7 @@
         .order-details {
             display: grid;
 
-            grid-template-columns:
-                repeat(2, 1fr);
+            grid-template-columns: repeat(2, 1fr);
 
             gap: 10px;
 
@@ -257,6 +303,30 @@
             font-weight: bold;
 
             color: #e65100;
+        }
+
+        .print-order-area {
+            text-align: right;
+            margin-top: 15px;
+        }
+
+        .print-order-btn {
+            background: #e65100;
+            color: white;
+
+            border: none;
+
+            padding: 10px 18px;
+
+            border-radius: 5px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+        }
+
+        .print-order-btn:hover {
+            background: #bf360c;
         }
 
         /* EMPTY */
@@ -322,6 +392,10 @@
                 width: 100%;
             }
 
+            .daily-report-box {
+                flex-direction: column;
+            }
+
         }
 
     </style>
@@ -343,13 +417,17 @@
         <button
             class="back-btn"
             onclick="goBack()">
+
             ← Back to Dashboard
+
         </button>
 
         <button
             class="logout-btn"
             onclick="logout()">
+
             Logout
+
         </button>
 
     </div>
@@ -392,95 +470,70 @@
     </div>
 
 
-
-    <!-- FILTER -->
+    <!-- DAILY SALES REPORT -->
 
     <div class="filter-area">
-  <!-- DAILY SALES REPORT -->
 
-<div class="filter-area">
+        <h2>
+            📊 Today's Sales Report
+        </h2>
 
-    <h2>📊 Today's Sales Report</h2>
 
-    <div style="
-        display:flex;
-        gap:20px;
-        flex-wrap:wrap;
-        margin-top:15px;
-    ">
+        <div class="daily-report-box">
 
-        <div style="
-            flex:1;
-            min-width:200px;
-            background:#fff3e0;
-            padding:20px;
-            border-radius:8px;
-        ">
 
-            <strong>Today's Orders</strong>
+            <div class="report-card">
 
-            <div
-                id="today-report-orders"
-                style="
-                    font-size:28px;
-                    font-weight:bold;
-                    color:#e65100;
-                    margin-top:8px;
-                ">
+                <strong>
+                    Today's Orders
+                </strong>
 
-                0
+                <div
+                    id="today-report-orders"
+                    class="report-number">
+
+                    0
+
+                </div>
 
             </div>
+
+
+            <div class="report-card">
+
+                <strong>
+                    Today's Revenue
+                </strong>
+
+                <div
+                    id="today-report-revenue"
+                    class="report-number">
+
+                    ₹0
+
+                </div>
+
+            </div>
+
 
         </div>
 
 
-        <div style="
-            flex:1;
-            min-width:200px;
-            background:#fff3e0;
-            padding:20px;
-            border-radius:8px;
-        ">
+        <button
+            class="print-report-btn"
+            onclick="printDailyReport()">
 
-            <strong>Today's Revenue</strong>
+            🖨️ Print Daily Report
 
-            <div
-                id="today-report-revenue"
-                style="
-                    font-size:28px;
-                    font-weight:bold;
-                    color:#e65100;
-                    margin-top:8px;
-                ">
-
-                ₹0
-
-            </div>
-
-        </div>
+        </button>
 
     </div>
 
 
-    <button
-        onclick="printDailyReport()"
-        style="
-            margin-top:20px;
-            background:#e65100;
-            color:white;
-            border:none;
-            padding:12px 20px;
-            border-radius:5px;
-            cursor:pointer;
-            font-weight:bold;
-        ">
+    <!-- FILTER -->
 
-        🖨️ Print Daily Report
+    <div class="filter-area">
 
-    </button>
-
-</div>
         <h2>
             Filter Orders
         </h2>
@@ -492,31 +545,45 @@
                 id="all-btn"
                 class="active"
                 onclick="setFilter('all')">
+
                 All
+
             </button>
+
 
             <button
                 id="today-btn"
                 onclick="setFilter('today')">
+
                 Today
+
             </button>
+
 
             <button
                 id="yesterday-btn"
                 onclick="setFilter('yesterday')">
+
                 Yesterday
+
             </button>
+
 
             <button
                 id="week-btn"
                 onclick="setFilter('week')">
+
                 This Week
+
             </button>
+
 
             <button
                 id="month-btn"
                 onclick="setFilter('month')">
+
                 This Month
+
             </button>
 
         </div>
@@ -535,11 +602,11 @@
     </div>
 
 
-
     <!-- ORDERS -->
 
-    <div id="orders-container"
-         class="orders-container">
+    <div
+        id="orders-container"
+        class="orders-container">
 
         <div class="loading">
 
@@ -553,15 +620,25 @@
 </div>
 
 
-
 <script>
+
+
+/* =========================================
+   RAILWAY BACKEND URL
+========================================= */
+
+const API_BASE =
+    "https://kolkata-victoria-chat-house-production.up.railway.app";
 
 
 /* =========================================
    LOGIN CHECK
 ========================================= */
 
-if (sessionStorage.getItem("adminLoggedIn") !== "true") {
+if (
+    sessionStorage.getItem("adminLoggedIn")
+    !== "true"
+) {
 
     window.location.href = "login.html";
 
@@ -583,19 +660,22 @@ let currentFilter = "all";
 
 function loadHistory() {
 
-    fetch("http://127.0.0.1:8080/api/orders", {
-
-        method: "GET",
-
-        credentials: "include"
-
-    })
+    fetch(
+        API_BASE + "/api/orders",
+        {
+            method: "GET",
+            credentials: "include"
+        }
+    )
 
     .then(function(response) {
 
         if (!response.ok) {
 
-            throw new Error("Could not load orders");
+            throw new Error(
+                "Could not load orders. Status: "
+                + response.status
+            );
 
         }
 
@@ -606,14 +686,16 @@ function loadHistory() {
     .then(function(orders) {
 
         /*
-         Only completed orders are shown
+           Only completed orders are shown
         */
 
-        allOrders = orders.filter(function(order) {
+        allOrders =
+            orders.filter(function(order) {
 
-            return order.status === "COMPLETED";
+                return order.status === "COMPLETED";
 
-        });
+            });
+
 
         displayOrders();
 
@@ -626,6 +708,7 @@ function loadHistory() {
             error
         );
 
+
         document.getElementById(
             "orders-container"
         ).innerHTML = `
@@ -636,8 +719,8 @@ function loadHistory() {
 
                 <br><br>
 
-                Make sure the Spring Boot server
-                is running.
+                Please check your admin login
+                and Railway backend.
 
             </div>
 
@@ -657,10 +740,6 @@ function setFilter(filter) {
     currentFilter = filter;
 
 
-    /*
-       Remove active from all buttons
-    */
-
     document
         .querySelectorAll(".filters button")
         .forEach(function(button) {
@@ -669,10 +748,6 @@ function setFilter(filter) {
 
         });
 
-
-    /*
-       Add active to selected button
-    */
 
     document
         .getElementById(filter + "-btn")
@@ -707,94 +782,118 @@ function matchesDateFilter(order) {
     let orderDate =
         new Date(order.orderDateTime);
 
+
     let today =
         new Date();
 
 
-    /*
-       TODAY
-    */
+    /* TODAY */
 
     if (currentFilter === "today") {
 
         return (
-            orderDate.getDate() === today.getDate()
+            orderDate.getDate()
+                === today.getDate()
+
             &&
-            orderDate.getMonth() === today.getMonth()
+
+            orderDate.getMonth()
+                === today.getMonth()
+
             &&
-            orderDate.getFullYear() === today.getFullYear()
+
+            orderDate.getFullYear()
+                === today.getFullYear()
         );
 
     }
 
 
-    /*
-       YESTERDAY
-    */
+    /* YESTERDAY */
 
     if (currentFilter === "yesterday") {
 
         let yesterday =
             new Date();
 
+
         yesterday.setDate(
             yesterday.getDate() - 1
         );
 
+
         return (
-            orderDate.getDate() === yesterday.getDate()
+            orderDate.getDate()
+                === yesterday.getDate()
+
             &&
-            orderDate.getMonth() === yesterday.getMonth()
+
+            orderDate.getMonth()
+                === yesterday.getMonth()
+
             &&
-            orderDate.getFullYear() === yesterday.getFullYear()
+
+            orderDate.getFullYear()
+                === yesterday.getFullYear()
         );
 
     }
 
 
-    /*
-       THIS WEEK
-    */
+    /* THIS WEEK */
 
     if (currentFilter === "week") {
 
         let startOfWeek =
             new Date(today);
 
+
         let day =
             startOfWeek.getDay();
 
+
         /*
-          Sunday = 0
-          Monday = 1
+           Sunday = 0
+           Monday = 1
         */
 
         let difference =
-            day === 0 ? 6 : day - 1;
+            day === 0
+                ? 6
+                : day - 1;
+
 
         startOfWeek.setDate(
-            startOfWeek.getDate() - difference
+            startOfWeek.getDate()
+            - difference
         );
 
+
         startOfWeek.setHours(
-            0, 0, 0, 0
+            0,
+            0,
+            0,
+            0
         );
+
 
         return orderDate >= startOfWeek;
 
     }
 
 
-    /*
-       THIS MONTH
-    */
+    /* THIS MONTH */
 
     if (currentFilter === "month") {
 
         return (
-            orderDate.getMonth() === today.getMonth()
+            orderDate.getMonth()
+                === today.getMonth()
+
             &&
-            orderDate.getFullYear() === today.getFullYear()
+
+            orderDate.getFullYear()
+                === today.getFullYear()
         );
 
     }
@@ -804,30 +903,46 @@ function matchesDateFilter(order) {
 
 }
 
+
 /* =========================================
-   UpdateTodaysREport()
+   TODAY'S REPORT
 ========================================= */
 
 function updateTodayReport() {
 
-    let today = new Date();
+    let today =
+        new Date();
+
 
     let todayOrders =
         allOrders.filter(function(order) {
 
             if (!order.orderDateTime) {
+
                 return false;
+
             }
 
+
             let orderDate =
-                new Date(order.orderDateTime);
+                new Date(
+                    order.orderDateTime
+                );
+
 
             return (
-                orderDate.getDate() === today.getDate()
+                orderDate.getDate()
+                    === today.getDate()
+
                 &&
-                orderDate.getMonth() === today.getMonth()
+
+                orderDate.getMonth()
+                    === today.getMonth()
+
                 &&
-                orderDate.getFullYear() === today.getFullYear()
+
+                orderDate.getFullYear()
+                    === today.getFullYear()
             );
 
         });
@@ -839,7 +954,8 @@ function updateTodayReport() {
     todayOrders.forEach(function(order) {
 
         revenue =
-            revenue + Number(order.total || 0);
+            revenue
+            + Number(order.total || 0);
 
     });
 
@@ -857,27 +973,46 @@ function updateTodayReport() {
 
 }
 
+
+/* =========================================
+   PRINT DAILY REPORT
+========================================= */
+
 function printDailyReport() {
 
-    let today = new Date();
+    let today =
+        new Date();
 
 
     let todayOrders =
         allOrders.filter(function(order) {
 
             if (!order.orderDateTime) {
+
                 return false;
+
             }
 
+
             let orderDate =
-                new Date(order.orderDateTime);
+                new Date(
+                    order.orderDateTime
+                );
+
 
             return (
-                orderDate.getDate() === today.getDate()
+                orderDate.getDate()
+                    === today.getDate()
+
                 &&
-                orderDate.getMonth() === today.getMonth()
+
+                orderDate.getMonth()
+                    === today.getMonth()
+
                 &&
-                orderDate.getFullYear() === today.getFullYear()
+
+                orderDate.getFullYear()
+                    === today.getFullYear()
             );
 
         });
@@ -900,7 +1035,8 @@ function printDailyReport() {
     todayOrders.forEach(function(order) {
 
         revenue =
-            revenue + Number(order.total || 0);
+            revenue
+            + Number(order.total || 0);
 
     });
 
@@ -917,7 +1053,21 @@ function printDailyReport() {
 
 
     let reportWindow =
-        window.open("", "_blank");
+        window.open(
+            "",
+            "_blank"
+        );
+
+
+    if (!reportWindow) {
+
+        alert(
+            "Please allow pop-ups to print the report."
+        );
+
+        return;
+
+    }
 
 
     let orderRows = "";
@@ -942,7 +1092,9 @@ function printDailyReport() {
                 </td>
 
                 <td>
-                    ₹${Number(order.total || 0).toFixed(2)}
+                    ₹${Number(
+                        order.total || 0
+                    ).toFixed(2)}
                 </td>
 
             </tr>
@@ -1024,7 +1176,6 @@ function printDailyReport() {
 
 
         <body>
-
 
             <div class="restaurant">
 
@@ -1119,19 +1270,25 @@ function printDailyReport() {
     reportWindow.document.close();
 
 
-    reportWindow.onload = function() {
+    reportWindow.onload =
+        function() {
 
-        reportWindow.print();
+            reportWindow.print();
 
-    };
+        };
 
 }
+
+
 /* =========================================
    DISPLAY ORDERS
 ========================================= */
 
 function displayOrders() {
-updateTodayReport();
+
+    updateTodayReport();
+
+
     let container =
         document.getElementById(
             "orders-container"
@@ -1146,61 +1303,60 @@ updateTodayReport();
         .trim();
 
 
-    /*
-       Apply date filter
-    */
+    /* DATE FILTER */
 
     let filteredOrders =
-        allOrders.filter(function(order) {
+        allOrders.filter(
+            function(order) {
 
-            return matchesDateFilter(order);
+                return matchesDateFilter(order);
 
-        });
+            }
+        );
 
 
-    /*
-       Apply search
-    */
+    /* SEARCH */
 
     if (search !== "") {
 
         filteredOrders =
-            filteredOrders.filter(function(order) {
+            filteredOrders.filter(
+                function(order) {
 
-                let text =
-                    String(order.id)
-                    + " "
-                    + String(order.name)
-                    + " "
-                    + String(order.phone)
-                    + " "
-                    + String(order.address)
-                    + " "
-                    + String(order.items);
+                    let text =
+                        String(order.id)
+                        + " "
+                        + String(order.name)
+                        + " "
+                        + String(order.phone)
+                        + " "
+                        + String(order.address)
+                        + " "
+                        + String(order.items);
 
-                return text
-                    .toLowerCase()
-                    .includes(search);
 
-            });
+                    return text
+                        .toLowerCase()
+                        .includes(search);
+
+                }
+            );
 
     }
 
 
-    /*
-       Sort newest first
-    */
+    /* SORT NEWEST FIRST */
 
-    filteredOrders.sort(function(a, b) {
+    filteredOrders.sort(
+        function(a, b) {
 
-        return b.id - a.id;
+            return b.id - a.id;
 
-    });
+        }
+    );
 
 
-    /*
-       Update summary
-    */
+    /* UPDATE SUMMARY */
 
     document.getElementById(
         "history-count"
@@ -1210,12 +1366,18 @@ updateTodayReport();
 
     let revenue = 0;
 
-    filteredOrders.forEach(function(order) {
 
-        revenue =
-            revenue + Number(order.total || 0);
+    filteredOrders.forEach(
+        function(order) {
 
-    });
+            revenue =
+                revenue
+                + Number(
+                    order.total || 0
+                );
+
+        }
+    );
 
 
     document.getElementById(
@@ -1224,9 +1386,7 @@ updateTodayReport();
         "₹" + revenue.toFixed(2);
 
 
-    /*
-       No orders
-    */
+    /* NO ORDERS */
 
     if (filteredOrders.length === 0) {
 
@@ -1245,141 +1405,148 @@ updateTodayReport();
     }
 
 
-    /*
-       Create order cards
-    */
+    /* CREATE ORDER CARDS */
 
     container.innerHTML = "";
 
 
-    filteredOrders.forEach(function(order) {
+    filteredOrders.forEach(
+        function(order) {
 
-        let orderDate =
-            formatDateTime(
-                order.orderDateTime
-            );
-
-
-        let card =
-            document.createElement("div");
-
-        card.className =
-            "order-card";
+            let orderDate =
+                formatDateTime(
+                    order.orderDateTime
+                );
 
 
-        card.innerHTML = `
+            let card =
+                document.createElement(
+                    "div"
+                );
 
-            <div class="order-header">
 
-                <div class="order-id">
+            card.className =
+                "order-card";
 
-                    Order #${order.id}
+
+            card.innerHTML = `
+
+                <div class="order-header">
+
+                    <div class="order-id">
+
+                        Order #${order.id}
+
+                    </div>
+
+
+                    <div class="completed-badge">
+
+                        COMPLETED
+
+                    </div>
 
                 </div>
 
-                <div class="completed-badge">
 
-                    COMPLETED
+                <div class="order-details">
+
+                    <div class="detail">
+
+                        <strong>
+                            Customer:
+                        </strong>
+
+                        ${escapeHtml(
+                            order.name
+                        )}
+
+                    </div>
+
+
+                    <div class="detail">
+
+                        <strong>
+                            Phone:
+                        </strong>
+
+                        ${escapeHtml(
+                            order.phone
+                        )}
+
+                    </div>
+
+
+                    <div class="detail">
+
+                        <strong>
+                            Address:
+                        </strong>
+
+                        ${escapeHtml(
+                            order.address
+                        )}
+
+                    </div>
+
+
+                    <div class="detail">
+
+                        <strong>
+                            Date & Time:
+                        </strong>
+
+                        ${orderDate}
+
+                    </div>
 
                 </div>
 
-            </div>
 
-
-            <div class="order-details">
-
-                <div class="detail">
+                <div class="items">
 
                     <strong>
-                        Customer:
+                        Items:
                     </strong>
 
-                    ${escapeHtml(order.name)}
+                    <br>
+
+                    ${escapeHtml(
+                        order.items
+                    )}
 
                 </div>
 
 
-                <div class="detail">
+                <div class="total">
 
-                    <strong>
-                        Phone:
-                    </strong>
-
-                    ${escapeHtml(order.phone)}
-
-                </div>
-
-
-                <div class="detail">
-
-                    <strong>
-                        Address:
-                    </strong>
-
-                    ${escapeHtml(order.address)}
+                    Total:
+                    ₹${Number(
+                        order.total || 0
+                    ).toFixed(2)}
 
                 </div>
 
 
-                <div class="detail">
+                <div class="print-order-area">
 
-                    <strong>
-                        Date & Time:
-                    </strong>
+                    <button
+                        class="print-order-btn"
+                        onclick="printOrder(${order.id})">
 
-                    ${orderDate}
+                        🖨️ Print Order
+
+                    </button>
 
                 </div>
 
-            </div>
+            `;
 
 
-            <div class="items">
+            container.appendChild(card);
 
-                <strong>
-                    Items:
-                </strong>
-
-                <br>
-
-                ${escapeHtml(order.items)}
-
-            </div>
-
-
-          <div class="total">
-
-    Total:
-    ₹${Number(order.total || 0).toFixed(2)}
-
-</div>
-
-<div style="text-align: right; margin-top: 15px;">
-
-    <button
-        onclick="printOrder(${order.id})"
-        style="
-            background:#e65100;
-            color:white;
-            border:none;
-            padding:10px 18px;
-            border-radius:5px;
-            cursor:pointer;
-            font-weight:bold;
-        ">
-
-        🖨️ Print Order
-
-    </button>
-
-</div>
-
-        `;
-
-
-        container.appendChild(card);
-
-    });
+        }
+    );
 
 }
 
@@ -1422,7 +1589,11 @@ function formatDateTime(dateTime) {
 
 function escapeHtml(value) {
 
-    if (value === null || value === undefined) {
+    if (
+        value === null
+        ||
+        value === undefined
+    ) {
 
         return "";
 
@@ -1430,11 +1601,26 @@ function escapeHtml(value) {
 
 
     return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
 }
 
@@ -1458,58 +1644,71 @@ function goBack() {
 function logout() {
 
     fetch(
-        "http://127.0.0.1:8080/api/logout",
+        API_BASE + "/api/logout",
         {
             method: "POST",
             credentials: "include"
         }
     )
 
-    .then(function(response) {
+    .then(
+        function(response) {
 
-        sessionStorage.removeItem(
-            "adminLoggedIn"
-        );
+            sessionStorage.removeItem(
+                "adminLoggedIn"
+            );
 
-        window.location.href =
-            "login.html";
 
-    })
+            window.location.href =
+                "login.html";
 
-    .catch(function(error) {
+        }
+    )
 
-        console.error(
-            "Logout error:",
-            error
-        );
+    .catch(
+        function(error) {
 
-        sessionStorage.removeItem(
-            "adminLoggedIn"
-        );
+            console.error(
+                "Logout error:",
+                error
+            );
 
-        window.location.href =
-            "login.html";
 
-    });
+            sessionStorage.removeItem(
+                "adminLoggedIn"
+            );
+
+
+            window.location.href =
+                "login.html";
+
+        }
+    );
 
 }
 
 
 /* =========================================
-   printOrders()
+   PRINT SINGLE ORDER
 ========================================= */
+
 function printOrder(orderId) {
 
-    let order = allOrders.find(function(item) {
+    let order =
+        allOrders.find(
+            function(item) {
 
-        return item.id === orderId;
+                return item.id === orderId;
 
-    });
+            }
+        );
 
 
     if (!order) {
 
-        alert("Order not found.");
+        alert(
+            "Order not found."
+        );
 
         return;
 
@@ -1517,11 +1716,27 @@ function printOrder(orderId) {
 
 
     let orderDate =
-        formatDateTime(order.orderDateTime);
+        formatDateTime(
+            order.orderDateTime
+        );
 
 
     let printWindow =
-        window.open("", "_blank");
+        window.open(
+            "",
+            "_blank"
+        );
+
+
+    if (!printWindow) {
+
+        alert(
+            "Please allow pop-ups to print the order."
+        );
+
+        return;
+
+    }
 
 
     printWindow.document.write(`
@@ -1610,7 +1825,9 @@ function printOrder(orderId) {
 
 
             <h2>
+
                 Order #${order.id}
+
             </h2>
 
 
@@ -1620,7 +1837,9 @@ function printOrder(orderId) {
                     Customer:
                 </strong>
 
-                ${escapeHtml(order.name)}
+                ${escapeHtml(
+                    order.name
+                )}
 
             </div>
 
@@ -1631,7 +1850,9 @@ function printOrder(orderId) {
                     Phone:
                 </strong>
 
-                ${escapeHtml(order.phone)}
+                ${escapeHtml(
+                    order.phone
+                )}
 
             </div>
 
@@ -1642,7 +1863,9 @@ function printOrder(orderId) {
                     Address:
                 </strong>
 
-                ${escapeHtml(order.address)}
+                ${escapeHtml(
+                    order.address
+                )}
 
             </div>
 
@@ -1666,7 +1889,9 @@ function printOrder(orderId) {
 
                 <br><br>
 
-                ${escapeHtml(order.items)}
+                ${escapeHtml(
+                    order.items
+                )}
 
             </div>
 
@@ -1674,7 +1899,9 @@ function printOrder(orderId) {
             <div class="total">
 
                 Total:
-                ₹${Number(order.total || 0).toFixed(2)}
+                ₹${Number(
+                    order.total || 0
+                ).toFixed(2)}
 
             </div>
 
@@ -1710,14 +1937,14 @@ function printOrder(orderId) {
     printWindow.document.close();
 
 
-    printWindow.onload = function() {
+    printWindow.onload =
+        function() {
 
-        printWindow.print();
+            printWindow.print();
 
-    };
+        };
 
 }
-
 
 
 /* =========================================
@@ -1727,10 +1954,10 @@ function printOrder(orderId) {
 loadHistory();
 
 
-
 </script>
 
 
 </body>
 
 </html>
+

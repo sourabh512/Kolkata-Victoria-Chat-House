@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,10 +53,13 @@
             <li>
                 <a href="#contact">Contact</a>
             </li>
-            
-                <li>
-                    <a href="http://127.0.0.1:5500/admin.html">Admin</a>
-                </li>
+
+            <!-- DEPLOYED ADMIN LINK -->
+            <li>
+                <a href="https://resplendent-solace-production-a0b3.up.railway.app/admin.html">
+                    Admin
+                </a>
+            </li>
 
         </ul>
 
@@ -73,7 +77,6 @@
 </header>
 
 
-
 <!-- =========================
      HERO SECTION
 ========================= -->
@@ -83,7 +86,9 @@
     <div class="hero-content">
 
         <p class="small-title">
+
             WELCOME TO
+
         </p>
 
 
@@ -132,7 +137,6 @@
 </section>
 
 
-
 <!-- =========================
      ABOUT SECTION
 ========================= -->
@@ -149,7 +153,6 @@
         </div>
 
     </div>
-
 
 
     <div class="about-content">
@@ -204,7 +207,6 @@
 </section>
 
 
-
 <!-- =========================
      MENU SECTION
 ========================= -->
@@ -214,13 +216,20 @@
     <h2>Our Menu</h2>
 
     <p class="menu-subtitle">
+
         Fresh and authentic taste of Kolkata
+
     </p>
 
-    <div id="dynamic-menu" class="dynamic-menu-grid">
+
+    <div
+        id="dynamic-menu"
+        class="dynamic-menu-grid">
 
         <p class="loading-menu">
+
             Loading menu...
+
         </p>
 
     </div>
@@ -253,7 +262,6 @@
     </h2>
 
 
-
     <div class="features">
 
 
@@ -274,7 +282,6 @@
         </div>
 
 
-
         <div class="feature">
 
             <div>
@@ -292,7 +299,6 @@
         </div>
 
 
-
         <div class="feature">
 
             <div>
@@ -308,7 +314,6 @@
             </p>
 
         </div>
-
 
 
         <div class="feature">
@@ -332,43 +337,64 @@
 
 </section>
 
-<!-- ORDER TRACKING -->
-<section id="order-tracking" class="order-tracking-section">
 
-    <h2>Track Your Order</h2>
+<!-- =========================
+     ORDER TRACKING
+========================= -->
+
+<section
+    id="order-tracking"
+    class="order-tracking-section">
+
+
+    <h2>
+        Track Your Order
+    </h2>
+
 
     <p>
+
         Enter your order ID to check your order status.
+
     </p>
 
+
     <div class="tracking-box">
+
 
         <input
             type="number"
             id="tracking-order-id"
-            placeholder="Enter Order ID"
-        >
+            placeholder="Enter Order ID">
+
 
         <button
             type="button"
             onclick="trackOrder()">
+
             Track Order
+
         </button>
 
     </div>
 
+
     <div
         id="tracking-result"
         class="tracking-result">
+
     </div>
 
 </section>
+
 
 <!-- =========================
      CONTACT
 ========================= -->
 
-<section id="contact" class="contact">
+<section
+    id="contact"
+    class="contact">
 
 
     <p class="section-title">
@@ -389,7 +415,6 @@
     </h2>
 
 
-
     <div class="contact-container">
 
 
@@ -406,7 +431,6 @@
         </div>
 
 
-
         <div>
 
             <h3>
@@ -418,7 +442,6 @@
             </p>
 
         </div>
-
 
 
         <div>
@@ -437,7 +460,6 @@
     </div>
 
 </section>
-
 
 
 <!-- =========================
@@ -473,7 +495,6 @@
 </footer>
 
 
-
 <!-- =========================
      CART BUTTON
 ========================= -->
@@ -489,7 +510,6 @@
     </span>
 
 </div>
-
 
 
 <!-- =========================
@@ -513,9 +533,7 @@
 
         </button>
 
-
     </div>
-
 
 
     <!-- CART ITEMS -->
@@ -523,7 +541,6 @@
     <div id="cart-items">
 
     </div>
-
 
 
     <!-- CART TOTAL -->
@@ -540,7 +557,6 @@
     </div>
 
 
-
     <!-- PLACE ORDER -->
 
     <button
@@ -553,7 +569,6 @@
 
 
 </div>
-
 
 
 <!-- =========================
@@ -575,9 +590,10 @@
 
 
         <h2>
-            Complete Your Order
-        </h2>
 
+            Complete Your Order
+
+        </h2>
 
 
         <form
@@ -597,9 +613,7 @@
                 type="text"
                 id="customer-name"
                 placeholder="Enter your name"
-                required
-            >
-
+                required>
 
 
             <!-- PHONE -->
@@ -617,9 +631,7 @@
                 placeholder="Enter your phone number"
                 pattern="[0-9]{10}"
                 maxlength="10"
-                required
-            >
-
+                required>
 
 
             <!-- ADDRESS -->
@@ -635,9 +647,7 @@
                 id="customer-address"
                 placeholder="Enter your complete address"
                 rows="4"
-                required
-            ></textarea>
-
+                required></textarea>
 
 
             <!-- ORDER SUMMARY -->
@@ -654,7 +664,6 @@
             </div>
 
 
-
             <!-- TOTAL -->
 
             <div class="form-total">
@@ -663,7 +672,6 @@
                 ₹<span id="form-total">0</span>
 
             </div>
-
 
 
             <!-- CONFIRM -->
@@ -685,57 +693,104 @@
 </div>
 
 
-
 <!-- =========================
      JAVASCRIPT
 ========================= -->
 
 <script src="script.js"></script>
- <!-- ORDER SUCCESS POPUP -->
-<div id="order-success-popup" class="success-popup">
+
+
+<!-- =========================
+     ORDER SUCCESS POPUP
+========================= -->
+
+<div
+    id="order-success-popup"
+    class="success-popup">
+
 
     <div class="success-popup-box">
 
+
         <div class="success-icon">
+
             ✓
+
         </div>
 
-        <h2>Order Placed Successfully!</h2>
+
+        <h2>
+
+            Order Placed Successfully!
+
+        </h2>
+
 
         <p class="success-thank-you">
+
             Thank you for ordering from
-            <strong>Kolkata Victoria Chat House</strong>
+
+            <strong>
+                Kolkata Victoria Chat House
+            </strong>
+
         </p>
+
 
         <div class="success-order-details">
 
+
             <p>
-                <strong>Order ID:</strong>
+
+                <strong>
+                    Order ID:
+                </strong>
+
                 <span id="success-order-id"></span>
+
             </p>
 
+
             <p>
-                <strong>Total:</strong>
+
+                <strong>
+                    Total:
+                </strong>
+
                 <span id="success-order-total"></span>
+
             </p>
 
+
             <p>
-                <strong>Customer:</strong>
+
+                <strong>
+                    Customer:
+                </strong>
+
                 <span id="success-customer-name"></span>
+
             </p>
+
 
         </div>
+
 
         <button
             type="button"
             onclick="closeSuccessPopup()">
+
             Continue
+
         </button>
+
 
     </div>
 
 </div>
 
+
 </body>
 
 </html>
+
