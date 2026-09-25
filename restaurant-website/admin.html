@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,34 +30,55 @@
             margin: auto;
         }
 
-        /* HEADER */
-
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 25px;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         h1 {
             color: #e65100;
         }
 
-        .logout-btn {
-            background: #d32f2f;
-            color: white;
+        .header button,
+        .header a {
             border: none;
             padding: 10px 18px;
             border-radius: 5px;
             cursor: pointer;
             font-size: 15px;
+            text-decoration: none;
+        }
+
+        .header button {
+            background: #e65100;
+            color: white;
+        }
+
+        .header button:hover {
+            background: #bf360c;
+        }
+
+        .header a {
+            background: #388e3c;
+            color: white;
+        }
+
+        .header a:hover {
+            background: #2e7d32;
+        }
+
+        .logout-btn {
+            background: #d32f2f !important;
+            color: white;
         }
 
         .logout-btn:hover {
-            background: #b71c1c;
+            background: #b71c1c !important;
         }
-
-        /* SEARCH */
 
         .search-box {
             display: flex;
@@ -91,8 +113,6 @@
             background: #bf360c;
         }
 
-        /* SUMMARY */
-
         .summary {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -119,8 +139,6 @@
             font-weight: bold;
         }
 
-        /* ORDER SECTIONS */
-
         .order-section {
             margin-bottom: 35px;
         }
@@ -145,8 +163,6 @@
         .completed-title {
             background: #616161;
         }
-
-        /* ORDER CARD */
 
         .order-card {
             background: white;
@@ -173,8 +189,6 @@
             margin-top: 15px;
         }
 
-        /* STATUS */
-
         .status {
             font-weight: bold;
         }
@@ -194,8 +208,6 @@
         .status-completed {
             color: #616161;
         }
-
-        /* BUTTONS */
 
         .status-btn {
             padding: 9px 14px;
@@ -230,8 +242,6 @@
             opacity: 0.8;
         }
 
-        /* EMPTY ORDERS */
-
         .no-orders {
             background: white;
             padding: 20px;
@@ -247,8 +257,6 @@
             border-radius: 8px;
             color: #777;
         }
-
-        /* NOTIFICATION */
 
         .notification {
             display: none;
@@ -286,159 +294,126 @@
             cursor: pointer;
         }
 
-        /* =====================================
-   MOBILE ADMIN DASHBOARD
-   ===================================== */
+        @media (max-width: 700px) {
 
-@media (max-width: 700px) {
+            body {
+                padding: 12px;
+            }
 
-    body {
-        padding: 12px;
-    }
+            #orders-container {
+                width: 100%;
+            }
 
-    #orders-container {
-        width: 100%;
-    }
+            .header {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
 
+            .header h1 {
+                font-size: 24px;
+                line-height: 1.3;
+            }
 
-    /* HEADER */
+            .header button,
+            .header a {
+                width: 100%;
+                padding: 12px;
+                text-align: center;
+                border-radius: 6px;
+                box-sizing: border-box;
+            }
 
-    .header {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        text-align: center;
-    }
+            .search-box {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
 
-    .header h1 {
-        font-size: 24px;
-        line-height: 1.3;
-    }
+            .search-box input {
+                width: 100%;
+                box-sizing: border-box;
+                padding: 13px;
+            }
 
-    .header button,
-    .header a {
-        width: 100%;
-        padding: 12px;
-        text-align: center;
-        border-radius: 6px;
-        box-sizing: border-box;
-    }
+            .search-box button {
+                width: 100%;
+                padding: 13px;
+            }
 
+            .summary {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
 
-    /* SEARCH */
+            .summary-box {
+                padding: 15px 8px;
+            }
 
-    .search-box {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
+            .summary-box h2 {
+                font-size: 24px;
+            }
 
-    .search-box input {
-        width: 100%;
-        box-sizing: border-box;
-        padding: 13px;
-    }
+            .summary-box p {
+                font-size: 13px;
+            }
 
-    .search-box button {
-        width: 100%;
-        padding: 13px;
-    }
+            .order-section {
+                margin-bottom: 25px;
+            }
 
+            .section-title {
+                font-size: 17px;
+                padding: 12px;
+            }
 
-    /* SUMMARY */
+            .order-card {
+                padding: 18px;
+                overflow-wrap: break-word;
+            }
 
-    .summary {
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-    }
+            .order-card h2 {
+                font-size: 20px;
+            }
 
-    .summary-box {
-        padding: 15px 8px;
-    }
+            .order-card p {
+                font-size: 14px;
+            }
 
-    .summary-box h2 {
-        font-size: 24px;
-    }
+            .status-btn {
+                width: 100%;
+                margin: 5px 0;
+                padding: 11px;
+            }
 
-    .summary-box p {
-        font-size: 13px;
-    }
+            .notification {
+                width: calc(100% - 24px);
+                left: 12px;
+                right: 12px;
+                top: 12px;
+                box-sizing: border-box;
+            }
+        }
 
+        @media (max-width: 400px) {
 
-    /* ORDER SECTION */
+            .summary {
+                grid-template-columns: 1fr;
+            }
 
-    .order-section {
-        margin-bottom: 25px;
-    }
+            .header h1 {
+                font-size: 21px;
+            }
 
-    .section-title {
-        font-size: 17px;
-        padding: 12px;
-    }
-
-
-    /* ORDER CARD */
-
-    .order-card {
-        padding: 18px;
-        overflow-wrap: break-word;
-    }
-
-    .order-card h2 {
-        font-size: 20px;
-    }
-
-    .order-card p {
-        font-size: 14px;
-    }
-
-
-    /* STATUS BUTTONS */
-
-    .status-btn {
-        width: 100%;
-        margin: 5px 0;
-        padding: 11px;
-    }
-
-
-    /* NOTIFICATION */
-
-    .notification {
-        width: calc(100% - 24px);
-        left: 12px;
-        right: 12px;
-        top: 12px;
-        box-sizing: border-box;
-    }
-
-}
-
-
-/* =====================================
-   VERY SMALL PHONES
-   ===================================== */
-
-@media (max-width: 400px) {
-
-    .summary {
-        grid-template-columns: 1fr;
-    }
-
-    .header h1 {
-        font-size: 21px;
-    }
-
-    .order-card {
-        padding: 15px;
-    }
-
-}
+            .order-card {
+                padding: 15px;
+            }
+        }
 
     </style>
 
 </head>
-
 
 <body>
 
@@ -472,13 +447,16 @@
 
         <h1>
             Restaurant Admin Dashboard
-        </h1> 
+        </h1>
+
         <button onclick="openHistory()">
-    📜 Order History
-</button>
-   <a href="menu.html">
-    🍽️ Menu Management
-</a>
+            📜 Order History
+        </button>
+
+        <a href="menu.html">
+            🍽️ Menu Management
+        </a>
+
         <button
                 class="logout-btn"
                 onclick="logout()">
@@ -498,7 +476,7 @@
                 type="text"
                 id="search-input"
                 placeholder="Search by order ID, name, phone, address or item..."
-                onkeyup="searchOrders()"
+                onkeyup="searchOrders"
         >
 
         <button onclick="clearSearch()">
@@ -524,7 +502,6 @@
 
         </div>
 
-
         <div class="summary-box">
 
             <h2 id="today-orders-count">
@@ -537,7 +514,6 @@
 
         </div>
 
-
         <div class="summary-box">
 
             <h2 id="completed-orders-count">
@@ -549,7 +525,6 @@
             </p>
 
         </div>
-
 
         <div class="summary-box">
 
@@ -622,6 +597,10 @@
 
 <script>
 
+const API_BASE =
+    "https://kolkata-victoria-chat-house-production.up.railway.app";
+
+
 /* =====================================================
    GLOBAL VARIABLES
 ===================================================== */
@@ -651,7 +630,7 @@ if (sessionStorage.getItem("adminLoggedIn") !== "true") {
 function logout() {
 
     fetch(
-        "http://127.0.0.1:8080/api/logout",
+        API_BASE + "/api/logout",
         {
             method: "POST",
             credentials: "include"
@@ -1161,8 +1140,6 @@ function checkForNewOrders(orders) {
             });
 
 
-    /* FIRST LOAD */
-
     if (firstLoad) {
 
         previousOrderIds =
@@ -1174,8 +1151,6 @@ function checkForNewOrders(orders) {
 
     }
 
-
-    /* FIND ACTUALLY NEW ORDER */
 
     let newlyCreatedOrders =
         orders.filter(function(order) {
@@ -1240,8 +1215,6 @@ function showNotification(order) {
         "block";
 
 
-    /* Play sound */
-
     let audio =
         new Audio(
             "https://actions.google.com/sounds/v1/alarms/notification.mp3"
@@ -1259,8 +1232,6 @@ function showNotification(order) {
 
     });
 
-
-    /* Hide after 8 seconds */
 
     setTimeout(function() {
 
@@ -1292,7 +1263,7 @@ function closeNotification() {
 function loadOrders() {
 
     fetch(
-        "http://127.0.0.1:8080/api/orders",
+        API_BASE + "/api/orders",
         {
             method: "GET",
             credentials: "include"
@@ -1318,9 +1289,7 @@ function loadOrders() {
 
         allOrders = orders;
 
-
         updateDashboardStats(orders);
-
 
         checkForNewOrders(orders);
 
@@ -1358,7 +1327,6 @@ function loadOrders() {
         document.getElementById(
             "new-orders"
         ).innerHTML =
-
             "<p>Unable to load orders.</p>";
 
     });
@@ -1376,7 +1344,7 @@ function updateStatus(
 ) {
 
     fetch(
-        "http://127.0.0.1:8080/api/orders/"
+        API_BASE + "/api/orders/"
         + orderId
         + "/status?status="
         + newStatus,
@@ -1391,7 +1359,8 @@ function updateStatus(
         if (!response.ok) {
 
             throw new Error(
-                "Could not update status"
+                "Could not update status. Status: "
+                + response.status
             );
 
         }
@@ -1626,6 +1595,17 @@ function printOrder(orderId) {
 
 
 /* =====================================================
+   ORDER HISTORY
+===================================================== */
+
+function openHistory() {
+
+    window.location.href = "history.html";
+
+}
+
+
+/* =====================================================
    INITIAL LOAD
 ===================================================== */
 
@@ -1640,16 +1620,11 @@ setInterval(function() {
 
     loadOrders();
 
-}, 5000);  
-
-function openHistory() {
-
-    window.location.href = "history.html";
-
-}
+}, 5000);
 
 </script>
 
 </body>
 
 </html>
+
