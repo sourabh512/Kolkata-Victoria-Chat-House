@@ -229,7 +229,7 @@ function confirmOrder(event) {
     });
 
     // Send order to Spring Boot
-    fetch("http://localhost:8080/api/orders", {
+   fetch("https://kolkata-victoria-chat-house-production.up.railway.app/api/orders",  {
 
         method: "POST",
 
@@ -324,7 +324,7 @@ function loadCustomerMenu() {
         return;
     }
 
-    fetch("http://127.0.0.1:8080/api/menu")
+   fetch("https://kolkata-victoria-chat-house-production.up.railway.app/api/menu")
         .then(function(response) {
 
             if (!response.ok) {
@@ -539,9 +539,8 @@ function trackOrder() {
         "<p>Checking order...</p>";
 
     let url =
-        "http://127.0.0.1:8080/api/orders/" +
-        encodeURIComponent(orderId);
-
+    "https://kolkata-victoria-chat-house-production.up.railway.app/api/orders/" +
+    encodeURIComponent(orderId);
     console.log("Tracking URL:", url);
 
     fetch(url, {
