@@ -1,4 +1,5 @@
-package com.kolkata.restaurant.model;
+
+        package com.kolkata.restaurant.model;
 
 import jakarta.persistence.*;
 
@@ -57,3 +58,4 @@ public class MenuItem {
         this.available = available;
     }
 }
+

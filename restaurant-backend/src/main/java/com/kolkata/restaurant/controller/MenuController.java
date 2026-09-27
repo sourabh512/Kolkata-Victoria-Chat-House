@@ -1,4 +1,5 @@
-package com.kolkata.restaurant.controller;
+
+        package com.kolkata.restaurant.controller;
 
 import com.kolkata.restaurant.model.MenuItem;
 import com.kolkata.restaurant.repository.MenuItemRepository;
@@ -10,9 +11,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/menu")
 @CrossOrigin(
-        origins = {
-                "http://localhost:5500",
-                "http://127.0.0.1:5500"
+        origins = { "http://localhost:5500",
+                "http://127.0.0.1:5500",
+                "https://resplendent-solace-production-a0b3.up.railway.app"
         }
 )
 public class MenuController {
@@ -23,19 +24,14 @@ public class MenuController {
         this.repository = repository;
     }
 
-
     // GET ALL MENU ITEMS
-
     @GetMapping
     public List<MenuItem> getAllMenuItems() {
 
         return repository.findAll();
-
     }
 
-
     // GET ONE MENU ITEM
-
     @GetMapping("/{id}")
     public MenuItem getMenuItem(
             @PathVariable Long id) {
@@ -46,23 +42,17 @@ public class MenuController {
                                 "Menu item not found"
                         )
                 );
-
     }
 
-
     // ADD MENU ITEM
-
     @PostMapping
     public MenuItem addMenuItem(
             @RequestBody MenuItem menuItem) {
 
         return repository.save(menuItem);
-
     }
 
-
     // UPDATE MENU ITEM
-
     @PutMapping("/{id}")
     public MenuItem updateMenuItem(
             @PathVariable Long id,
@@ -77,22 +67,16 @@ public class MenuController {
                         );
 
         item.setName(updatedItem.getName());
-
         item.setPrice(updatedItem.getPrice());
-
         item.setImage(updatedItem.getImage());
-
         item.setAvailable(
                 updatedItem.isAvailable()
         );
 
         return repository.save(item);
-
     }
 
-
     // DELETE MENU ITEM
-
     @DeleteMapping("/{id}")
     public String deleteMenuItem(
             @PathVariable Long id) {
@@ -102,13 +86,11 @@ public class MenuController {
             throw new RuntimeException(
                     "Menu item not found"
             );
-
         }
 
         repository.deleteById(id);
 
         return "Menu item deleted successfully";
-
     }
-
 }
+

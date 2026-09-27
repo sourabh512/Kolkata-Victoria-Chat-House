@@ -205,7 +205,6 @@ function closeOrderForm() {
 // CONFIRM ORDER
 // =========================
 
-
 function confirmOrder(event) {
 
     event.preventDefault();
@@ -218,78 +217,228 @@ function confirmOrder(event) {
     let total = 0;
 
     cart.forEach(function(item) {
+
         total = total + (item.price * item.quantity);
+
     });
 
     // Convert cart items into text
     let items = "";
 
     cart.forEach(function(item) {
+
         items = items + item.name + " x " + item.quantity + ", ";
+
     });
 
-    // Send order to Spring Boot
-   fetch("https://kolkata-victoria-chat-house-production.up.railway.app/api/orders",  {
 
-        method: "POST",
+    // ==========================================
+    // CREATE RAZORPAY ORDER
+    // ==========================================
 
-        headers: {
-            "Content-Type": "application/json"
-        },
+    fetch(
+        "https://kolkata-victoria-chat-house-production.up.railway.app/api/payment/create-order?amount=" + total,
+        {
+            method: "POST"
+        }
 
-        body: JSON.stringify({
-
-            name: name,
-            phone: phone,
-            address: address,
-            items: items,
-            total: total
-
-        })
-    })
+    // fetch(
+    // "http://localhost:8080/api/payment/create-order?amount=" + total,
+    // {
+    //     method: "POST"
+    // }
+)
+    
 
     .then(function(response) {
 
         if (!response.ok) {
-            throw new Error("Order failed");
+
+            throw new Error("Could not create payment order");
+
+        }
+
+        return response.json();
+
+    })
+
+    .then(function(paymentOrder) {
+
+        console.log(
+            "Razorpay order created:",
+            paymentOrder
+        );
+
+
+        // ==========================================
+        // RAZORPAY CHECKOUT
+        // ==========================================
+
+        let options = {
+
+            key: "rzp_test_TgzCHppixI72ho",
+
+            amount: paymentOrder.amount,
+
+            currency: paymentOrder.currency,
+
+            name: "Kolkata Victoria Chat House",
+
+            description: "Restaurant Order",
+
+            order_id: paymentOrder.orderId,
+
+
+            // CUSTOMER DETAILS
+            prefill: {
+
+                name: name,
+
+                contact: phone
+
+            },
+
+
+            // PAYMENT SUCCESS
+          handler: function(response) {
+
+    console.log("Payment successful:", response);
+
+    // Step 1: Verify payment with backend
+    fetch(
+        "https://kolkata-victoria-chat-house-production.up.railway.app/api/payment/verify",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                razorpayOrderId: response.razorpay_order_id,
+                razorpayPaymentId: response.razorpay_payment_id,
+                razorpaySignature: response.razorpay_signature
+            })
+        }
+    )
+    .then(function(response) {
+
+        if (!response.ok) {
+            throw new Error("Payment verification failed");
         }
 
         return response.json();
     })
+    .then(function(verificationData) {
 
-    .then(function(data) {
+        console.log("Payment verification:", verificationData);
 
-        console.log("Order saved in database:", data);
+        if (verificationData.status !== "success") {
+            throw new Error("Payment verification failed");
+        }
 
-   showOrderSuccessPopup(
-    data.id,
-    data.total,
-    name
-);
+        // Step 2: Payment is verified
+        // Now save the restaurant order
 
-        // EMPTY CART
-        cart = [];
+        fetch(
+            "https://kolkata-victoria-chat-house-production.up.railway.app/api/orders",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    name: name,
+                    phone: phone,
+                    address: address,
+                    items: items,
+                    total: total
+                })
+            }
+        )
+        .then(function(response) {
 
-        updateCart();
+            if (!response.ok) {
+                throw new Error("Order could not be saved");
+            }
 
-        // CLOSE FORM
-        closeOrderForm();
+            return response.json();
+        })
+        .then(function(data) {
 
-        // RESET FORM
-        document.querySelector("#order-form form").reset();
+            console.log("Order saved in database:", data);
+
+            showOrderSuccessPopup(
+                data.id,
+                data.total,
+                name
+            );
+
+            cart = [];
+
+            updateCart();
+
+            closeOrderForm();
+
+            document
+                .querySelector("#order-form form")
+                .reset();
+        })
+        .catch(function(error) {
+
+            console.error("Order saving error:", error);
+
+            alert(
+                "Payment was successful, but the order could not be saved. Please contact the restaurant."
+            );
+        });
+
+    })
+    .catch(function(error) {
+
+        console.error("Payment verification error:", error);
+
+        alert(
+            "Payment could not be verified. Please contact the restaurant."
+        );
+    });
+},
+
+            // PAYMENT WINDOW CLOSED
+
+            modal: {
+
+                ondismiss: function() {
+
+                    console.log(
+                        "Payment window closed"
+                    );
+
+                }
+
+            }
+
+        };
+
+
+        let razorpay = new Razorpay(options);
+
+        razorpay.open();
+
     })
 
     .catch(function(error) {
 
-        console.error("Error:", error);
+        console.error(
+            "Payment error:",
+            error
+        );
 
         alert(
-            "Sorry! Order could not be placed."
+            "Sorry! Payment could not be started."
         );
+
     });
+
 }
-
-
 
 
 // =========================

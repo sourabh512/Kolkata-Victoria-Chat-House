@@ -4,277 +4,329 @@
 
 <head>
 
-
 <meta charset="UTF-8">
 
 <meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+   content="width=device-width, initial-scale=1.0">
 
 <title>Menu Management</title>
 
 <style>
 
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-    }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-    body {
-        font-family: Arial, sans-serif;
-        background: #f5f5f5;
-        color: #333;
-    }
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    color: #333;
+}
+
+header {
+    background: #e65100;
+    color: white;
+    padding: 18px 30px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+header h1 {
+    font-size: 24px;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.back-btn {
+    background: white;
+    color: #e65100;
+    padding: 10px 16px;
+}
+
+.logout-btn {
+    background: #333;
+    color: white;
+    padding: 10px 16px;
+}
+
+.container {
+    width: 95%;
+    max-width: 1200px;
+    margin: 30px auto;
+}
+
+.top-section {
+    background: white;
+    padding: 20px;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 2px 8px rgba(0,0,0,0.1);
+
+    margin-bottom: 25px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.add-btn {
+    background: #e65100;
+    color: white;
+    padding: 12px 20px;
+}
+
+.menu-container {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(280px, 1fr));
+
+    gap: 20px;
+}
+
+.menu-card {
+    background: white;
+
+    border-radius: 10px;
+
+    padding: 20px;
+
+    box-shadow:
+        0 2px 8px rgba(0,0,0,0.1);
+}
+
+.menu-card h3 {
+    color: #e65100;
+    margin-bottom: 10px;
+}
+
+.menu-card-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.price {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.image-name {
+    color: #777;
+    margin-bottom: 15px;
+    word-break: break-all;
+}
+
+.status {
+    display: inline-block;
+
+    padding: 6px 12px;
+
+    border-radius: 20px;
+
+    font-size: 13px;
+
+    margin-bottom: 15px;
+}
+
+.available {
+    background: #dff5e1;
+    color: #2e7d32;
+}
+
+.unavailable {
+    background: #ffdddd;
+    color: #c62828;
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.edit-btn {
+    background: #1976d2;
+    color: white;
+    padding: 9px 14px;
+}
+
+.toggle-btn {
+    background: #555;
+    color: white;
+    padding: 9px 14px;
+}
+
+.delete-btn {
+    background: #c62828;
+    color: white;
+    padding: 9px 14px;
+}
+
+.form-container {
+    display: none;
+
+    background: white;
+
+    padding: 25px;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 2px 8px rgba(0,0,0,0.1);
+
+    margin-bottom: 25px;
+}
+
+.form-container.show {
+    display: block;
+}
+
+.form-container h2 {
+    margin-bottom: 20px;
+    color: #e65100;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="file"] {
+    width: 100%;
+
+    padding: 11px;
+
+    border: 1px solid #ccc;
+
+    border-radius: 5px;
+
+    font-size: 15px;
+}
+
+.image-preview-container {
+    margin-top: 12px;
+    display: none;
+}
+
+.image-preview-container.show {
+    display: block;
+}
+
+.image-preview {
+    width: 200px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.current-image {
+    margin-top: 10px;
+    color: #777;
+    font-size: 14px;
+    word-break: break-all;
+}
+
+.upload-status {
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.checkbox-group input {
+    width: auto;
+}
+
+.form-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.save-btn {
+    background: #2e7d32;
+    color: white;
+    padding: 11px 20px;
+}
+
+.cancel-btn {
+    background: #777;
+    color: white;
+    padding: 11px 20px;
+}
+
+.save-btn:disabled {
+    background: #999;
+    cursor: not-allowed;
+}
+
+.empty {
+    background: white;
+    padding: 40px;
+    text-align: center;
+    border-radius: 10px;
+    color: #777;
+}
+
+@media (max-width: 700px) {
 
     header {
-        background: #e65100;
-        color: white;
-        padding: 18px 30px;
-
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    }
-
-    header h1 {
-        font-size: 24px;
-    }
-
-    .header-buttons {
-        display: flex;
-        gap: 10px;
-    }
-
-    button {
-        border: none;
-        cursor: pointer;
-        border-radius: 5px;
-        font-weight: bold;
-    }
-
-    .back-btn {
-        background: white;
-        color: #e65100;
-        padding: 10px 16px;
-    }
-
-    .logout-btn {
-        background: #333;
-        color: white;
-        padding: 10px 16px;
-    }
-
-    .container {
-        width: 95%;
-        max-width: 1200px;
-        margin: 30px auto;
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
     }
 
     .top-section {
-        background: white;
-        padding: 20px;
-
-        border-radius: 10px;
-
-        box-shadow:
-            0 2px 8px rgba(0,0,0,0.1);
-
-        margin-bottom: 25px;
-
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .add-btn {
-        background: #e65100;
-        color: white;
-        padding: 12px 20px;
-    }
-
-    .menu-container {
-        display: grid;
-
-        grid-template-columns:
-            repeat(auto-fit, minmax(280px, 1fr));
-
-        gap: 20px;
-    }
-
-    .menu-card {
-        background: white;
-
-        border-radius: 10px;
-
-        padding: 20px;
-
-        box-shadow:
-            0 2px 8px rgba(0,0,0,0.1);
-    }
-
-    .menu-card h3 {
-        color: #e65100;
-        margin-bottom: 10px;
-    }
-
-    .price {
-        font-size: 20px;
-        font-weight: bold;
-        margin-bottom: 10px;
-    }
-
-    .image-name {
-        color: #777;
-        margin-bottom: 15px;
-    }
-
-    .status {
-        display: inline-block;
-
-        padding: 6px 12px;
-
-        border-radius: 20px;
-
-        font-size: 13px;
-
-        margin-bottom: 15px;
-    }
-
-    .available {
-        background: #dff5e1;
-        color: #2e7d32;
-    }
-
-    .unavailable {
-        background: #ffdddd;
-        color: #c62828;
-    }
-
-    .actions {
-        display: flex;
-        gap: 8px;
-        flex-wrap: wrap;
-    }
-
-    .edit-btn {
-        background: #1976d2;
-        color: white;
-        padding: 9px 14px;
-    }
-
-    .toggle-btn {
-        background: #555;
-        color: white;
-        padding: 9px 14px;
-    }
-
-    .delete-btn {
-        background: #c62828;
-        color: white;
-        padding: 9px 14px;
-    }
-
-    .form-container {
-        display: none;
-
-        background: white;
-
-        padding: 25px;
-
-        border-radius: 10px;
-
-        box-shadow:
-            0 2px 8px rgba(0,0,0,0.1);
-
-        margin-bottom: 25px;
-    }
-
-    .form-container.show {
-        display: block;
-    }
-
-    .form-container h2 {
-        margin-bottom: 20px;
-        color: #e65100;
-    }
-
-    .form-group {
-        margin-bottom: 15px;
-    }
-
-    .form-group label {
-        display: block;
-        margin-bottom: 6px;
-        font-weight: bold;
-    }
-
-    .form-group input {
-        width: 100%;
-
-        padding: 11px;
-
-        border: 1px solid #ccc;
-
-        border-radius: 5px;
-
-        font-size: 15px;
-    }
-
-    .checkbox-group {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .checkbox-group input {
-        width: auto;
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
     }
 
     .form-buttons {
-        display: flex;
-        gap: 10px;
+        flex-direction: column;
     }
 
-    .save-btn {
-        background: #2e7d32;
-        color: white;
-        padding: 11px 20px;
+    .form-buttons button {
+        width: 100%;
     }
 
-    .cancel-btn {
-        background: #777;
-        color: white;
-        padding: 11px 20px;
-    }
-
-    .empty {
-        background: white;
-        padding: 40px;
-        text-align: center;
-        border-radius: 10px;
-        color: #777;
-    }
-
-    @media (max-width: 700px) {
-
-        header {
-            flex-direction: column;
-            gap: 15px;
-            text-align: center;
-        }
-
-        .top-section {
-            flex-direction: column;
-            gap: 15px;
-            text-align: center;
-        }
-
-    }
+}
 
 </style>
-
 
 </head>
 
@@ -282,151 +334,174 @@
 
 <header>
 
-
 <h1>
     🍽️ Menu Management
 </h1>
 
 <div class="header-buttons">
 
-    <button
-        class="back-btn"
-        onclick="goBack()">
+```
+<button
+    class="back-btn"
+    onclick="goBack()">
 
-        ← Dashboard
+    ← Dashboard
 
-    </button>
+</button>
 
-    <button
-        class="logout-btn"
-        onclick="logout()">
+<button
+    class="logout-btn"
+    onclick="logout()">
 
-        Logout
+    Logout
 
-    </button>
+</button>
+```
 
 </div>
-
 
 </header>
 
 <div class="container">
 
-
 <div class="top-section">
 
-    <div>
+```
+<div>
 
-        <h2>
-            Restaurant Menu
-        </h2>
+    <h2>
+        Restaurant Menu
+    </h2>
 
-        <p>
-            Add, edit and manage your menu items.
-        </p>
-
-    </div>
-
-
-    <button
-        class="add-btn"
-        onclick="openAddForm()">
-
-        + Add Menu Item
-
-    </button>
+    <p>
+        Add, edit and manage your menu items.
+    </p>
 
 </div>
 
+<button
+    class="add-btn"
+    onclick="openAddForm()">
+
+    + Add Menu Item
+
+</button>
+```
+
+</div>
 
 <div
     id="form-container"
     class="form-container">
 
-    <h2 id="form-title">
-        Add Menu Item
-    </h2>
+```
+<h2 id="form-title">
+    Add Menu Item
+</h2>
 
 
-    <div class="form-group">
+<div class="form-group">
 
-        <label>
-            Item Name
-        </label>
+    <label>
+        Item Name
+    </label>
 
-        <input
-            type="text"
-            id="item-name"
-            placeholder="Example: Puchka">
+    <input
+        type="text"
+        id="item-name"
+        placeholder="Example: Puchka">
 
-    </div>
-
-
-    <div class="form-group">
-
-        <label>
-            Price
-        </label>
-
-        <input
-            type="number"
-            id="item-price"
-            placeholder="Example: 40"
-            min="0">
-
-    </div>
+</div>
 
 
-    <div class="form-group">
+<div class="form-group">
 
-        <label>
-            Image Filename
-        </label>
+    <label>
+        Price
+    </label>
 
-        <input
-            type="text"
-            id="item-image"
-            placeholder="Example: Panipuri.jpg">
+    <input
+        type="number"
+        id="item-price"
+        placeholder="Example: 40"
+        min="0">
 
-    </div>
+</div>
 
 
-    <div class="form-group checkbox-group">
+<div class="form-group">
 
-        <input
-            type="checkbox"
-            id="item-available"
-            checked>
+    <label>
+        Image
+    </label>
 
-        <label>
-            Available for customers
-        </label>
+    <input
+        type="file"
+        id="image-file"
+        accept="image/*"
+        onchange="previewImage()">
+
+    <div
+        id="image-preview-container"
+        class="image-preview-container">
+
+        <img
+            id="image-preview"
+            class="image-preview"
+            alt="Image Preview">
 
     </div>
 
+    <div
+        id="current-image"
+        class="current-image">
+    </div>
 
-    <div class="form-buttons">
-
-        <button
-            class="save-btn"
-            onclick="saveItem()">
-
-            Save Item
-
-        </button>
-
-        <button
-            class="cancel-btn"
-            onclick="closeForm()">
-
-            Cancel
-
-        </button>
-
+    <div
+        id="upload-status"
+        class="upload-status">
     </div>
 
 </div>
 
+
+<div class="form-group checkbox-group">
+
+    <input
+        type="checkbox"
+        id="item-available"
+        checked>
+
+    <label>
+        Available for customers
+    </label>
+
+</div>
+
+
+<div class="form-buttons">
+
+    <button
+        id="save-button"
+        class="save-btn"
+        onclick="saveItem()">
+
+        Save Item
+
+    </button>
+
+    <button
+        class="cancel-btn"
+        onclick="closeForm()">
+
+        Cancel
+
+    </button>
+
+</div>
+```
+
+</div>
 
 <div
     id="menu-container"
@@ -434,11 +509,9 @@
 
 </div>
 
-
 </div>
 
 <script>
-
 
 /* =========================================
    RAILWAY BACKEND
@@ -446,6 +519,17 @@
 
 const API_BASE =
     "https://kolkata-victoria-chat-house-production.up.railway.app";
+
+
+/* =========================================
+   CLOUDINARY
+========================================= */
+
+const CLOUDINARY_CLOUD_NAME =
+"ab9fczhg";
+
+const CLOUDINARY_UPLOAD_PRESET =
+    "kvch_menu_images";
 
 
 /* =========================================
@@ -466,6 +550,10 @@ if (sessionStorage.getItem("adminLoggedIn") !== "true") {
 let menuItems = [];
 
 let editingId = null;
+
+let selectedImageFile = null;
+
+let currentImageUrl = "";
 
 
 /* =========================================
@@ -543,9 +631,7 @@ function displayMenu() {
             "menu-container"
         );
 
-
     container.innerHTML = "";
-
 
     if (menuItems.length === 0) {
 
@@ -563,7 +649,6 @@ function displayMenu() {
 
     }
 
-
     menuItems.forEach(function(item) {
 
         let card =
@@ -571,20 +656,35 @@ function displayMenu() {
 
         card.className = "menu-card";
 
-
         let statusClass =
             item.available
                 ? "available"
                 : "unavailable";
-
 
         let statusText =
             item.available
                 ? "AVAILABLE"
                 : "UNAVAILABLE";
 
+        let imageHtml = "";
+
+        if (item.image) {
+
+            imageHtml = `
+
+                <img
+                    class="menu-card-image"
+                    src="${escapeHtml(item.image)}"
+                    alt="${escapeHtml(item.name)}"
+                    onerror="this.style.display='none'">
+
+            `;
+
+        }
 
         card.innerHTML = `
+
+            ${imageHtml}
 
             <h3>
                 ${escapeHtml(item.name)}
@@ -641,7 +741,6 @@ function displayMenu() {
 
         `;
 
-
         container.appendChild(card);
 
     });
@@ -657,32 +756,42 @@ function openAddForm() {
 
     editingId = null;
 
+    selectedImageFile = null;
+
+    currentImageUrl = "";
 
     document.getElementById(
         "form-title"
     ).innerText =
         "Add Menu Item";
 
-
     document.getElementById(
         "item-name"
     ).value = "";
-
 
     document.getElementById(
         "item-price"
     ).value = "";
 
-
     document.getElementById(
-        "item-image"
+        "image-file"
     ).value = "";
-
 
     document.getElementById(
         "item-available"
     ).checked = true;
 
+    document.getElementById(
+        "image-preview-container"
+    ).classList.remove("show");
+
+    document.getElementById(
+        "current-image"
+    ).innerText = "";
+
+    document.getElementById(
+        "upload-status"
+    ).innerText = "";
 
     document.getElementById(
         "form-container"
@@ -703,6 +812,155 @@ function closeForm() {
 
     editingId = null;
 
+    selectedImageFile = null;
+
+    currentImageUrl = "";
+
+}
+
+
+/* =========================================
+   IMAGE PREVIEW
+========================================= */
+
+function previewImage() {
+
+    let file =
+        document.getElementById(
+            "image-file"
+        ).files[0];
+
+    if (!file) {
+
+        selectedImageFile = null;
+
+        return;
+
+    }
+
+    if (!file.type.startsWith("image/")) {
+
+        alert("Please select an image file.");
+
+        document.getElementById(
+            "image-file"
+        ).value = "";
+
+        return;
+
+    }
+
+    selectedImageFile = file;
+
+    let preview =
+        document.getElementById(
+            "image-preview"
+        );
+
+    preview.src =
+        URL.createObjectURL(file);
+
+    document.getElementById(
+        "image-preview-container"
+    ).classList.add("show");
+
+    document.getElementById(
+        "current-image"
+    ).innerText =
+        "Selected: " + file.name;
+
+    document.getElementById(
+        "upload-status"
+    ).innerText = "";
+
+}
+
+
+/* =========================================
+   UPLOAD IMAGE TO CLOUDINARY
+========================================= */
+
+function uploadImageToCloudinary(file) {
+
+    return new Promise(function(resolve, reject) {
+
+        let formData =
+            new FormData();
+
+        formData.append(
+            "file",
+            file
+        );
+
+        formData.append(
+            "upload_preset",
+            CLOUDINARY_UPLOAD_PRESET
+        );
+
+        let uploadUrl =
+            "https://api.cloudinary.com/v1_1/"
+            + CLOUDINARY_CLOUD_NAME
+            + "/image/upload";
+
+        document.getElementById(
+            "upload-status"
+        ).innerText =
+            "Uploading image...";
+
+        fetch(uploadUrl, {
+
+            method: "POST",
+
+            body: formData
+
+        })
+
+        .then(function(response) {
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Cloudinary upload failed"
+                );
+
+            }
+
+            return response.json();
+
+        })
+
+        .then(function(data) {
+
+            if (!data.secure_url) {
+
+                throw new Error(
+                    "Cloudinary did not return an image URL"
+                );
+
+            }
+
+            document.getElementById(
+                "upload-status"
+            ).innerText =
+                "Image uploaded successfully.";
+
+            resolve(data.secure_url);
+
+        })
+
+        .catch(function(error) {
+
+            document.getElementById(
+                "upload-status"
+            ).innerText =
+                "Image upload failed.";
+
+            reject(error);
+
+        });
+
+    });
+
 }
 
 
@@ -719,46 +977,75 @@ function editItem(id) {
 
         });
 
-
     if (!item) {
 
         return;
 
     }
 
-
     editingId = id;
 
+    selectedImageFile = null;
+
+    currentImageUrl =
+        item.image || "";
 
     document.getElementById(
         "form-title"
     ).innerText =
         "Edit Menu Item";
 
-
     document.getElementById(
         "item-name"
     ).value =
         item.name;
-
 
     document.getElementById(
         "item-price"
     ).value =
         item.price;
 
-
     document.getElementById(
-        "item-image"
-    ).value =
-        item.image || "";
-
+        "image-file"
+    ).value = "";
 
     document.getElementById(
         "item-available"
     ).checked =
         item.available;
 
+    document.getElementById(
+        "upload-status"
+    ).innerText = "";
+
+    if (item.image) {
+
+        document.getElementById(
+            "image-preview"
+        ).src =
+            item.image;
+
+        document.getElementById(
+            "image-preview-container"
+        ).classList.add("show");
+
+        document.getElementById(
+            "current-image"
+        ).innerText =
+            "Current image: " + item.image;
+
+    } else {
+
+        document.getElementById(
+            "image-preview-container"
+        ).classList.remove("show");
+
+        document.getElementById(
+            "current-image"
+        ).innerText =
+            "No image selected.";
+
+    }
 
     document.getElementById(
         "form-container"
@@ -771,13 +1058,12 @@ function editItem(id) {
    SAVE ITEM
 ========================================= */
 
-function saveItem() {
+async function saveItem() {
 
     let name =
         document.getElementById(
             "item-name"
         ).value.trim();
-
 
     let price =
         Number(
@@ -786,18 +1072,10 @@ function saveItem() {
             ).value
         );
 
-
-    let image =
-        document.getElementById(
-            "item-image"
-        ).value.trim();
-
-
     let available =
         document.getElementById(
             "item-available"
         ).checked;
-
 
     if (name === "") {
 
@@ -807,7 +1085,6 @@ function saveItem() {
 
     }
 
-
     if (price <= 0) {
 
         alert("Please enter a valid price.");
@@ -816,47 +1093,64 @@ function saveItem() {
 
     }
 
+    let saveButton =
+        document.getElementById(
+            "save-button"
+        );
 
-    let menuItem = {
+    saveButton.disabled = true;
 
-        name: name,
+    try {
 
-        price: price,
+        let imageUrl = currentImageUrl;
 
-        image: image,
+        /* Upload new image if selected */
 
-        available: available
+        if (selectedImageFile) {
 
-    };
+            imageUrl =
+                await uploadImageToCloudinary(
+                    selectedImageFile
+                );
 
+        }
 
-    let url =
-        editingId === null
-            ? API_BASE + "/api/menu"
-            : API_BASE + "/api/menu/" + editingId;
+        let menuItem = {
 
+            name: name,
 
-    let method =
-        editingId === null
-            ? "POST"
-            : "PUT";
+            price: price,
 
+            image: imageUrl,
 
-    fetch(url, {
+            available: available
 
-        method: method,
+        };
 
-        headers: {
-            "Content-Type": "application/json"
-        },
+        let url =
+            editingId === null
+                ? API_BASE + "/api/menu"
+                : API_BASE + "/api/menu/" + editingId;
 
-        credentials: "include",
+        let method =
+            editingId === null
+                ? "POST"
+                : "PUT";
 
-        body: JSON.stringify(menuItem)
+        let response =
+            await fetch(url, {
 
-    })
+                method: method,
 
-    .then(function(response) {
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                credentials: "include",
+
+                body: JSON.stringify(menuItem)
+
+            });
 
         if (!response.ok) {
 
@@ -867,11 +1161,7 @@ function saveItem() {
 
         }
 
-        return response.json();
-
-    })
-
-    .then(function() {
+        await response.json();
 
         alert(
             editingId === null
@@ -879,14 +1169,12 @@ function saveItem() {
                 : "Menu item updated successfully!"
         );
 
-
         closeForm();
 
         loadMenu();
 
-    })
-
-    .catch(function(error) {
+    }
+    catch (error) {
 
         console.error(
             "Save error:",
@@ -894,10 +1182,16 @@ function saveItem() {
         );
 
         alert(
-            "Could not save menu item."
+            "Could not save menu item.\n\n"
+            + error.message
         );
 
-    });
+    }
+    finally {
+
+        saveButton.disabled = false;
+
+    }
 
 }
 
@@ -915,13 +1209,11 @@ function toggleAvailability(id) {
 
         });
 
-
     if (!item) {
 
         return;
 
     }
-
 
     let updatedItem = {
 
@@ -934,7 +1226,6 @@ function toggleAvailability(id) {
         available: !item.available
 
     };
-
 
     fetch(
         API_BASE + "/api/menu/" + id,
@@ -1002,13 +1293,11 @@ function deleteItem(id) {
 
         });
 
-
     if (!item) {
 
         return;
 
     }
-
 
     let confirmed =
         confirm(
@@ -1017,13 +1306,11 @@ function deleteItem(id) {
             + "?"
         );
 
-
     if (!confirmed) {
 
         return;
 
     }
-
 
     fetch(
         API_BASE + "/api/menu/" + id,
@@ -1150,7 +1437,6 @@ function escapeHtml(value) {
 
     }
 
-
     return String(value)
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
@@ -1166,7 +1452,6 @@ function escapeHtml(value) {
 ========================================= */
 
 loadMenu();
-
 
 </script>
 
