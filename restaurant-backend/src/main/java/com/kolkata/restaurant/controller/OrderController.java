@@ -10,7 +10,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/orders")
 @CrossOrigin(
-        origins = "http://127.0.0.1:5500",
+        origins = {
+                "http://localhost:5500",
+                "http://127.0.0.1:5500",
+                "https://kolkata-victoria-chat-house-production.up.railway.app"
+        },
         allowCredentials = "true"
 )
 public class OrderController {
