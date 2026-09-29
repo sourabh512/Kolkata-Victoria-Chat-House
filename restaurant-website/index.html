@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,14 +12,11 @@
 
     <link rel="stylesheet" href="style.css">
 
-
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 </head>
 
-
 <body>
-
 
 <!-- =========================
      NAVBAR
@@ -31,13 +27,9 @@
     <nav class="navbar">
 
         <div class="logo">
-
             <span>🍽️</span>
-
             Kolkata Victoria Chat House
-
         </div>
-
 
         <ul class="nav-links">
 
@@ -57,15 +49,14 @@
                 <a href="#contact">Contact</a>
             </li>
 
-            <!-- DEPLOYED ADMIN LINK -->
+            <!-- ADMIN -->
             <li>
-                <a href="https://resplendent-solace-production-a0b3.up.railway.app/admin.html">
+                <a href="admin.html">
                     Admin
                 </a>
             </li>
 
         </ul>
-
 
         <button
             class="order-btn"
@@ -89,11 +80,8 @@
     <div class="hero-content">
 
         <p class="small-title">
-
             WELCOME TO
-
         </p>
-
 
         <h1>
 
@@ -105,14 +93,12 @@
 
         </h1>
 
-
         <p>
 
             Authentic Indian Chaat with delicious flavors,
             fresh ingredients and a taste you'll remember.
 
         </p>
-
 
         <div class="hero-buttons">
 
@@ -123,7 +109,6 @@
                 View Menu
 
             </a>
-
 
             <button
                 class="secondary-btn"
@@ -146,26 +131,19 @@
 
 <section id="about" class="about">
 
-
     <div class="about-image">
 
         <div class="food-placeholder">
-
             🍛
-
         </div>
 
     </div>
 
-
     <div class="about-content">
 
         <p class="section-title">
-
             ABOUT US
-
         </p>
-
 
         <h2>
 
@@ -177,7 +155,6 @@
 
         </h2>
 
-
         <p>
 
             At Kolkata Victoria Chat House,
@@ -187,7 +164,6 @@
 
         </p>
 
-
         <p>
 
             From crispy Puchka to delicious Chaat
@@ -195,7 +171,6 @@
             with love.
 
         </p>
-
 
         <button
             class="primary-btn"
@@ -224,7 +199,6 @@
 
     </p>
 
-
     <div
         id="dynamic-menu"
         class="dynamic-menu-grid">
@@ -246,13 +220,9 @@
 
 <section class="why-us">
 
-
     <p class="section-title">
-
         WHY CHOOSE US
-
     </p>
-
 
     <h2>
 
@@ -264,9 +234,7 @@
 
     </h2>
 
-
     <div class="features">
-
 
         <div class="feature">
 
@@ -335,7 +303,6 @@
 
         </div>
 
-
     </div>
 
 </section>
@@ -349,11 +316,9 @@
     id="order-tracking"
     class="order-tracking-section">
 
-
     <h2>
         Track Your Order
     </h2>
-
 
     <p>
 
@@ -361,15 +326,12 @@
 
     </p>
 
-
     <div class="tracking-box">
-
 
         <input
             type="number"
             id="tracking-order-id"
             placeholder="Enter Order ID">
-
 
         <button
             type="button"
@@ -380,7 +342,6 @@
         </button>
 
     </div>
-
 
     <div
         id="tracking-result"
@@ -399,13 +360,9 @@
     id="contact"
     class="contact">
 
-
     <p class="section-title">
-
         CONTACT US
-
     </p>
-
 
     <h2>
 
@@ -417,9 +374,7 @@
 
     </h2>
 
-
     <div class="contact-container">
-
 
         <div>
 
@@ -459,7 +414,6 @@
 
         </div>
 
-
     </div>
 
 </section>
@@ -471,21 +425,14 @@
 
 <footer>
 
-
     <h3>
-
         Kolkata Victoria Chat House
-
     </h3>
 
-
     <p>
-
         Delicious food.
         Authentic taste.
-
     </p>
-
 
     <p class="copyright">
 
@@ -493,7 +440,6 @@
         All Rights Reserved.
 
     </p>
-
 
 </footer>
 
@@ -521,32 +467,22 @@
 
 <div id="cart-box">
 
-
     <div class="cart-header">
-
 
         <h2>
             Your Cart
         </h2>
 
-
         <button onclick="toggleCart()">
-
             ✕
-
         </button>
 
     </div>
 
 
-    <!-- CART ITEMS -->
-
     <div id="cart-items">
-
     </div>
 
-
-    <!-- CART TOTAL -->
 
     <div class="cart-total">
 
@@ -560,8 +496,6 @@
     </div>
 
 
-    <!-- PLACE ORDER -->
-
     <button
         class="place-order-btn"
         onclick="placeOrder()">
@@ -569,7 +503,6 @@
         Place Order
 
     </button>
-
 
 </div>
 
@@ -580,9 +513,7 @@
 
 <div id="order-form">
 
-
     <div class="order-form-box">
-
 
         <button
             onclick="closeOrderForm()">
@@ -591,26 +522,16 @@
 
         </button>
 
-
         <h2>
-
             Complete Your Order
-
         </h2>
-
 
         <form
             onsubmit="confirmOrder(event)">
 
-
-            <!-- NAME -->
-
             <label for="customer-name">
-
                 Full Name
-
             </label>
-
 
             <input
                 type="text"
@@ -619,14 +540,9 @@
                 required>
 
 
-            <!-- PHONE -->
-
             <label for="customer-phone">
-
                 Phone Number
-
             </label>
-
 
             <input
                 type="tel"
@@ -637,14 +553,9 @@
                 required>
 
 
-            <!-- ADDRESS -->
-
             <label for="customer-address">
-
                 Delivery Address
-
             </label>
-
 
             <textarea
                 id="customer-address"
@@ -653,21 +564,13 @@
                 required></textarea>
 
 
-            <!-- ORDER SUMMARY -->
-
             <h3 class="order-summary-title">
-
                 Order Summary
-
             </h3>
 
-
             <div id="order-summary">
-
             </div>
 
-
-            <!-- TOTAL -->
 
             <div class="form-total">
 
@@ -677,8 +580,6 @@
             </div>
 
 
-            <!-- CONFIRM -->
-
             <button
                 type="submit"
                 class="confirm-order-btn">
@@ -687,9 +588,7 @@
 
             </button>
 
-
         </form>
-
 
     </div>
 
@@ -711,23 +610,15 @@
     id="order-success-popup"
     class="success-popup">
 
-
     <div class="success-popup-box">
 
-
         <div class="success-icon">
-
             ✓
-
         </div>
 
-
         <h2>
-
             Order Placed Successfully!
-
         </h2>
-
 
         <p class="success-thank-you">
 
@@ -739,9 +630,7 @@
 
         </p>
 
-
         <div class="success-order-details">
-
 
             <p>
 
@@ -753,7 +642,6 @@
 
             </p>
 
-
             <p>
 
                 <strong>
@@ -763,7 +651,6 @@
                 <span id="success-order-total"></span>
 
             </p>
-
 
             <p>
 
@@ -775,9 +662,7 @@
 
             </p>
 
-
         </div>
-
 
         <button
             type="button"
@@ -787,7 +672,6 @@
 
         </button>
 
-
     </div>
 
 </div>
@@ -796,4 +680,3 @@
 </body>
 
 </html>
-

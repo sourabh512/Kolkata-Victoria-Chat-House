@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -628,7 +627,7 @@
 ========================================= */
 
 const API_BASE =
-    "https://kolkata-victoria-chat-house-production.up.railway.app";
+    "https://resplendent-solace-production-a0b3.up.railway.app";
 
 
 /* =========================================
@@ -686,8 +685,8 @@ function loadHistory() {
     .then(function(orders) {
 
         /*
-           Only completed orders are shown
-        */
+         * Only completed orders are shown.
+         */
 
         allOrders =
             orders.filter(function(order) {
@@ -853,9 +852,9 @@ function matchesDateFilter(order) {
 
 
         /*
-           Sunday = 0
-           Monday = 1
-        */
+         * Sunday = 0
+         * Monday = 1
+         */
 
         let difference =
             day === 0
@@ -1960,4 +1959,3 @@ loadHistory();
 </body>
 
 </html>
-

@@ -4,136 +4,134 @@
 
 <head>
 
+    <meta charset="UTF-8">
 
-<meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
 
-<title>Admin Login</title>
+    <style>
 
-<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+        body {
+            font-family: Arial, sans-serif;
+            background: #fff3e0;
 
-    body {
-        font-family: Arial, sans-serif;
-        background: #fff3e0;
+            min-height: 100vh;
 
-        min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+        .login-box {
+            width: 400px;
+            max-width: 90%;
 
-    .login-box {
-        width: 400px;
-        max-width: 90%;
+            background: white;
 
-        background: white;
+            padding: 35px;
 
-        padding: 35px;
+            border-radius: 12px;
 
-        border-radius: 12px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+        }
 
-        box-shadow: 0 5px 25px rgba(0,0,0,0.2);
-    }
+        .login-box h1 {
+            text-align: center;
 
-    .login-box h1 {
-        text-align: center;
+            color: #e65100;
 
-        color: #e65100;
+            margin-bottom: 10px;
+        }
 
-        margin-bottom: 10px;
-    }
+        .login-box p {
+            text-align: center;
 
-    .login-box p {
-        text-align: center;
+            color: #666;
 
-        color: #666;
+            margin-bottom: 25px;
+        }
 
-        margin-bottom: 25px;
-    }
+        .login-box label {
+            display: block;
 
-    .login-box label {
-        display: block;
+            font-weight: bold;
 
-        font-weight: bold;
+            margin-bottom: 7px;
+        }
 
-        margin-bottom: 7px;
-    }
+        .login-box input {
+            width: 100%;
 
-    .login-box input {
-        width: 100%;
+            padding: 12px;
 
-        padding: 12px;
+            margin-bottom: 20px;
 
-        margin-bottom: 20px;
+            border: 1px solid #ccc;
 
-        border: 1px solid #ccc;
+            border-radius: 5px;
 
-        border-radius: 5px;
+            font-size: 16px;
+        }
 
-        font-size: 16px;
-    }
+        .login-box input:focus {
+            outline: none;
 
-    .login-box input:focus {
-        outline: none;
+            border-color: #e65100;
+        }
 
-        border-color: #e65100;
-    }
+        .login-btn {
+            width: 100%;
 
-    .login-btn {
-        width: 100%;
+            padding: 13px;
 
-        padding: 13px;
+            background: #e65100;
 
-        background: #e65100;
+            color: white;
 
-        color: white;
+            border: none;
 
-        border: none;
+            border-radius: 5px;
 
-        border-radius: 5px;
+            font-size: 17px;
 
-        font-size: 17px;
+            font-weight: bold;
 
-        font-weight: bold;
+            cursor: pointer;
+        }
 
-        cursor: pointer;
-    }
+        .login-btn:hover {
+            background: #bf360c;
+        }
 
-    .login-btn:hover {
-        background: #bf360c;
-    }
+        #error-message {
+            color: red;
 
-    #error-message {
-        color: red;
+            text-align: center;
 
-        text-align: center;
+            margin-top: 15px;
 
-        margin-top: 15px;
+            display: none;
+        }
 
-        display: none;
-    }
+        #loading {
+            text-align: center;
 
-    #loading {
-        text-align: center;
+            color: #e65100;
 
-        color: #e65100;
+            margin-top: 15px;
 
-        margin-top: 15px;
+            display: none;
+        }
 
-        display: none;
-    }
-
-</style>
-
+    </style>
 
 </head>
 
@@ -141,60 +139,60 @@
 
 <div class="login-box">
 
+    <h1>Admin Login</h1>
 
-<h1>Admin Login</h1>
+    <p>Kolkata Victoria Chat House</p>
 
-<p>Kolkata Victoria Chat House</p>
+    <form onsubmit="login(event)">
 
-<form onsubmit="login(event)">
+        <label for="username">
+            Username
+        </label>
 
-    <label for="username">
-        Username
-    </label>
-
-    <input
+        <input
             type="text"
             id="username"
             placeholder="Enter username"
             required
-    >
+        >
 
-    <label for="password">
-        Password
-    </label>
+        <label for="password">
+            Password
+        </label>
 
-    <input
+        <input
             type="password"
             id="password"
             placeholder="Enter password"
             required
-    >
+        >
 
-    <button
+        <button
             type="submit"
             class="login-btn">
-        Login
-    </button>
 
-    <p id="loading">
-        Checking login...
-    </p>
+            Login
 
-    <p id="error-message">
-        Invalid username or password
-    </p>
+        </button>
 
-</form>
+        <p id="loading">
+            Checking login...
+        </p>
 
+        <p id="error-message">
+            Invalid username or password
+        </p>
+
+    </form>
 
 </div>
+
 
 <script>
 
     function login(event) {
 
         event.preventDefault();
-
 
         let username =
             document.getElementById("username").value;
@@ -209,30 +207,49 @@
         document.getElementById("error-message")
             .style.display = "none";
 
-fetch("https://kolkata-victoria-chat-house-production.up.railway.app/api/login", {
 
-    method: "POST",
+        /*
+         * IMPORTANT:
+         * The login API belongs to the Spring Boot backend.
+         */
 
-    credentials: "include",
+        fetch(
+            "https://resplendent-solace-production-a0b3.up.railway.app/api/login",
+            {
 
-    headers: {
-        "Content-Type": "application/json"
-    },
+                method: "POST",
 
-            body: JSON.stringify({
+                /*
+                 * Required for JSESSIONID/session authentication.
+                 */
 
-                username: username,
-                password: password
+                credentials: "include",
 
-            })
+                headers: {
 
-        })
+                    "Content-Type": "application/json"
+
+                },
+
+                body: JSON.stringify({
+
+                    username: username,
+
+                    password: password
+
+                })
+
+            }
+        )
 
         .then(function(response) {
 
             if (!response.ok) {
 
-                throw new Error("Login request failed");
+                throw new Error(
+                    "Login request failed: " +
+                    response.status
+                );
 
             }
 
@@ -248,18 +265,37 @@ fetch("https://kolkata-victoria-chat-house-production.up.railway.app/api/login",
 
             if (data.success === true) {
 
+                /*
+                 * Remember that login was successful
+                 * in this browser session.
+                 */
+
                 sessionStorage.setItem(
                     "adminLoggedIn",
                     "true"
                 );
 
+
+                /*
+                 * admin.html is on the FRONTEND,
+                 * so use a relative path.
+                 */
+
                 window.location.href =
                     "admin.html";
 
-            } else {
+            }
 
-                document.getElementById("error-message")
-                    .style.display = "block";
+            else {
+
+                document.getElementById(
+                    "error-message"
+                ).innerText =
+                    "Invalid username or password.";
+
+                document.getElementById(
+                    "error-message"
+                ).style.display = "block";
 
             }
 
@@ -267,23 +303,32 @@ fetch("https://kolkata-victoria-chat-house-production.up.railway.app/api/login",
 
         .catch(function(error) {
 
-            console.error(error);
+            console.error(
+                "Login error:",
+                error
+            );
+
 
             document.getElementById("loading")
                 .style.display = "none";
 
-            document.getElementById("error-message")
-                .innerText =
-                    "Cannot connect to server.";
 
-            document.getElementById("error-message")
-                .style.display = "block";
+            document.getElementById(
+                "error-message"
+            ).innerText =
+                "Cannot connect to server.";
+
+
+            document.getElementById(
+                "error-message"
+            ).style.display = "block";
 
         });
 
     }
 
 </script>
+
 
 </body>
 
