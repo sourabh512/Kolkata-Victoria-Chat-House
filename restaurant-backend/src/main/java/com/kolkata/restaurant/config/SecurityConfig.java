@@ -1,7 +1,7 @@
 package com.kolkata.restaurant.config;
 
 import java.util.List;
-import org.springframework.security.authentication.ProviderManager;
+
 import com.kolkata.restaurant.security.AdminUserDetailsService;
 
 import org.springframework.context.annotation.Bean;
@@ -29,14 +29,22 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 public class SecurityConfig {
 
-    // Password encryption
+    // =========================
+    // PASSWORD ENCODER
+    // =========================
+
     @Bean
     public PasswordEncoder passwordEncoder() {
+
         return new BCryptPasswordEncoder();
+
     }
 
 
-    // Connect AdminUserDetailsService with Spring Security
+    // =========================
+    // AUTHENTICATION PROVIDER
+    // =========================
+
     @Bean
     public AuthenticationProvider authenticationProvider(
             AdminUserDetailsService adminUserDetailsService,
@@ -53,145 +61,242 @@ public class SecurityConfig {
     }
 
 
-    // Authentication manager
+    // =========================
+    // AUTHENTICATION MANAGER
+    // =========================
+
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration configuration)
             throws Exception {
 
         return configuration.getAuthenticationManager();
+
     }
 
 
-    // CORS
+    // =========================
+    // CORS CONFIGURATION
+    // =========================
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
 
         CorsConfiguration configuration =
                 new CorsConfiguration();
 
+
         configuration.setAllowedOrigins(List.of(
+
+                // Local frontend
                 "http://localhost:5500",
+
+                // Local frontend
                 "http://127.0.0.1:5500",
-                "https://resplendent-solace-production-a0b3.up.railway.app"
+
+                // Railway frontend
+                "https://kolkata-victoria-chat-house-production.up.railway.app"
+
         ));
 
+
         configuration.setAllowedMethods(List.of(
+
                 "GET",
                 "POST",
                 "PUT",
                 "DELETE",
                 "OPTIONS"
+
         ));
 
-        configuration.setAllowedHeaders(List.of("*"));
+
+        configuration.setAllowedHeaders(
+                List.of("*")
+        );
+
 
         configuration.setAllowCredentials(true);
 
+
         UrlBasedCorsConfigurationSource source =
                 new UrlBasedCorsConfigurationSource();
+
 
         source.registerCorsConfiguration(
                 "/**",
                 configuration
         );
 
+
         return source;
     }
 
 
-    // Security rules
+    // =========================
+    // SECURITY RULES
+    // =========================
+
     @Bean
     public SecurityFilterChain securityFilterChain(
             HttpSecurity http)
             throws Exception {
 
         http
+
+                // Enable CORS
                 .cors(cors -> {})
 
+                // Disable CSRF
                 .csrf(csrf -> csrf.disable())
+
 
                 .authorizeHttpRequests(auth -> auth
 
-                        // Browser preflight
+
+                        // =========================
+                        // CORS PREFLIGHT
+                        // =========================
+
                         .requestMatchers(
                                 HttpMethod.OPTIONS,
                                 "/**"
                         ).permitAll()
 
-                        // Login
+
+                        // =========================
+                        // ADMIN LOGIN
+                        // =========================
+
                         .requestMatchers(
                                 "/api/login"
                         ).permitAll()
 
-                        // Logout
+
+                        // =========================
+                        // LOGOUT
+                        // =========================
+
                         .requestMatchers(
                                 "/api/logout"
                         ).permitAll()
 
-                        // Customer places order
+
+                        // =========================
+                        // CUSTOMER PLACE ORDER
+                        // =========================
+
                         .requestMatchers(
                                 HttpMethod.POST,
                                 "/api/orders"
                         ).permitAll()
 
-                                // Customer can track one order
-                                .requestMatchers(
-                                        HttpMethod.GET,
-                                        "/api/orders/*"
-                                ).permitAll()
 
-// Admin views all orders
-                                .requestMatchers(
-                                        HttpMethod.GET,
-                                        "/api/orders"
-                                ).authenticated()
-                        // Admin changes order status
+                        // =========================
+                        // CUSTOMER TRACK ORDER
+                        // =========================
+
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/orders/*"
+                        ).permitAll()
+
+
+                        // =========================
+                        // ADMIN VIEW ALL ORDERS
+                        // =========================
+
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/orders"
+                        ).authenticated()
+
+
+                        // =========================
+                        // ADMIN UPDATE ORDER
+                        // =========================
+
                         .requestMatchers(
                                 HttpMethod.PUT,
                                 "/api/orders/**"
                         ).authenticated()
+
+
+                        // =========================
+                        // CUSTOMER VIEW MENU
+                        // =========================
+
                         .requestMatchers(
                                 HttpMethod.GET,
                                 "/api/menu",
                                 "/api/menu/**"
                         ).permitAll()
 
+
+                        // =========================
+                        // ADMIN ADD MENU
+                        // =========================
+
                         .requestMatchers(
                                 HttpMethod.POST,
                                 "/api/menu"
                         ).authenticated()
+
+
+                        // =========================
+                        // ADMIN UPDATE MENU
+                        // =========================
 
                         .requestMatchers(
                                 HttpMethod.PUT,
                                 "/api/menu/**"
                         ).authenticated()
 
+
+                        // =========================
+                        // ADMIN DELETE MENU
+                        // =========================
+
                         .requestMatchers(
                                 HttpMethod.DELETE,
                                 "/api/menu/**"
                         ).authenticated()
+
+
+                        // =========================
+                        // OTHER REQUESTS
+                        // =========================
+
                         .anyRequest().permitAll()
+
                 )
 
 
+                // =========================
                 // LOGOUT
+                // =========================
+
                 .logout(logout -> logout
 
                         .logoutUrl("/api/logout")
 
                         .logoutSuccessHandler(
                                 (request, response, authentication) -> {
+
                                     response.setStatus(200);
+
                                 }
                         )
 
                         .invalidateHttpSession(true)
 
                         .deleteCookies("JSESSIONID")
+
                 );
 
 
         return http.build();
+
     }
+
 }
