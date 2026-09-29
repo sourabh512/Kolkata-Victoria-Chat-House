@@ -1,3 +1,11 @@
+// =====================================
+// BACKEND API URL
+// =====================================
+
+const API_BASE_URL =
+    "https://resplendent-solace-production-a0b3.up.railway.app";
+
+
 let cart = [];
 
 
@@ -209,9 +217,14 @@ function confirmOrder(event) {
 
     event.preventDefault();
 
-    let name = document.getElementById("customer-name").value;
-    let phone = document.getElementById("customer-phone").value;
-    let address = document.getElementById("customer-address").value;
+    let name =
+        document.getElementById("customer-name").value;
+
+    let phone =
+        document.getElementById("customer-phone").value;
+
+    let address =
+        document.getElementById("customer-address").value;
 
     // Calculate total amount
     let total = 0;
@@ -227,7 +240,12 @@ function confirmOrder(event) {
 
     cart.forEach(function(item) {
 
-        items = items + item.name + " x " + item.quantity + ", ";
+        items =
+            items +
+            item.name +
+            " x " +
+            item.quantity +
+            ", ";
 
     });
 
@@ -237,24 +255,21 @@ function confirmOrder(event) {
     // ==========================================
 
     fetch(
-        "https://kolkata-victoria-chat-house-production.up.railway.app/api/payment/create-order?amount=" + total,
+        API_BASE_URL +
+        "/api/payment/create-order?amount=" +
+        total,
         {
             method: "POST"
         }
-
-    // fetch(
-    // "http://localhost:8080/api/payment/create-order?amount=" + total,
-    // {
-    //     method: "POST"
-    // }
-)
-    
+    )
 
     .then(function(response) {
 
         if (!response.ok) {
 
-            throw new Error("Could not create payment order");
+            throw new Error(
+                "Could not create payment order"
+            );
 
         }
 
@@ -290,6 +305,7 @@ function confirmOrder(event) {
 
 
             // CUSTOMER DETAILS
+
             prefill: {
 
                 name: name,
@@ -300,107 +316,184 @@ function confirmOrder(event) {
 
 
             // PAYMENT SUCCESS
-          handler: function(response) {
 
-    console.log("Payment successful:", response);
+            handler: function(response) {
 
-    // Step 1: Verify payment with backend
-    fetch(
-        "https://kolkata-victoria-chat-house-production.up.railway.app/api/payment/verify",
-        {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                razorpayOrderId: response.razorpay_order_id,
-                razorpayPaymentId: response.razorpay_payment_id,
-                razorpaySignature: response.razorpay_signature
-            })
-        }
-    )
-    .then(function(response) {
+                console.log(
+                    "Payment successful:",
+                    response
+                );
 
-        if (!response.ok) {
-            throw new Error("Payment verification failed");
-        }
 
-        return response.json();
-    })
-    .then(function(verificationData) {
+                // ==========================================
+                // VERIFY PAYMENT WITH BACKEND
+                // ==========================================
 
-        console.log("Payment verification:", verificationData);
+                fetch(
+                    API_BASE_URL +
+                    "/api/payment/verify",
+                    {
+                        method: "POST",
 
-        if (verificationData.status !== "success") {
-            throw new Error("Payment verification failed");
-        }
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
 
-        // Step 2: Payment is verified
-        // Now save the restaurant order
+                        body: JSON.stringify({
 
-        fetch(
-            "https://kolkata-victoria-chat-house-production.up.railway.app/api/orders",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    name: name,
-                    phone: phone,
-                    address: address,
-                    items: items,
-                    total: total
+                            razorpayOrderId:
+                                response.razorpay_order_id,
+
+                            razorpayPaymentId:
+                                response.razorpay_payment_id,
+
+                            razorpaySignature:
+                                response.razorpay_signature
+
+                        })
+                    }
+                )
+
+                .then(function(response) {
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            "Payment verification failed"
+                        );
+
+                    }
+
+                    return response.json();
+
                 })
-            }
-        )
-        .then(function(response) {
 
-            if (!response.ok) {
-                throw new Error("Order could not be saved");
-            }
+                .then(function(verificationData) {
 
-            return response.json();
-        })
-        .then(function(data) {
+                    console.log(
+                        "Payment verification:",
+                        verificationData
+                    );
 
-            console.log("Order saved in database:", data);
 
-            showOrderSuccessPopup(
-                data.id,
-                data.total,
-                name
-            );
+                    if (
+                        verificationData.status !==
+                        "success"
+                    ) {
 
-            cart = [];
+                        throw new Error(
+                            "Payment verification failed"
+                        );
 
-            updateCart();
+                    }
 
-            closeOrderForm();
 
-            document
-                .querySelector("#order-form form")
-                .reset();
-        })
-        .catch(function(error) {
+                    // ==========================================
+                    // SAVE RESTAURANT ORDER
+                    // ==========================================
 
-            console.error("Order saving error:", error);
+                    fetch(
+                        API_BASE_URL +
+                        "/api/orders",
+                        {
+                            method: "POST",
 
-            alert(
-                "Payment was successful, but the order could not be saved. Please contact the restaurant."
-            );
-        });
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
 
-    })
-    .catch(function(error) {
+                            body: JSON.stringify({
 
-        console.error("Payment verification error:", error);
+                                name: name,
 
-        alert(
-            "Payment could not be verified. Please contact the restaurant."
-        );
-    });
-},
+                                phone: phone,
+
+                                address: address,
+
+                                items: items,
+
+                                total: total
+
+                            })
+                        }
+                    )
+
+                    .then(function(response) {
+
+                        if (!response.ok) {
+
+                            throw new Error(
+                                "Order could not be saved"
+                            );
+
+                        }
+
+                        return response.json();
+
+                    })
+
+                    .then(function(data) {
+
+                        console.log(
+                            "Order saved in database:",
+                            data
+                        );
+
+
+                        showOrderSuccessPopup(
+                            data.id,
+                            data.total,
+                            name
+                        );
+
+
+                        cart = [];
+
+                        updateCart();
+
+                        closeOrderForm();
+
+
+                        document
+                            .querySelector(
+                                "#order-form form"
+                            )
+                            .reset();
+
+                    })
+
+                    .catch(function(error) {
+
+                        console.error(
+                            "Order saving error:",
+                            error
+                        );
+
+                        alert(
+                            "Payment was successful, but the order could not be saved. Please contact the restaurant."
+                        );
+
+                    });
+
+                })
+
+                .catch(function(error) {
+
+                    console.error(
+                        "Payment verification error:",
+                        error
+                    );
+
+                    alert(
+                        "Payment could not be verified. Please contact the restaurant."
+                    );
+
+                });
+
+            },
+
 
             // PAYMENT WINDOW CLOSED
 
@@ -419,7 +512,8 @@ function confirmOrder(event) {
         };
 
 
-        let razorpay = new Razorpay(options);
+        let razorpay =
+            new Razorpay(options);
 
         razorpay.open();
 
@@ -457,8 +551,12 @@ function orderNow() {
 
 function showMessage() {
 
-    alert("Welcome to Kolkata Victoria Chat House!");
+    alert(
+        "Welcome to Kolkata Victoria Chat House!"
+    );
+
 }
+
 
 // =====================================
 // LOAD MENU FROM DATABASE
@@ -470,153 +568,194 @@ function loadCustomerMenu() {
         document.getElementById("dynamic-menu");
 
     if (!menuContainer) {
+
         return;
+
     }
 
-   fetch("https://kolkata-victoria-chat-house-production.up.railway.app/api/menu")
-        .then(function(response) {
 
-            if (!response.ok) {
-                throw new Error("Could not load menu");
-            }
+    fetch(
+        API_BASE_URL +
+        "/api/menu"
+    )
 
-            return response.json();
-        })
+    .then(function(response) {
 
-        .then(function(menuItems) {
+        if (!response.ok) {
 
-            menuContainer.innerHTML = "";
+            throw new Error(
+                "Could not load menu"
+            );
 
-            // Show only available items
-            let availableItems =
-                menuItems.filter(function(item) {
-                    return item.available === true;
-                });
+        }
 
-            if (availableItems.length === 0) {
+        return response.json();
 
-                menuContainer.innerHTML =
-                    '<p class="no-menu">No menu items available right now.</p>';
+    })
 
-                return;
-            }
+    .then(function(menuItems) {
 
-            availableItems.forEach(function(item) {
-
-                // Create card
-                let card =
-                    document.createElement("div");
-
-                card.className =
-                    "dynamic-menu-card";
+        menuContainer.innerHTML = "";
 
 
-                // Create image
-                if (item.image) {
+        // Show only available items
 
-                    let image =
-                        document.createElement("img");
+        let availableItems =
+            menuItems.filter(function(item) {
 
-                    image.className =
-                        "dynamic-menu-image";
-
-                    image.src = item.image;
-
-                    image.alt = item.name;
-
-                    // Hide broken image
-                    image.onerror = function() {
-                        this.style.display = "none";
-                    };
-
-                    card.appendChild(image);
-                }
-
-
-                // Create content
-                let content =
-                    document.createElement("div");
-
-                content.className =
-                    "dynamic-menu-content";
-
-
-                // Item name
-                let name =
-                    document.createElement("h3");
-
-                name.textContent =
-                    item.name;
-
-
-                // Item price
-                let price =
-                    document.createElement("div");
-
-                price.className =
-                    "dynamic-menu-price";
-
-                price.textContent =
-                    "₹" + item.price;
-
-
-                // Add to cart button
-                let button =
-                    document.createElement("button");
-
-                button.className =
-                    "dynamic-menu-button";
-
-                button.textContent =
-                    "Add to Cart";
-
-
-                // Connect button to existing cart
-                button.addEventListener(
-                    "click",
-                    function() {
-
-                        addToCart(
-                            item.name,
-                            Number(item.price)
-                        );
-
-                    }
-                );
-
-
-                // Add everything
-                content.appendChild(name);
-
-                content.appendChild(price);
-
-                content.appendChild(button);
-
-                card.appendChild(content);
-
-                menuContainer.appendChild(card);
+                return item.available === true;
 
             });
 
-        })
 
-        .catch(function(error) {
-
-            console.error(
-                "Menu loading error:",
-                error
-            );
+        if (availableItems.length === 0) {
 
             menuContainer.innerHTML =
-                '<p class="menu-error">' +
-                'Unable to load menu. Please try again.' +
+                '<p class="no-menu">' +
+                'No menu items available right now.' +
                 '</p>';
 
+            return;
+
+        }
+
+
+        availableItems.forEach(function(item) {
+
+            // Create card
+
+            let card =
+                document.createElement("div");
+
+            card.className =
+                "dynamic-menu-card";
+
+
+            // Create image
+
+            if (item.image) {
+
+                let image =
+                    document.createElement("img");
+
+                image.className =
+                    "dynamic-menu-image";
+
+                image.src =
+                    item.image;
+
+                image.alt =
+                    item.name;
+
+
+                // Hide broken image
+
+                image.onerror = function() {
+
+                    this.style.display =
+                        "none";
+
+                };
+
+
+                card.appendChild(image);
+
+            }
+
+
+            // Create content
+
+            let content =
+                document.createElement("div");
+
+            content.className =
+                "dynamic-menu-content";
+
+
+            // Item name
+
+            let name =
+                document.createElement("h3");
+
+            name.textContent =
+                item.name;
+
+
+            // Item price
+
+            let price =
+                document.createElement("div");
+
+            price.className =
+                "dynamic-menu-price";
+
+            price.textContent =
+                "₹" + item.price;
+
+
+            // Add to cart button
+
+            let button =
+                document.createElement("button");
+
+            button.className =
+                "dynamic-menu-button";
+
+            button.textContent =
+                "Add to Cart";
+
+
+            // Connect button to existing cart
+
+            button.addEventListener(
+                "click",
+                function() {
+
+                    addToCart(
+                        item.name,
+                        Number(item.price)
+                    );
+
+                }
+            );
+
+
+            // Add everything
+
+            content.appendChild(name);
+
+            content.appendChild(price);
+
+            content.appendChild(button);
+
+            card.appendChild(content);
+
+            menuContainer.appendChild(card);
+
         });
+
+    })
+
+    .catch(function(error) {
+
+        console.error(
+            "Menu loading error:",
+            error
+        );
+
+
+        menuContainer.innerHTML =
+            '<p class="menu-error">' +
+            'Unable to load menu. Please try again.' +
+            '</p>';
+
+    });
+
 }
 
 
 // Load menu after page is ready
+
 document.addEventListener(
     "DOMContentLoaded",
     function() {
@@ -625,6 +764,7 @@ document.addEventListener(
 
     }
 );
+
 
 // =====================================
 // ORDER SUCCESS POPUP
@@ -638,19 +778,26 @@ function showOrderSuccessPopup(
 
     document.getElementById(
         "success-order-id"
-    ).textContent = "#" + orderId;
+    ).textContent =
+        "#" + orderId;
+
 
     document.getElementById(
         "success-order-total"
-    ).textContent = "₹" + total;
+    ).textContent =
+        "₹" + total;
+
 
     document.getElementById(
         "success-customer-name"
-    ).textContent = customerName;
+    ).textContent =
+        customerName;
+
 
     document.getElementById(
         "order-success-popup"
     ).classList.add("show");
+
 }
 
 
@@ -659,20 +806,27 @@ function closeSuccessPopup() {
     document.getElementById(
         "order-success-popup"
     ).classList.remove("show");
+
 }
+
 
 // =====================================
 // CUSTOMER ORDER TRACKING
 // =====================================
+
 function trackOrder() {
 
-    let orderId = document.getElementById(
-        "tracking-order-id"
-    ).value.trim();
+    let orderId =
+        document.getElementById(
+            "tracking-order-id"
+        ).value.trim();
 
-    let result = document.getElementById(
-        "tracking-result"
-    );
+
+    let result =
+        document.getElementById(
+            "tracking-result"
+        );
+
 
     if (orderId === "") {
 
@@ -682,19 +836,33 @@ function trackOrder() {
             '</p>';
 
         return;
+
     }
+
 
     result.innerHTML =
         "<p>Checking order...</p>";
 
-    let url =
-    "https://kolkata-victoria-chat-house-production.up.railway.app/api/orders/" +
-    encodeURIComponent(orderId);
-    console.log("Tracking URL:", url);
 
-    fetch(url, {
-        method: "GET"
-    })
+    let url =
+        API_BASE_URL +
+        "/api/orders/" +
+        encodeURIComponent(orderId);
+
+
+    console.log(
+        "Tracking URL:",
+        url
+    );
+
+
+    fetch(
+        url,
+        {
+            method: "GET"
+        }
+    )
+
     .then(function(response) {
 
         console.log(
@@ -702,16 +870,20 @@ function trackOrder() {
             response.status
         );
 
+
         if (!response.ok) {
 
             throw new Error(
                 "Server returned " +
                 response.status
             );
+
         }
 
         return response.json();
+
     })
+
     .then(function(order) {
 
         console.log(
@@ -719,9 +891,11 @@ function trackOrder() {
             order
         );
 
+
         displayOrderStatus(order);
 
     })
+
     .catch(function(error) {
 
         console.error(
@@ -729,13 +903,17 @@ function trackOrder() {
             error
         );
 
+
         result.innerHTML =
             '<p class="tracking-error">' +
             'Unable to find this order. ' +
             'Please check your Order ID.' +
             '</p>';
+
     });
+
 }
+
 
 // Display order status
 
@@ -746,8 +924,10 @@ function displayOrderStatus(order) {
             "tracking-result"
         );
 
+
     let status =
         order.status;
+
 
     let newActive =
         status === "NEW" ||
@@ -755,14 +935,17 @@ function displayOrderStatus(order) {
         status === "READY" ||
         status === "COMPLETED";
 
+
     let preparingActive =
         status === "PREPARING" ||
         status === "READY" ||
         status === "COMPLETED";
 
+
     let readyActive =
         status === "READY" ||
         status === "COMPLETED";
+
 
     let completedActive =
         status === "COMPLETED";
@@ -816,6 +999,7 @@ function displayOrderStatus(order) {
             '</div>' +
 
         '</div>';
+
 }
 
 
@@ -829,8 +1013,10 @@ function createStatusStep(
     let activeClass =
         active ? "active" : "";
 
+
     let symbol =
         active ? "✓" : "";
+
 
     return (
 
@@ -849,7 +1035,9 @@ function createStatusStep(
         '</div>'
 
     );
+
 }
+
 
 // =====================================
 // ESCAPE HTML
@@ -857,14 +1045,41 @@ function createStatusStep(
 
 function escapeHtml(text) {
 
-    if (text === null || text === undefined) {
+    if (
+        text === null ||
+        text === undefined
+    ) {
+
         return "";
+
     }
 
+
     return String(text)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
 }
