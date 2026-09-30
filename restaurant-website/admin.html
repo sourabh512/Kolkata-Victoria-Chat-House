@@ -2,12 +2,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Admin Dashboard - Kolkata Victoria Chat House</title>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Admin Dashboard - Kolkata Victoria Chat House
+    </title>
 
     <style>
+
         * {
             box-sizing: border-box;
         }
@@ -19,84 +25,122 @@
             color: #333;
         }
 
-        /* HEADER */
+        /* =========================================
+           HEADER
+        ========================================= */
 
         header {
-            background: linear-gradient(135deg, #e65100, #ff6d00);
+            background: linear-gradient(
+                135deg,
+                #e65100,
+                #ff6d00
+            );
+
             color: white;
+
             padding: 18px 25px;
+
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
+
             flex-wrap: wrap;
+
             gap: 10px;
         }
 
         header h1 {
             margin: 0;
+
             font-size: 24px;
         }
 
         .header-buttons {
             display: flex;
+
             gap: 10px;
+
             flex-wrap: wrap;
         }
 
         button {
             border: none;
-            cursor: pointer;
-            border-radius: 6px;
-            padding: 10px 16px;
-            font-size: 14px;
-        }
 
-        .sound-btn {
-            background: white;
-            color: #e65100;
-            font-weight: bold;
+            cursor: pointer;
+
+            border-radius: 6px;
+
+            padding: 10px 16px;
+
+            font-size: 14px;
         }
 
         .logout-btn {
             background: #b71c1c;
+
             color: white;
         }
 
         .menu-btn {
             background: #fff3e0;
+
             color: #e65100;
+
             font-weight: bold;
         }
 
-        /* SOUND STATUS */
+        /* =========================================
+           SOUND STATUS
+        ========================================= */
 
         #soundStatus {
             text-align: center;
+
             background: #fff3e0;
+
             color: #e65100;
+
             padding: 10px;
+
             font-weight: bold;
         }
 
-        /* NOTIFICATION */
+        /* =========================================
+           NOTIFICATION
+        ========================================= */
 
         #notification {
             display: none;
+
             position: fixed;
+
             top: 20px;
+
             right: 20px;
+
             width: 330px;
+
             max-width: calc(100% - 40px);
+
             background: white;
+
             border-left: 6px solid #e65100;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.25);
+
+            box-shadow:
+                0 5px 20px rgba(0, 0, 0, 0.25);
+
             padding: 18px;
+
             z-index: 9999;
+
             border-radius: 8px;
         }
 
         #notification h3 {
             margin-top: 0;
+
             color: #e65100;
         }
 
@@ -106,58 +150,83 @@
 
         .notification-buttons {
             display: flex;
+
             gap: 8px;
+
             margin-top: 15px;
         }
 
         .prepare-notification {
             background: #e65100;
+
             color: white;
+
             flex: 1;
         }
 
         .close-notification {
             background: #ddd;
+
             color: #333;
         }
 
-        /* CONTAINER */
+        /* =========================================
+           CONTAINER
+        ========================================= */
 
         .container {
             width: 95%;
+
             max-width: 1300px;
+
             margin: 25px auto;
         }
 
-        /* STATISTICS */
+        /* =========================================
+           STATISTICS
+        ========================================= */
 
         .stats {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
             gap: 15px;
+
             margin-bottom: 25px;
         }
 
         .stat-card {
             background: white;
+
             padding: 20px;
+
             border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.1);
+
             text-align: center;
         }
 
         .stat-card h2 {
             margin: 0;
+
             color: #e65100;
+
             font-size: 30px;
         }
 
         .stat-card p {
             margin-bottom: 0;
+
             color: #666;
         }
 
-        /* SEARCH */
+        /* =========================================
+           SEARCH
+        ========================================= */
 
         .search-box {
             margin-bottom: 25px;
@@ -165,14 +234,28 @@
 
         .search-box input {
             width: 100%;
+
             padding: 14px 18px;
+
             border: 2px solid #e65100;
+
             border-radius: 30px;
+
             font-size: 16px;
+
             outline: none;
         }
 
-        /* SECTIONS */
+        .search-box input:focus {
+            border-color: #ff6d00;
+
+            box-shadow:
+                0 0 8px rgba(230, 81, 0, 0.2);
+        }
+
+        /* =========================================
+           SECTIONS
+        ========================================= */
 
         .order-section {
             margin-bottom: 35px;
@@ -180,42 +263,64 @@
 
         .section-title {
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
+
             margin-bottom: 15px;
         }
 
         .section-title h2 {
             margin: 0;
+
             color: #e65100;
         }
 
         .order-count {
             background: #e65100;
+
             color: white;
+
             border-radius: 20px;
+
             padding: 5px 12px;
+
             font-size: 13px;
         }
 
-        /* ORDER GRID */
+        /* =========================================
+           ORDER GRID
+        ========================================= */
 
         .orders {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(300px, 1fr)
+                );
+
             gap: 15px;
         }
 
         .order-card {
             background: white;
+
             border-radius: 10px;
+
             padding: 18px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.12);
+
             border-top: 5px solid #e65100;
         }
 
         .order-card h3 {
             margin-top: 0;
+
             color: #e65100;
         }
 
@@ -225,16 +330,23 @@
 
         .order-items {
             background: #f8f8f8;
+
             padding: 10px;
+
             border-radius: 6px;
+
             margin: 12px 0;
         }
 
         .order-item {
             display: flex;
+
             justify-content: space-between;
+
             gap: 10px;
+
             padding: 5px 0;
+
             border-bottom: 1px solid #ddd;
         }
 
@@ -244,20 +356,27 @@
 
         .total {
             font-size: 18px;
+
             font-weight: bold;
+
             color: #e65100;
         }
 
         .status-buttons {
             display: flex;
+
             gap: 8px;
+
             flex-wrap: wrap;
+
             margin-top: 15px;
         }
 
         .status-buttons button {
             flex: 1;
+
             min-width: 90px;
+
             color: white;
         }
 
@@ -275,19 +394,27 @@
 
         .empty {
             background: white;
+
             padding: 25px;
+
             text-align: center;
+
             border-radius: 8px;
+
             color: #777;
         }
 
-        /* MOBILE */
+        /* =========================================
+           MOBILE
+        ========================================= */
 
         @media (max-width: 800px) {
 
             header {
                 flex-direction: column;
+
                 align-items: stretch;
+
                 text-align: center;
             }
 
@@ -296,7 +423,8 @@
             }
 
             .stats {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns:
+                    repeat(2, 1fr);
             }
 
             .orders {
@@ -315,7 +443,9 @@
             }
 
             .stats {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns:
+                    1fr 1fr;
+
                 gap: 10px;
             }
 
@@ -329,52 +459,65 @@
 
             #notification {
                 top: 10px;
+
                 right: 10px;
+
                 width: calc(100% - 20px);
             }
         }
+
     </style>
+
 </head>
 
 <body>
 
 <header>
 
-    <h1>🍽️ Kolkata Victoria Chat House</h1>
+    <h1>
+        🍽️ Kolkata Victoria Chat House
+    </h1>
 
     <div class="header-buttons">
 
         <button
-            class="sound-btn"
-            onclick="enableOrderSound()">
-            🔊 Enable Order Sound
-        </button>
-
-        <button
             class="menu-btn"
             onclick="openMenuManagement()">
+
             🍽️ Menu Management
+
         </button>
 
         <button
             class="logout-btn"
             onclick="logout()">
+
             Logout
+
         </button>
 
     </div>
 
 </header>
 
+
 <div id="soundStatus">
-    🔇 Order sound is disabled. Click "Enable Order Sound" once.
+
+    🔊 Order notification sound is automatic.
+    Sound will activate after your first interaction with this page.
+
 </div>
 
-<!-- NEW ORDER NOTIFICATION -->
+
+<!-- =========================================
+     NEW ORDER NOTIFICATION
+========================================= -->
 
 <div id="notification">
 
-    <h3>🔔 NEW ORDER!</h3>
+    <h3>
+        🔔 NEW ORDER!
+    </h3>
 
     <p id="notificationText">
         New order received.
@@ -385,48 +528,90 @@
         <button
             class="prepare-notification"
             onclick="prepareNotificationOrder()">
+
             👨‍🍳 Mark Preparing
+
         </button>
 
         <button
             class="close-notification"
             onclick="closeNotification()">
+
             Close
+
         </button>
 
     </div>
 
 </div>
 
+
 <div class="container">
 
-    <!-- STATISTICS -->
+
+    <!-- =========================================
+         STATISTICS
+    ========================================= -->
 
     <div class="stats">
 
         <div class="stat-card">
-            <h2 id="newCount">0</h2>
-            <p>New Orders</p>
+
+            <h2 id="newCount">
+                0
+            </h2>
+
+            <p>
+                New Orders
+            </p>
+
         </div>
 
-        <div class="stat-card">
-            <h2 id="preparingCount">0</h2>
-            <p>Preparing</p>
-        </div>
 
         <div class="stat-card">
-            <h2 id="readyCount">0</h2>
-            <p>Ready</p>
+
+            <h2 id="preparingCount">
+                0
+            </h2>
+
+            <p>
+                Preparing
+            </p>
+
         </div>
 
+
         <div class="stat-card">
-            <h2 id="completedCount">0</h2>
-            <p>Completed</p>
+
+            <h2 id="readyCount">
+                0
+            </h2>
+
+            <p>
+                Ready
+            </p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h2 id="completedCount">
+                0
+            </h2>
+
+            <p>
+                Completed
+            </p>
+
         </div>
 
     </div>
 
-    <!-- SEARCH -->
+
+    <!-- =========================================
+         SEARCH
+    ========================================= -->
 
     <div class="search-box">
 
@@ -438,18 +623,25 @@
 
     </div>
 
-    <!-- NEW ORDERS -->
+
+    <!-- =========================================
+         NEW ORDERS
+    ========================================= -->
 
     <section class="order-section">
 
         <div class="section-title">
 
-            <h2>🆕 New Orders</h2>
+            <h2>
+                🆕 New Orders
+            </h2>
 
             <span
                 class="order-count"
                 id="newSectionCount">
+
                 0
+
             </span>
 
         </div>
@@ -461,18 +653,25 @@
 
     </section>
 
-    <!-- PREPARING -->
+
+    <!-- =========================================
+         PREPARING
+    ========================================= -->
 
     <section class="order-section">
 
         <div class="section-title">
 
-            <h2>👨‍🍳 Preparing</h2>
+            <h2>
+                👨‍🍳 Preparing
+            </h2>
 
             <span
                 class="order-count"
                 id="preparingSectionCount">
+
                 0
+
             </span>
 
         </div>
@@ -484,18 +683,25 @@
 
     </section>
 
-    <!-- READY -->
+
+    <!-- =========================================
+         READY
+    ========================================= -->
 
     <section class="order-section">
 
         <div class="section-title">
 
-            <h2>✅ Ready</h2>
+            <h2>
+                ✅ Ready
+            </h2>
 
             <span
                 class="order-count"
                 id="readySectionCount">
+
                 0
+
             </span>
 
         </div>
@@ -507,18 +713,25 @@
 
     </section>
 
-    <!-- COMPLETED -->
+
+    <!-- =========================================
+         COMPLETED
+    ========================================= -->
 
     <section class="order-section">
 
         <div class="section-title">
 
-            <h2>📦 Completed</h2>
+            <h2>
+                📦 Completed
+            </h2>
 
             <span
                 class="order-count"
                 id="completedSectionCount">
+
                 0
+
             </span>
 
         </div>
@@ -532,15 +745,22 @@
 
 </div>
 
+
 <script>
+
 
     /* =========================================
        ADMIN LOGIN CHECK
     ========================================= */
 
-    if (sessionStorage.getItem("adminLoggedIn") !== "true") {
+    if (
+        sessionStorage.getItem(
+            "adminLoggedIn"
+        ) !== "true"
+    ) {
 
-        window.location.href = "login.html";
+        window.location.href =
+            "login.html";
 
     }
 
@@ -559,7 +779,8 @@
 
     let allOrders = [];
 
-    let previousNewOrderIds = new Set();
+    let previousNewOrderIds =
+        new Set();
 
     let firstLoad = true;
 
@@ -569,89 +790,150 @@
 
     let soundTimer = null;
 
+    let audioContext = null;
+
 
     /* =========================================
-       AUDIO
+       AUDIO INITIALIZATION
     ========================================= */
 
-    const notificationSound =
-        new Audio(
-            "https://actions.google.com/sounds/v1/alarms/notification.mp3"
-        );
+    function initializeAudio() {
 
-    notificationSound.preload = "auto";
+        try {
 
+            const AudioContext =
+                window.AudioContext ||
+                window.webkitAudioContext;
 
-    /*
-       Enable sound.
+            if (!AudioContext) {
 
-       Browser normally blocks automatic audio.
-       The admin clicks the button once.
-    */
-
-    function enableOrderSound() {
-
-        notificationSound.volume = 1.0;
-
-        notificationSound.currentTime = 0;
-
-        notificationSound.play()
-            .then(() => {
-
-                notificationSound.pause();
-
-                notificationSound.currentTime = 0;
-
-                soundEnabled = true;
-
-                document.getElementById("soundStatus").innerText =
-                    "🔊 Order sound is ENABLED.";
-
-                document.querySelector(".sound-btn").innerText =
-                    "🔊 Sound Enabled";
-
-            })
-            .catch(error => {
-
-                console.log("Audio permission error:", error);
-
-                alert(
-                    "Please click the button again to allow sound."
+                console.log(
+                    "Web Audio API is not supported."
                 );
 
-            });
+                return;
+
+            }
+
+            if (!audioContext) {
+
+                audioContext =
+                    new AudioContext();
+
+            }
+
+            if (
+                audioContext.state ===
+                "suspended"
+            ) {
+
+                audioContext.resume();
+
+            }
+
+            soundEnabled = true;
+
+            document.getElementById(
+                "soundStatus"
+            ).innerText =
+                "🔊 Order notification sound is ON.";
+
+            console.log(
+                "Order sound enabled automatically."
+            );
+
+
+            /*
+               If NEW orders already exist,
+               start the alarm after audio
+               becomes available.
+            */
+
+            const newOrders =
+                allOrders.filter(
+                    order =>
+                        getStatus(order) ===
+                        "NEW"
+                );
+
+            if (
+                newOrders.length > 0
+            ) {
+
+                startRepeatingSound();
+
+            }
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Audio initialization error:",
+                error
+            );
+
+        }
 
     }
 
 
-    /*
-       Start repeating sound.
-    */
+    /* =========================================
+       UNLOCK AUDIO ON FIRST USER INTERACTION
+    ========================================= */
 
-    function startRepeatingSound() {
+    function unlockAudio() {
 
-        if (!soundEnabled) {
+        if (soundEnabled) {
 
             return;
 
         }
 
-        stopRepeatingSound();
-
-        playNotificationSound();
-
-        soundTimer = setInterval(() => {
-
-            playNotificationSound();
-
-        }, 3000);
+        initializeAudio();
 
     }
 
 
     /*
-       Play sound once.
+       Chrome and other browsers may block
+       automatic audio.
+
+       Therefore the first normal interaction
+       anywhere on the admin page unlocks it.
+
+       The admin does NOT need to click a
+       special sound button.
     */
+
+    document.addEventListener(
+        "click",
+        unlockAudio,
+        {
+            once: true
+        }
+    );
+
+    document.addEventListener(
+        "touchstart",
+        unlockAudio,
+        {
+            once: true
+        }
+    );
+
+    document.addEventListener(
+        "keydown",
+        unlockAudio,
+        {
+            once: true
+        }
+    );
+
+
+    /* =========================================
+       PLAY NOTIFICATION SOUND
+    ========================================= */
 
     function playNotificationSound() {
 
@@ -661,38 +943,193 @@
 
         }
 
-        notificationSound.currentTime = 0;
+        if (!audioContext) {
 
-        notificationSound.play()
-            .catch(error => {
+            return;
 
-                console.log(
-                    "Notification sound could not play:",
-                    error
-                );
+        }
 
-            });
+        try {
+
+            if (
+                audioContext.state ===
+                "suspended"
+            ) {
+
+                audioContext.resume();
+
+            }
+
+
+            /*
+               First beep
+            */
+
+            const oscillator1 =
+                audioContext.createOscillator();
+
+            const gain1 =
+                audioContext.createGain();
+
+            oscillator1.type =
+                "square";
+
+            oscillator1.frequency.setValueAtTime(
+                900,
+                audioContext.currentTime
+            );
+
+            oscillator1.frequency.setValueAtTime(
+                700,
+                audioContext.currentTime + 0.15
+            );
+
+            gain1.gain.setValueAtTime(
+                0.001,
+                audioContext.currentTime
+            );
+
+            gain1.gain.exponentialRampToValueAtTime(
+                0.5,
+                audioContext.currentTime + 0.02
+            );
+
+            gain1.gain.exponentialRampToValueAtTime(
+                0.001,
+                audioContext.currentTime + 0.3
+            );
+
+            oscillator1.connect(gain1);
+
+            gain1.connect(
+                audioContext.destination
+            );
+
+            oscillator1.start();
+
+            oscillator1.stop(
+                audioContext.currentTime + 0.3
+            );
+
+
+            /*
+               Second beep
+            */
+
+            const oscillator2 =
+                audioContext.createOscillator();
+
+            const gain2 =
+                audioContext.createGain();
+
+            oscillator2.type =
+                "square";
+
+            oscillator2.frequency.setValueAtTime(
+                900,
+                audioContext.currentTime + 0.35
+            );
+
+            oscillator2.frequency.setValueAtTime(
+                700,
+                audioContext.currentTime + 0.5
+            );
+
+            gain2.gain.setValueAtTime(
+                0.001,
+                audioContext.currentTime + 0.35
+            );
+
+            gain2.gain.exponentialRampToValueAtTime(
+                0.5,
+                audioContext.currentTime + 0.37
+            );
+
+            gain2.gain.exponentialRampToValueAtTime(
+                0.001,
+                audioContext.currentTime + 0.65
+            );
+
+            oscillator2.connect(gain2);
+
+            gain2.connect(
+                audioContext.destination
+            );
+
+            oscillator2.start(
+                audioContext.currentTime + 0.35
+            );
+
+            oscillator2.stop(
+                audioContext.currentTime + 0.65
+            );
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Notification sound error:",
+                error
+            );
+
+        }
 
     }
 
 
-    /*
-       Stop repeating sound.
-    */
+    /* =========================================
+       START REPEATING SOUND
+    ========================================= */
+
+    function startRepeatingSound() {
+
+        if (!soundEnabled) {
+
+            return;
+
+        }
+
+        if (!audioContext) {
+
+            return;
+
+        }
+
+        stopRepeatingSound();
+
+        playNotificationSound();
+
+        soundTimer =
+            setInterval(
+                function() {
+
+                    playNotificationSound();
+
+                },
+                3000
+            );
+
+    }
+
+
+    /* =========================================
+       STOP REPEATING SOUND
+    ========================================= */
 
     function stopRepeatingSound() {
 
-        if (soundTimer !== null) {
+        if (
+            soundTimer !== null
+        ) {
 
-            clearInterval(soundTimer);
+            clearInterval(
+                soundTimer
+            );
 
             soundTimer = null;
 
         }
-
-        notificationSound.pause();
-
-        notificationSound.currentTime = 0;
 
     }
 
@@ -703,18 +1140,36 @@
 
     function escapeHtml(value) {
 
-        if (value === null || value === undefined) {
+        if (
+            value === null ||
+            value === undefined
+        ) {
 
             return "";
 
         }
 
         return String(value)
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+            .replace(
+                /</g,
+                "&lt;"
+            )
+            .replace(
+                />/g,
+                "&gt;"
+            )
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+            .replace(
+                /'/g,
+                "&#039;"
+            );
 
     }
 
@@ -736,84 +1191,118 @@
        CHECK NEW ORDERS
     ========================================= */
 
-    function checkForNewOrders(orders) {
+    function checkForNewOrders(
+        orders
+    ) {
 
-        const newOrders = orders.filter(
-            order => getStatus(order) === "NEW"
-        );
+        const newOrders =
+            orders.filter(
+                order =>
+                    getStatus(order) ===
+                    "NEW"
+            );
 
-        const currentIds = new Set(
-            newOrders.map(order => String(order.id))
-        );
+
+        const currentIds =
+            new Set(
+                newOrders.map(
+                    order =>
+                        String(order.id)
+                )
+            );
 
 
-        /*
-           First page load.
-
-           If orders already exist when admin opens
-           the dashboard, show notification.
-        */
+        /* =====================================
+           FIRST PAGE LOAD
+        ===================================== */
 
         if (firstLoad) {
 
             firstLoad = false;
 
-            newOrders.forEach(order => {
+            newOrders.forEach(
+                order => {
 
-                previousNewOrderIds.add(
-                    String(order.id)
+                    previousNewOrderIds.add(
+                        String(order.id)
+                    );
+
+                }
+            );
+
+
+            /*
+               Show existing NEW order
+               notification.
+
+               Sound will start automatically
+               once browser audio is unlocked.
+            */
+
+            if (
+                newOrders.length > 0
+            ) {
+
+                showNotification(
+                    newOrders[
+                        newOrders.length - 1
+                    ]
                 );
-
-            });
-
-            if (newOrders.length > 0) {
-
-                showNotification(newOrders[0]);
 
             }
 
             return;
+
         }
 
 
-        /*
-           Find newly arrived orders.
-        */
+        /* =====================================
+           FIND NEWLY ARRIVED ORDERS
+        ===================================== */
 
-        const newlyArrived = newOrders.filter(
-            order =>
-                !previousNewOrderIds.has(
-                    String(order.id)
-                )
-        );
+        const newlyArrived =
+            newOrders.filter(
+                order =>
+                    !previousNewOrderIds.has(
+                        String(order.id)
+                    )
+            );
 
 
-        if (newlyArrived.length > 0) {
+        if (
+            newlyArrived.length > 0
+        ) {
 
             showNotification(
-                newlyArrived[newlyArrived.length - 1]
+                newlyArrived[
+                    newlyArrived.length - 1
+                ]
             );
 
         }
 
 
-        previousNewOrderIds = currentIds;
+        previousNewOrderIds =
+            currentIds;
 
 
-        /*
-           If there are no NEW orders,
-           stop sound.
-        */
+        /* =====================================
+           NO NEW ORDERS
+        ===================================== */
 
-        if (newOrders.length === 0) {
+        if (
+            newOrders.length === 0
+        ) {
 
             stopRepeatingSound();
 
             document.getElementById(
                 "notification"
-            ).style.display = "none";
+            ).style.display =
+                "none";
 
-            notificationOrderId = null;
+            notificationOrderId =
+                null;
 
         }
 
@@ -824,15 +1313,19 @@
        SHOW NOTIFICATION
     ========================================= */
 
-    function showNotification(order) {
+    function showNotification(
+        order
+    ) {
 
         notificationOrderId =
             String(order.id);
+
 
         const customerName =
             order.customerName ||
             order.name ||
             "Customer";
+
 
         const amount =
             order.totalAmount ||
@@ -840,25 +1333,48 @@
             order.amount ||
             0;
 
+
         document.getElementById(
             "notificationText"
         ).innerHTML =
             `
-            <strong>Order #${escapeHtml(order.id)}</strong><br>
-            Customer: ${escapeHtml(customerName)}<br>
-            Amount: ₹${escapeHtml(amount)}
+            <strong>
+                Order #${escapeHtml(order.id)}
+            </strong>
+            <br>
+
+            Customer:
+            ${escapeHtml(customerName)}
+
+            <br>
+
+            Amount:
+            ₹${escapeHtml(amount)}
             `;
+
 
         document.getElementById(
             "notification"
-        ).style.display = "block";
+        ).style.display =
+            "block";
 
 
         /*
-           Start repeating sound.
+           Start alarm automatically.
+
+           If browser audio has already been
+           unlocked, sound starts immediately.
+
+           If browser has not allowed audio yet,
+           the first normal interaction with
+           the page will unlock it.
         */
 
-        startRepeatingSound();
+        if (soundEnabled) {
+
+            startRepeatingSound();
+
+        }
 
     }
 
@@ -869,7 +1385,9 @@
 
     function prepareNotificationOrder() {
 
-        if (!notificationOrderId) {
+        if (
+            !notificationOrderId
+        ) {
 
             return;
 
@@ -891,14 +1409,22 @@
 
         document.getElementById(
             "notification"
-        ).style.display = "none";
+        ).style.display =
+            "none";
+
 
         /*
-           Closing notification only hides it.
-           Sound stops temporarily.
-        */
+           IMPORTANT:
 
-        stopRepeatingSound();
+           Closing the popup does NOT stop
+           the alarm.
+
+           The order is still NEW.
+
+           The alarm will stop only when the
+           order becomes PREPARING or there
+           are no NEW orders.
+        */
 
     }
 
@@ -913,10 +1439,13 @@
 
             const response =
                 await fetch(
-                    API_BASE + "/api/orders",
+                    API_BASE +
+                    "/api/orders",
                     {
                         method: "GET",
-                        credentials: "include"
+
+                        credentials:
+                            "include"
                     }
                 );
 
@@ -935,9 +1464,10 @@
                 await response.json();
 
 
-            allOrders = Array.isArray(orders)
-                ? orders
-                : [];
+            allOrders =
+                Array.isArray(orders)
+                    ? orders
+                    : [];
 
 
             checkForNewOrders(
@@ -954,8 +1484,9 @@
                 allOrders
             );
 
+        }
 
-        } catch (error) {
+        catch (error) {
 
             console.error(
                 "Failed to load orders:",
@@ -971,30 +1502,39 @@
        UPDATE STATISTICS
     ========================================= */
 
-    function updateStatistics(orders) {
+    function updateStatistics(
+        orders
+    ) {
 
         const newOrders =
             orders.filter(
                 order =>
-                    getStatus(order) === "NEW"
+                    getStatus(order) ===
+                    "NEW"
             );
+
 
         const preparing =
             orders.filter(
                 order =>
-                    getStatus(order) === "PREPARING"
+                    getStatus(order) ===
+                    "PREPARING"
             );
+
 
         const ready =
             orders.filter(
                 order =>
-                    getStatus(order) === "READY"
+                    getStatus(order) ===
+                    "READY"
             );
+
 
         const completed =
             orders.filter(
                 order =>
-                    getStatus(order) === "COMPLETED"
+                    getStatus(order) ===
+                    "COMPLETED"
             );
 
 
@@ -1052,22 +1592,27 @@
        DISPLAY ORDERS
     ========================================= */
 
-    function displayOrders(orders) {
+    function displayOrders(
+        orders
+    ) {
 
         const newContainer =
             document.getElementById(
                 "newOrders"
             );
 
+
         const preparingContainer =
             document.getElementById(
                 "preparingOrders"
             );
 
+
         const readyContainer =
             document.getElementById(
                 "readyOrders"
             );
+
 
         const completedContainer =
             document.getElementById(
@@ -1075,13 +1620,20 @@
             );
 
 
-        newContainer.innerHTML = "";
+        newContainer.innerHTML =
+            "";
 
-        preparingContainer.innerHTML = "";
 
-        readyContainer.innerHTML = "";
+        preparingContainer.innerHTML =
+            "";
 
-        completedContainer.innerHTML = "";
+
+        readyContainer.innerHTML =
+            "";
+
+
+        completedContainer.innerHTML =
+            "";
 
 
         const searchText =
@@ -1092,90 +1644,120 @@
             .trim();
 
 
-        let filteredOrders =
-            orders.filter(order => {
+        const filteredOrders =
+            orders.filter(
+                order => {
 
-                if (!searchText) {
+                    if (!searchText) {
 
-                    return true;
+                        return true;
+
+                    }
+
+
+                    const id =
+                        String(
+                            order.id || ""
+                        ).toLowerCase();
+
+
+                    const name =
+                        String(
+                            order.customerName ||
+                            order.name ||
+                            ""
+                        ).toLowerCase();
+
+
+                    const phone =
+                        String(
+                            order.customerPhone ||
+                            order.phone ||
+                            ""
+                        ).toLowerCase();
+
+
+                    return (
+                        id.includes(searchText) ||
+                        name.includes(searchText) ||
+                        phone.includes(searchText)
+                    );
+
+                }
+            );
+
+
+        filteredOrders.forEach(
+            order => {
+
+                const status =
+                    getStatus(order);
+
+
+                const card =
+                    createOrderCard(
+                        order
+                    );
+
+
+                if (
+                    status === "NEW"
+                ) {
+
+                    newContainer.appendChild(
+                        card
+                    );
 
                 }
 
-                const id =
-                    String(
-                        order.id || ""
-                    ).toLowerCase();
+                else if (
+                    status === "PREPARING"
+                ) {
 
-                const name =
-                    String(
-                        order.customerName ||
-                        order.name ||
-                        ""
-                    ).toLowerCase();
+                    preparingContainer.appendChild(
+                        card
+                    );
 
-                const phone =
-                    String(
-                        order.customerPhone ||
-                        order.phone ||
-                        ""
-                    ).toLowerCase();
+                }
 
-                return (
-                    id.includes(searchText) ||
-                    name.includes(searchText) ||
-                    phone.includes(searchText)
-                );
+                else if (
+                    status === "READY"
+                ) {
 
-            });
+                    readyContainer.appendChild(
+                        card
+                    );
 
+                }
 
-        filteredOrders.forEach(order => {
+                else if (
+                    status === "COMPLETED"
+                ) {
 
-            const status =
-                getStatus(order);
+                    completedContainer.appendChild(
+                        card
+                    );
 
-            const card =
-                createOrderCard(order);
-
-
-            if (status === "NEW") {
-
-                newContainer.appendChild(card);
+                }
 
             }
-
-            else if (status === "PREPARING") {
-
-                preparingContainer.appendChild(card);
-
-            }
-
-            else if (status === "READY") {
-
-                readyContainer.appendChild(card);
-
-            }
-
-            else if (status === "COMPLETED") {
-
-                completedContainer.appendChild(card);
-
-            }
-
-        });
+        );
 
 
         showEmptyMessage(
             newContainer
         );
 
+
         showEmptyMessage(
             preparingContainer
         );
 
+
         showEmptyMessage(
             readyContainer
         );
+
 
         showEmptyMessage(
             completedContainer
@@ -1188,17 +1770,24 @@
        CREATE ORDER CARD
     ========================================= */
 
-    function createOrderCard(order) {
+    function createOrderCard(
+        order
+    ) {
 
         const card =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
+
 
         card.className =
             "order-card";
 
 
         const id =
-            escapeHtml(order.id);
+            escapeHtml(
+                order.id
+            );
 
 
         const customerName =
@@ -1232,13 +1821,9 @@
             0;
 
 
-        let itemsHtml = "";
+        let itemsHtml =
+            "";
 
-
-        /*
-           Support different possible
-           item property names.
-        */
 
         let items =
             order.items ||
@@ -1247,47 +1832,54 @@
             [];
 
 
-        if (!Array.isArray(items)) {
+        if (
+            !Array.isArray(items)
+        ) {
 
             items = [];
 
         }
 
 
-        items.forEach(item => {
+        items.forEach(
+            item => {
 
-            const itemName =
-                escapeHtml(
-                    item.name ||
-                    item.itemName ||
-                    "Item"
-                );
-
-
-            const quantity =
-                item.quantity ||
-                1;
+                const itemName =
+                    escapeHtml(
+                        item.name ||
+                        item.itemName ||
+                        "Item"
+                    );
 
 
-            const price =
-                item.price ||
-                0;
+                const quantity =
+                    item.quantity ||
+                    1;
 
 
-            itemsHtml +=
-                `
-                <div class="order-item">
-                    <span>
-                        ${itemName} × ${quantity}
-                    </span>
+                const price =
+                    item.price ||
+                    0;
 
-                    <span>
-                        ₹${price}
-                    </span>
-                </div>
-                `;
 
-        });
+                itemsHtml +=
+                    `
+                    <div class="order-item">
+
+                        <span>
+                            ${itemName}
+                            × ${quantity}
+                        </span>
+
+                        <span>
+                            ₹${price}
+                        </span>
+
+                    </div>
+                    `;
+
+            }
+        );
 
 
         if (!itemsHtml) {
@@ -1295,6 +1887,7 @@
             itemsHtml =
                 `
                 <div class="order-item">
+
                     <span>
                         Order items
                     </span>
@@ -1302,6 +1895,7 @@
                     <span>
                         See order details
                     </span>
+
                 </div>
                 `;
 
@@ -1312,10 +1906,13 @@
             getStatus(order);
 
 
-        let buttonsHtml = "";
+        let buttonsHtml =
+            "";
 
 
-        if (status === "NEW") {
+        if (
+            status === "NEW"
+        ) {
 
             buttonsHtml =
                 `
@@ -1323,8 +1920,13 @@
 
                     <button
                         class="preparing-btn"
-                        onclick="updateStatus('${id}', 'PREPARING')">
+                        onclick="updateStatus(
+                            '${id}',
+                            'PREPARING'
+                        )">
+
                         👨‍🍳 Preparing
+
                     </button>
 
                 </div>
@@ -1333,7 +1935,9 @@
         }
 
 
-        else if (status === "PREPARING") {
+        else if (
+            status === "PREPARING"
+        ) {
 
             buttonsHtml =
                 `
@@ -1341,8 +1945,13 @@
 
                     <button
                         class="ready-btn"
-                        onclick="updateStatus('${id}', 'READY')">
+                        onclick="updateStatus(
+                            '${id}',
+                            'READY'
+                        )">
+
                         ✅ Ready
+
                     </button>
 
                 </div>
@@ -1351,7 +1960,9 @@
         }
 
 
-        else if (status === "READY") {
+        else if (
+            status === "READY"
+        ) {
 
             buttonsHtml =
                 `
@@ -1359,8 +1970,13 @@
 
                     <button
                         class="completed-btn"
-                        onclick="updateStatus('${id}', 'COMPLETED')">
+                        onclick="updateStatus(
+                            '${id}',
+                            'COMPLETED'
+                        )">
+
                         📦 Completed
+
                     </button>
 
                 </div>
@@ -1371,22 +1987,43 @@
 
         card.innerHTML =
             `
-            <h3>Order #${id}</h3>
+            <h3>
+                Order #${id}
+            </h3>
+
 
             <p>
-                <strong>Customer:</strong>
+
+                <strong>
+                    Customer:
+                </strong>
+
                 ${customerName}
+
             </p>
 
+
             <p>
-                <strong>Phone:</strong>
+
+                <strong>
+                    Phone:
+                </strong>
+
                 ${phone}
+
             </p>
 
+
             <p>
-                <strong>Address:</strong>
+
+                <strong>
+                    Address:
+                </strong>
+
                 ${address}
+
             </p>
+
 
             <div class="order-items">
 
@@ -1394,11 +2031,17 @@
 
             </div>
 
+
             <p class="total">
-                Total: ₹${escapeHtml(total)}
+
+                Total:
+                ₹${escapeHtml(total)}
+
             </p>
 
+
             ${buttonsHtml}
+
             `;
 
 
@@ -1411,7 +2054,9 @@
        EMPTY MESSAGE
     ========================================= */
 
-    function showEmptyMessage(container) {
+    function showEmptyMessage(
+        container
+    ) {
 
         if (
             container.children.length === 0
@@ -1422,13 +2067,18 @@
                     "div"
                 );
 
+
             empty.className =
                 "empty";
+
 
             empty.innerText =
                 "No orders here.";
 
-            container.appendChild(empty);
+
+            container.appendChild(
+                empty
+            );
 
         }
 
@@ -1465,7 +2115,8 @@
                     {
                         method: "PUT",
 
-                        credentials: "include"
+                        credentials:
+                            "include"
                     }
                 );
 
@@ -1481,20 +2132,23 @@
 
 
             /*
-               If order is moved to Preparing,
-               stop the alarm.
+               Stop alarm when the order
+               becomes PREPARING.
             */
 
             if (
-                newStatus === "PREPARING"
+                newStatus ===
+                "PREPARING"
             ) {
 
                 stopRepeatingSound();
+
 
                 document.getElementById(
                     "notification"
                 ).style.display =
                     "none";
+
 
                 notificationOrderId =
                     null;
@@ -1504,13 +2158,15 @@
 
             await loadOrders();
 
+        }
 
-        } catch (error) {
+        catch (error) {
 
             console.error(
                 "Status update error:",
                 error
             );
+
 
             alert(
                 "Could not update order status."
@@ -1543,6 +2199,10 @@
             "adminLoggedIn"
         );
 
+
+        stopRepeatingSound();
+
+
         window.location.href =
             "login.html";
 
@@ -1557,7 +2217,7 @@
 
 
     /*
-       Check for orders every 5 seconds.
+       Check for new orders every 5 seconds.
     */
 
     setInterval(
@@ -1565,8 +2225,8 @@
         5000
     );
 
+
 </script>
 
 </body>
 </html>
-

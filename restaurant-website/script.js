@@ -432,7 +432,7 @@ function confirmOrder(event) {
              */
 
             key:
-                "rzp_test_TgzCHppixI72ho",
+                "rzp_test_Th8EVNQBaH7Gva",
 
 
             amount:
