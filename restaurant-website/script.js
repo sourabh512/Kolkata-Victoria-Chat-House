@@ -52,6 +52,10 @@ function updateCart() {
     let cartTotal =
         document.getElementById("cart-total");
 
+    if (!cartItems || !cartCount || !cartTotal) {
+        return;
+    }
+
     cartItems.innerHTML = "";
 
     let total = 0;
@@ -74,7 +78,7 @@ function updateCart() {
             <div class="cart-item">
 
                 <div>
-                    <h4>${item.name}</h4>
+                    <h4>${escapeHtml(item.name)}</h4>
                     <p>₹${item.price} × ${item.quantity}</p>
                 </div>
 
@@ -117,6 +121,10 @@ function updateCart() {
 
 function increaseQuantity(index) {
 
+    if (!cart[index]) {
+        return;
+    }
+
     cart[index].quantity++;
 
     updateCart();
@@ -128,6 +136,10 @@ function increaseQuantity(index) {
 // =========================
 
 function decreaseQuantity(index) {
+
+    if (!cart[index]) {
+        return;
+    }
 
     if (cart[index].quantity > 1) {
 
@@ -149,6 +161,10 @@ function decreaseQuantity(index) {
 
 function removeItem(index) {
 
+    if (!cart[index]) {
+        return;
+    }
+
     cart.splice(index, 1);
 
     updateCart();
@@ -163,6 +179,10 @@ function toggleCart() {
 
     let cartBox =
         document.getElementById("cart-box");
+
+    if (!cartBox) {
+        return;
+    }
 
     cartBox.classList.toggle("show-cart");
 }
@@ -189,6 +209,16 @@ function placeOrder() {
         document.getElementById("form-total");
 
 
+    if (!summary || !formTotal) {
+
+        alert(
+            "Order form could not be opened."
+        );
+
+        return;
+    }
+
+
     summary.innerHTML = "";
 
     let orderTotal = 0;
@@ -207,7 +237,7 @@ function placeOrder() {
             <div class="summary-item">
 
                 <span>
-                    ${item.name} × ${item.quantity}
+                    ${escapeHtml(item.name)} × ${item.quantity}
                 </span>
 
                 <span>
@@ -228,16 +258,31 @@ function placeOrder() {
 
     // CLOSE CART
 
-    document
-        .getElementById("cart-box")
-        .classList.remove("show-cart");
+    let cartBox =
+        document.getElementById("cart-box");
+
+    if (cartBox) {
+
+        cartBox.classList.remove(
+            "show-cart"
+        );
+
+    }
 
 
     // OPEN ORDER FORM
 
-    document
-        .getElementById("order-form")
-        .classList.add("show-form");
+    let orderForm =
+        document.getElementById("order-form");
+
+    if (orderForm) {
+
+        orderForm.classList.add(
+            "show-form"
+        );
+
+    }
+
 }
 
 
@@ -247,9 +292,16 @@ function placeOrder() {
 
 function closeOrderForm() {
 
-    document
-        .getElementById("order-form")
-        .classList.remove("show-form");
+    let orderForm =
+        document.getElementById("order-form");
+
+    if (!orderForm) {
+        return;
+    }
+
+    orderForm.classList.remove(
+        "show-form"
+    );
 }
 
 
@@ -263,15 +315,41 @@ function confirmOrder(event) {
 
 
     let name =
-        document.getElementById("customer-name").value;
+        document.getElementById(
+            "customer-name"
+        ).value.trim();
 
 
     let phone =
-        document.getElementById("customer-phone").value;
+        document.getElementById(
+            "customer-phone"
+        ).value.trim();
 
 
     let address =
-        document.getElementById("customer-address").value;
+        document.getElementById(
+            "customer-address"
+        ).value.trim();
+
+
+    if (!name || !phone || !address) {
+
+        alert(
+            "Please fill in all customer details."
+        );
+
+        return;
+    }
+
+
+    if (cart.length === 0) {
+
+        alert(
+            "Your cart is empty!"
+        );
+
+        return;
+    }
 
 
     // Calculate total amount
@@ -312,7 +390,7 @@ function confirmOrder(event) {
     fetch(
         API_BASE_URL +
         "/api/payment/create-order?amount=" +
-        total,
+        encodeURIComponent(total),
         {
             method: "POST"
         }
@@ -346,26 +424,40 @@ function confirmOrder(event) {
 
         let options = {
 
+            /*
+             * IMPORTANT:
+             * This is your Razorpay TEST KEY ID.
+             *
+             * NEVER put the Razorpay Secret Key here.
+             */
+
             key:
                 "rzp_test_TgzCHppixI72ho",
+
 
             amount:
                 paymentOrder.amount,
 
+
             currency:
                 paymentOrder.currency,
+
 
             name:
                 "Kolkata Victoria Chat House",
 
+
             description:
                 "Restaurant Order",
+
 
             order_id:
                 paymentOrder.orderId,
 
 
+            // ==========================================
             // CUSTOMER DETAILS
+            // ==========================================
 
             prefill: {
 
@@ -378,7 +470,9 @@ function confirmOrder(event) {
             },
 
 
+            // ==========================================
             // PAYMENT SUCCESS
+            // ==========================================
 
             handler: function(response) {
 
@@ -527,6 +621,8 @@ function confirmOrder(event) {
                         );
 
 
+                        // Empty cart
+
                         cart = [];
 
 
@@ -536,11 +632,17 @@ function confirmOrder(event) {
                         closeOrderForm();
 
 
-                        document
-                            .querySelector(
+                        let form =
+                            document.querySelector(
                                 "#order-form form"
-                            )
-                            .reset();
+                            );
+
+
+                        if (form) {
+
+                            form.reset();
+
+                        }
 
                     })
 
@@ -577,7 +679,9 @@ function confirmOrder(event) {
             },
 
 
+            // ==========================================
             // PAYMENT WINDOW CLOSED
+            // ==========================================
 
             modal: {
 
@@ -594,11 +698,51 @@ function confirmOrder(event) {
         };
 
 
-        let razorpay =
-            new Razorpay(options);
+        // ==========================================
+        // OPEN RAZORPAY
+        // ==========================================
+
+        try {
+
+            let razorpay =
+                new Razorpay(options);
 
 
-        razorpay.open();
+            razorpay.on(
+                "payment.failed",
+                function(response) {
+
+                    console.error(
+                        "Razorpay payment failed:",
+                        response
+                    );
+
+
+                    alert(
+                        "Payment failed. Please try again."
+                    );
+
+                }
+            );
+
+
+            razorpay.open();
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Razorpay checkout error:",
+                error
+            );
+
+
+            alert(
+                "Razorpay could not be opened. Please refresh the page and try again."
+            );
+
+        }
 
     })
 
@@ -650,7 +794,9 @@ function showMessage() {
 function loadCustomerMenu() {
 
     let menuContainer =
-        document.getElementById("dynamic-menu");
+        document.getElementById(
+            "dynamic-menu"
+        );
 
 
     if (!menuContainer) {
@@ -694,7 +840,9 @@ function loadCustomerMenu() {
             });
 
 
-        if (availableItems.length === 0) {
+        if (
+            availableItems.length === 0
+        ) {
 
             menuContainer.innerHTML =
                 '<p class="no-menu">' +
@@ -711,7 +859,9 @@ function loadCustomerMenu() {
             // Create card
 
             let card =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
 
             card.className =
@@ -723,7 +873,9 @@ function loadCustomerMenu() {
             if (item.image) {
 
                 let image =
-                    document.createElement("img");
+                    document.createElement(
+                        "img"
+                    );
 
 
                 image.className =
@@ -749,7 +901,9 @@ function loadCustomerMenu() {
                     };
 
 
-                card.appendChild(image);
+                card.appendChild(
+                    image
+                );
 
             }
 
@@ -757,7 +911,9 @@ function loadCustomerMenu() {
             // Create content
 
             let content =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
 
             content.className =
@@ -767,7 +923,9 @@ function loadCustomerMenu() {
             // Item name
 
             let name =
-                document.createElement("h3");
+                document.createElement(
+                    "h3"
+                );
 
 
             name.textContent =
@@ -777,7 +935,9 @@ function loadCustomerMenu() {
             // Item price
 
             let price =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
 
             price.className =
@@ -791,7 +951,9 @@ function loadCustomerMenu() {
             // Add to cart button
 
             let button =
-                document.createElement("button");
+                document.createElement(
+                    "button"
+                );
 
 
             button.className =
@@ -819,15 +981,29 @@ function loadCustomerMenu() {
 
             // Add everything
 
-            content.appendChild(name);
+            content.appendChild(
+                name
+            );
 
-            content.appendChild(price);
 
-            content.appendChild(button);
+            content.appendChild(
+                price
+            );
 
-            card.appendChild(content);
 
-            menuContainer.appendChild(card);
+            content.appendChild(
+                button
+            );
+
+
+            card.appendChild(
+                content
+            );
+
+
+            menuContainer.appendChild(
+                card
+            );
 
         });
 
@@ -858,7 +1034,16 @@ function loadCustomerMenu() {
 function searchMenu() {
 
     const searchInput =
-        document.getElementById("menuSearch");
+        document.getElementById(
+            "menuSearch"
+        );
+
+
+    if (!searchInput) {
+
+        return;
+
+    }
 
 
     const searchText =
@@ -875,38 +1060,41 @@ function searchMenu() {
 
     menuItems.forEach(function(item) {
 
+        const heading =
+            item.querySelector("h3");
+
+
+        if (!heading) {
+
+            return;
+
+        }
+
+
         const itemName =
-            item
-                .querySelector("h3")
-                .textContent
+            heading.textContent
                 .toLowerCase();
 
 
-        if (itemName.includes(searchText)) {
+        if (
+            itemName.includes(
+                searchText
+            )
+        ) {
 
-            item.style.display = "";
+            item.style.display =
+                "";
 
         } else {
 
-            item.style.display = "none";
+            item.style.display =
+                "none";
 
         }
 
     });
 
 }
-
-
-// Load menu after page is ready
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function() {
-
-        loadCustomerMenu();
-
-    }
-);
 
 
 // =====================================
@@ -919,46 +1107,79 @@ function showOrderSuccessPopup(
     customerName
 ) {
 
-    document
-        .getElementById(
+    let orderIdElement =
+        document.getElementById(
             "success-order-id"
-        )
-        .textContent =
+        );
+
+
+    let totalElement =
+        document.getElementById(
+            "success-order-total"
+        );
+
+
+    let nameElement =
+        document.getElementById(
+            "success-customer-name"
+        );
+
+
+    let popup =
+        document.getElementById(
+            "order-success-popup"
+        );
+
+
+    if (
+        !orderIdElement ||
+        !totalElement ||
+        !nameElement ||
+        !popup
+    ) {
+
+        return;
+
+    }
+
+
+    orderIdElement.textContent =
         "#" + orderId;
 
 
-    document
-        .getElementById(
-            "success-order-total"
-        )
-        .textContent =
+    totalElement.textContent =
         "₹" + total;
 
 
-    document
-        .getElementById(
-            "success-customer-name"
-        )
-        .textContent =
+    nameElement.textContent =
         customerName;
 
 
-    document
-        .getElementById(
-            "order-success-popup"
-        )
-        .classList.add("show");
+    popup.classList.add(
+        "show"
+    );
 
 }
 
 
 function closeSuccessPopup() {
 
-    document
-        .getElementById(
+    let popup =
+        document.getElementById(
             "order-success-popup"
-        )
-        .classList.remove("show");
+        );
+
+
+    if (!popup) {
+
+        return;
+
+    }
+
+
+    popup.classList.remove(
+        "show"
+    );
 
 }
 
@@ -969,20 +1190,27 @@ function closeSuccessPopup() {
 
 function trackOrder() {
 
-    let orderId =
-        document
-            .getElementById(
-                "tracking-order-id"
-            )
-            .value
-            .trim();
+    let trackingInput =
+        document.getElementById(
+            "tracking-order-id"
+        );
 
 
     let result =
-        document
-            .getElementById(
-                "tracking-result"
-            );
+        document.getElementById(
+            "tracking-result"
+        );
+
+
+    if (!trackingInput || !result) {
+
+        return;
+
+    }
+
+
+    let orderId =
+        trackingInput.value.trim();
 
 
     if (orderId === "") {
@@ -1004,7 +1232,9 @@ function trackOrder() {
     let url =
         API_BASE_URL +
         "/api/orders/" +
-        encodeURIComponent(orderId);
+        encodeURIComponent(
+            orderId
+        );
 
 
     console.log(
@@ -1037,6 +1267,7 @@ function trackOrder() {
 
         }
 
+
         return response.json();
 
     })
@@ -1049,7 +1280,9 @@ function trackOrder() {
         );
 
 
-        displayOrderStatus(order);
+        displayOrderStatus(
+            order
+        );
 
     })
 
@@ -1084,8 +1317,17 @@ function displayOrderStatus(order) {
         );
 
 
+    if (!result) {
+
+        return;
+
+    }
+
+
     let status =
-        order.status;
+        String(
+            order.status || "NEW"
+        ).toUpperCase();
 
 
     let newActive =
@@ -1116,7 +1358,7 @@ function displayOrderStatus(order) {
 
             '<h3>' +
             'Order #' +
-            order.id +
+            escapeHtml(order.id) +
             '</h3>' +
 
             '<p>' +
@@ -1126,12 +1368,12 @@ function displayOrderStatus(order) {
 
             '<p>' +
             '<strong>Total:</strong> ₹' +
-            order.total +
+            escapeHtml(order.total) +
             '</p>' +
 
             '<p>' +
             '<strong>Current Status:</strong> ' +
-            status +
+            escapeHtml(status) +
             '</p>' +
 
             '<div class="order-status">' +
@@ -1191,7 +1433,7 @@ function createStatusStep(
             '</div>' +
 
             '<span>' +
-            text +
+            escapeHtml(text) +
             '</span>' +
 
         '</div>'
@@ -1245,4 +1487,20 @@ function escapeHtml(text) {
         );
 
 }
+
+
+// =====================================
+// LOAD MENU AFTER PAGE IS READY
+// =====================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        loadCustomerMenu();
+
+        updateCart();
+
+    }
+);
 
