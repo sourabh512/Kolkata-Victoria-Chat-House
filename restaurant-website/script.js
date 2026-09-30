@@ -291,7 +291,7 @@ function confirmOrder(event) {
 
         let options = {
 
-            key: "rzp_test_TgzCHppixI72ho",
+            key: "rzp_test_Th8EVNQBaH7Gva",
 
             amount: paymentOrder.amount,
 
