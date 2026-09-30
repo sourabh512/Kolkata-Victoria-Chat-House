@@ -1389,3 +1389,53 @@ footer p {
         font-size: 14px;
     }
 }
+
+/* =====================================
+   MENU SEARCH
+   ===================================== */
+
+.menu-search {
+    max-width: 500px;
+    margin: 25px auto 10px;
+}
+
+#menuSearch {
+    width: 100%;
+    padding: 14px 18px;
+
+    border: 2px solid #e65100;
+    border-radius: 30px;
+
+    font-size: 16px;
+    outline: none;
+
+    background: white;
+}
+
+#menuSearch:focus {
+    border-color: #ff6d00;
+
+    box-shadow:
+        0 0 8px rgba(230, 81, 0, 0.25);
+}
+
+#menuSearch::placeholder {
+    color: #888;
+}
+
+
+/* MOBILE SEARCH */
+
+@media (max-width: 600px) {
+
+    .menu-search {
+        width: 100%;
+        padding: 0 5px;
+    }
+
+    #menuSearch {
+        font-size: 15px;
+        padding: 13px 16px;
+    }
+
+}

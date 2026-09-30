@@ -1,3 +1,4 @@
+
 // =====================================
 // BACKEND API URL
 // =====================================
@@ -15,16 +16,21 @@ let cart = [];
 
 function addToCart(name, price) {
 
-    let existingItem = cart.find(item => item.name === name);
+    let existingItem =
+        cart.find(item => item.name === name);
 
     if (existingItem) {
+
         existingItem.quantity++;
+
     } else {
+
         cart.push({
             name: name,
             price: price,
             quantity: 1
         });
+
     }
 
     updateCart();
@@ -37,21 +43,32 @@ function addToCart(name, price) {
 
 function updateCart() {
 
-    let cartItems = document.getElementById("cart-items");
-    let cartCount = document.getElementById("cart-count");
-    let cartTotal = document.getElementById("cart-total");
+    let cartItems =
+        document.getElementById("cart-items");
+
+    let cartCount =
+        document.getElementById("cart-count");
+
+    let cartTotal =
+        document.getElementById("cart-total");
 
     cartItems.innerHTML = "";
 
     let total = 0;
     let totalItems = 0;
 
+
     cart.forEach(function(item, index) {
 
-        let itemTotal = item.price * item.quantity;
+        let itemTotal =
+            item.price * item.quantity;
 
-        total = total + itemTotal;
-        totalItems = totalItems + item.quantity;
+        total =
+            total + itemTotal;
+
+        totalItems =
+            totalItems + item.quantity;
+
 
         cartItems.innerHTML += `
             <div class="cart-item">
@@ -73,8 +90,9 @@ function updateCart() {
                         +
                     </button>
 
-                    <button class="remove-btn"
-                            onclick="removeItem(${index})">
+                    <button
+                        class="remove-btn"
+                        onclick="removeItem(${index})">
                         Remove
                     </button>
 
@@ -84,8 +102,12 @@ function updateCart() {
         `;
     });
 
-    cartCount.innerText = totalItems;
-    cartTotal.innerText = total;
+
+    cartCount.innerText =
+        totalItems;
+
+    cartTotal.innerText =
+        total;
 }
 
 
@@ -114,6 +136,7 @@ function decreaseQuantity(index) {
     } else {
 
         cart.splice(index, 1);
+
     }
 
     updateCart();
@@ -138,7 +161,8 @@ function removeItem(index) {
 
 function toggleCart() {
 
-    let cartBox = document.getElementById("cart-box");
+    let cartBox =
+        document.getElementById("cart-box");
 
     cartBox.classList.toggle("show-cart");
 }
@@ -157,18 +181,27 @@ function placeOrder() {
         return;
     }
 
-    let summary = document.getElementById("order-summary");
-    let formTotal = document.getElementById("form-total");
+
+    let summary =
+        document.getElementById("order-summary");
+
+    let formTotal =
+        document.getElementById("form-total");
+
 
     summary.innerHTML = "";
 
     let orderTotal = 0;
 
+
     cart.forEach(function(item) {
 
-        let itemTotal = item.price * item.quantity;
+        let itemTotal =
+            item.price * item.quantity;
 
-        orderTotal = orderTotal + itemTotal;
+        orderTotal =
+            orderTotal + itemTotal;
+
 
         summary.innerHTML += `
             <div class="summary-item">
@@ -183,17 +216,27 @@ function placeOrder() {
 
             </div>
         `;
+
     });
 
+
     // PUT TOTAL IN FORM
-    formTotal.innerText = orderTotal;
+
+    formTotal.innerText =
+        orderTotal;
+
 
     // CLOSE CART
-    document.getElementById("cart-box")
+
+    document
+        .getElementById("cart-box")
         .classList.remove("show-cart");
 
+
     // OPEN ORDER FORM
-    document.getElementById("order-form")
+
+    document
+        .getElementById("order-form")
         .classList.add("show-form");
 }
 
@@ -204,7 +247,8 @@ function placeOrder() {
 
 function closeOrderForm() {
 
-    document.getElementById("order-form")
+    document
+        .getElementById("order-form")
         .classList.remove("show-form");
 }
 
@@ -217,26 +261,37 @@ function confirmOrder(event) {
 
     event.preventDefault();
 
+
     let name =
         document.getElementById("customer-name").value;
+
 
     let phone =
         document.getElementById("customer-phone").value;
 
+
     let address =
         document.getElementById("customer-address").value;
 
+
     // Calculate total amount
+
     let total = 0;
+
 
     cart.forEach(function(item) {
 
-        total = total + (item.price * item.quantity);
+        total =
+            total +
+            (item.price * item.quantity);
 
     });
 
+
     // Convert cart items into text
+
     let items = "";
+
 
     cart.forEach(function(item) {
 
@@ -291,26 +346,34 @@ function confirmOrder(event) {
 
         let options = {
 
-            key: "rzp_test_Th8EVNQBaH7Gva",
+            key:
+                "rzp_test_TgzCHppixI72ho",
 
-            amount: paymentOrder.amount,
+            amount:
+                paymentOrder.amount,
 
-            currency: paymentOrder.currency,
+            currency:
+                paymentOrder.currency,
 
-            name: "Kolkata Victoria Chat House",
+            name:
+                "Kolkata Victoria Chat House",
 
-            description: "Restaurant Order",
+            description:
+                "Restaurant Order",
 
-            order_id: paymentOrder.orderId,
+            order_id:
+                paymentOrder.orderId,
 
 
             // CUSTOMER DETAILS
 
             prefill: {
 
-                name: name,
+                name:
+                    name,
 
-                contact: phone
+                contact:
+                    phone
 
             },
 
@@ -333,25 +396,30 @@ function confirmOrder(event) {
                     API_BASE_URL +
                     "/api/payment/verify",
                     {
+
                         method: "POST",
 
                         headers: {
+
                             "Content-Type":
                                 "application/json"
+
                         },
 
-                        body: JSON.stringify({
+                        body:
+                            JSON.stringify({
 
-                            razorpayOrderId:
-                                response.razorpay_order_id,
+                                razorpayOrderId:
+                                    response.razorpay_order_id,
 
-                            razorpayPaymentId:
-                                response.razorpay_payment_id,
+                                razorpayPaymentId:
+                                    response.razorpay_payment_id,
 
-                            razorpaySignature:
-                                response.razorpay_signature
+                                razorpaySignature:
+                                    response.razorpay_signature
 
-                        })
+                            })
+
                     }
                 )
 
@@ -397,26 +465,36 @@ function confirmOrder(event) {
                         API_BASE_URL +
                         "/api/orders",
                         {
+
                             method: "POST",
 
                             headers: {
+
                                 "Content-Type":
                                     "application/json"
+
                             },
 
-                            body: JSON.stringify({
+                            body:
+                                JSON.stringify({
 
-                                name: name,
+                                    name:
+                                        name,
 
-                                phone: phone,
+                                    phone:
+                                        phone,
 
-                                address: address,
+                                    address:
+                                        address,
 
-                                items: items,
+                                    items:
+                                        items,
 
-                                total: total
+                                    total:
+                                        total
 
-                            })
+                                })
+
                         }
                     )
 
@@ -451,7 +529,9 @@ function confirmOrder(event) {
 
                         cart = [];
 
+
                         updateCart();
+
 
                         closeOrderForm();
 
@@ -471,6 +551,7 @@ function confirmOrder(event) {
                             error
                         );
 
+
                         alert(
                             "Payment was successful, but the order could not be saved. Please contact the restaurant."
                         );
@@ -485,6 +566,7 @@ function confirmOrder(event) {
                         "Payment verification error:",
                         error
                     );
+
 
                     alert(
                         "Payment could not be verified. Please contact the restaurant."
@@ -515,6 +597,7 @@ function confirmOrder(event) {
         let razorpay =
             new Razorpay(options);
 
+
         razorpay.open();
 
     })
@@ -525,6 +608,7 @@ function confirmOrder(event) {
             "Payment error:",
             error
         );
+
 
         alert(
             "Sorry! Payment could not be started."
@@ -542,6 +626,7 @@ function confirmOrder(event) {
 function orderNow() {
 
     toggleCart();
+
 }
 
 
@@ -566,6 +651,7 @@ function loadCustomerMenu() {
 
     let menuContainer =
         document.getElementById("dynamic-menu");
+
 
     if (!menuContainer) {
 
@@ -627,6 +713,7 @@ function loadCustomerMenu() {
             let card =
                 document.createElement("div");
 
+
             card.className =
                 "dynamic-menu-card";
 
@@ -638,11 +725,14 @@ function loadCustomerMenu() {
                 let image =
                     document.createElement("img");
 
+
                 image.className =
                     "dynamic-menu-image";
 
+
                 image.src =
                     item.image;
+
 
                 image.alt =
                     item.name;
@@ -650,12 +740,13 @@ function loadCustomerMenu() {
 
                 // Hide broken image
 
-                image.onerror = function() {
+                image.onerror =
+                    function() {
 
-                    this.style.display =
-                        "none";
+                        this.style.display =
+                            "none";
 
-                };
+                    };
 
 
                 card.appendChild(image);
@@ -668,6 +759,7 @@ function loadCustomerMenu() {
             let content =
                 document.createElement("div");
 
+
             content.className =
                 "dynamic-menu-content";
 
@@ -676,6 +768,7 @@ function loadCustomerMenu() {
 
             let name =
                 document.createElement("h3");
+
 
             name.textContent =
                 item.name;
@@ -686,8 +779,10 @@ function loadCustomerMenu() {
             let price =
                 document.createElement("div");
 
+
             price.className =
                 "dynamic-menu-price";
+
 
             price.textContent =
                 "₹" + item.price;
@@ -698,8 +793,10 @@ function loadCustomerMenu() {
             let button =
                 document.createElement("button");
 
+
             button.className =
                 "dynamic-menu-button";
+
 
             button.textContent =
                 "Add to Cart";
@@ -754,6 +851,52 @@ function loadCustomerMenu() {
 }
 
 
+// =====================================
+// SEARCH MENU
+// =====================================
+
+function searchMenu() {
+
+    const searchInput =
+        document.getElementById("menuSearch");
+
+
+    const searchText =
+        searchInput.value
+            .toLowerCase()
+            .trim();
+
+
+    const menuItems =
+        document.querySelectorAll(
+            "#dynamic-menu .dynamic-menu-card"
+        );
+
+
+    menuItems.forEach(function(item) {
+
+        const itemName =
+            item
+                .querySelector("h3")
+                .textContent
+                .toLowerCase();
+
+
+        if (itemName.includes(searchText)) {
+
+            item.style.display = "";
+
+        } else {
+
+            item.style.display = "none";
+
+        }
+
+    });
+
+}
+
+
 // Load menu after page is ready
 
 document.addEventListener(
@@ -776,36 +919,46 @@ function showOrderSuccessPopup(
     customerName
 ) {
 
-    document.getElementById(
-        "success-order-id"
-    ).textContent =
+    document
+        .getElementById(
+            "success-order-id"
+        )
+        .textContent =
         "#" + orderId;
 
 
-    document.getElementById(
-        "success-order-total"
-    ).textContent =
+    document
+        .getElementById(
+            "success-order-total"
+        )
+        .textContent =
         "₹" + total;
 
 
-    document.getElementById(
-        "success-customer-name"
-    ).textContent =
+    document
+        .getElementById(
+            "success-customer-name"
+        )
+        .textContent =
         customerName;
 
 
-    document.getElementById(
-        "order-success-popup"
-    ).classList.add("show");
+    document
+        .getElementById(
+            "order-success-popup"
+        )
+        .classList.add("show");
 
 }
 
 
 function closeSuccessPopup() {
 
-    document.getElementById(
-        "order-success-popup"
-    ).classList.remove("show");
+    document
+        .getElementById(
+            "order-success-popup"
+        )
+        .classList.remove("show");
 
 }
 
@@ -817,15 +970,19 @@ function closeSuccessPopup() {
 function trackOrder() {
 
     let orderId =
-        document.getElementById(
-            "tracking-order-id"
-        ).value.trim();
+        document
+            .getElementById(
+                "tracking-order-id"
+            )
+            .value
+            .trim();
 
 
     let result =
-        document.getElementById(
-            "tracking-result"
-        );
+        document
+            .getElementById(
+                "tracking-result"
+            );
 
 
     if (orderId === "") {
@@ -915,7 +1072,9 @@ function trackOrder() {
 }
 
 
-// Display order status
+// =====================================
+// DISPLAY ORDER STATUS
+// =====================================
 
 function displayOrderStatus(order) {
 
@@ -956,7 +1115,8 @@ function displayOrderStatus(order) {
         '<div class="tracking-order-card">' +
 
             '<h3>' +
-            'Order #' + order.id +
+            'Order #' +
+            order.id +
             '</h3>' +
 
             '<p>' +
@@ -1003,7 +1163,9 @@ function displayOrderStatus(order) {
 }
 
 
-// Create status step
+// =====================================
+// CREATE STATUS STEP
+// =====================================
 
 function createStatusStep(
     text,
@@ -1083,3 +1245,4 @@ function escapeHtml(text) {
         );
 
 }
+
